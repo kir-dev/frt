@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Project Setup Guide
 
-## Getting Started
+This guide will help you set up the project locally.
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Ensure you have the following installed on your machine:
+- Node.js (v16 or higher)
+- Yarn (v1.22.22 or higher)
+- Docker
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation Steps
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the repository:**
+   ```sh
+   git clone <repository-url>
+   cd <repository-directory>
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Install dependencies:**
+   ```sh
+   yarn install
+   ```
 
-## Learn More
+3. **Set up environment variables:**
+    - Copy the `.env.example` file to `.env`:
+      ```sh
+      cp .env.example .env
+      ```
+    - Update the `.env` file with your specific values if necessary.
 
-To learn more about Next.js, take a look at the following resources:
+4. **Start the PostgreSQL database using Docker:**
+   ```sh
+   docker-compose up -d
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. **Run the development server:**
+   ```sh
+   yarn dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Additional Commands
 
-## Deploy on Vercel
+- **Build the project:**
+  ```sh
+  yarn build
+  ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Start the production server:**
+  ```sh
+  yarn start
+  ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Lint the project:**
+  ```sh
+  yarn lint
+  ```
+
+### Notes
+
+- Ensure Docker is running before starting the development server.
+- The database connection string and other secrets are managed in the `.env` file.
+- The project uses Tailwind CSS for styling and Payload CMS for content management.
