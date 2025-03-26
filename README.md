@@ -14,7 +14,6 @@ Ensure you have the following installed on your machine:
 1. **Clone the repository:**
    ```sh
    git clone <repository-url>
-   cd <repository-directory>
    ```
 
 2. **Install dependencies:**
@@ -24,9 +23,7 @@ Ensure you have the following installed on your machine:
 
 3. **Set up environment variables:**
     - Copy the `.env.example` file to `.env`:
-      ```sh
-      cp .env.example .env
-      ```
+
     - Update the `.env` file with your specific values if necessary.
 
 4. **Start the PostgreSQL database using Docker:**
