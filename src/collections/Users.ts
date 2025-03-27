@@ -4,6 +4,7 @@ export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
     useAsTitle: 'email',
+    description: 'Felhasználók, akik be tudnak jelentkezni az admin felületre.',
   },
   auth: true,
   fields: [
