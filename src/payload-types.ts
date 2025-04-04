@@ -74,6 +74,7 @@ export interface Config {
     cars: Car;
     gallery: Gallery;
     publications: Publication;
+    sponsors: Sponsor;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -83,6 +84,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
+    sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     cars: CarsSelect<false> | CarsSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
@@ -211,6 +213,21 @@ export interface Article {
     | null;
   category: string;
   category_eng: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Támogató adatai
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors".
+ */
+export interface Sponsor {
+  id: number;
+  name: string;
+  logo: number | Media;
+  website: string;
+  tier: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -408,6 +425,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'publications';
         value: number | Publication;
+      } | null)
+    | ({
+        relationTo: 'sponsors';
+        value: number | Sponsor;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -503,6 +524,18 @@ export interface ArticlesSelect<T extends boolean = true> {
       };
   category?: T;
   category_eng?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors_select".
+ */
+export interface SponsorsSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  website?: T;
+  tier?: T;
   updatedAt?: T;
   createdAt?: T;
 }
