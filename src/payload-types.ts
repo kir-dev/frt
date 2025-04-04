@@ -72,6 +72,7 @@ export interface Config {
     articles: Article;
     events: Event;
     cars: Car;
+    gallery: Gallery;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -83,6 +84,7 @@ export interface Config {
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     cars: CarsSelect<false> | CarsSelect<true>;
+    gallery: GallerySelect<false> | GallerySelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -258,7 +260,7 @@ export interface Event {
   createdAt: string;
 }
 /**
- * Az autók listája részletekkel és képekkel.
+ * Az autó leírása részletekkel és képekkel.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cars".
@@ -282,12 +284,46 @@ export interface Car {
     };
     [k: string]: unknown;
   };
+  description_eng: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   image: number | Media;
   gallery: {
     image: number | Media;
     id?: string | null;
   }[];
-  interactive_model?: string | null;
+  interactive_model?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Képek kategorizálása albumokba
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery".
+ */
+export interface Gallery {
+  id: number;
+  title: string;
+  title_eng?: string | null;
+  date: string;
+  category?: string | null;
+  images: {
+    image: number | Media;
+    id?: string | null;
+  }[];
   updatedAt: string;
   createdAt: string;
 }
@@ -317,6 +353,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'cars';
         value: number | Car;
+      } | null)
+    | ({
+        relationTo: 'gallery';
+        value: number | Gallery;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -439,6 +479,7 @@ export interface CarsSelect<T extends boolean = true> {
   name?: T;
   year?: T;
   description?: T;
+  description_eng?: T;
   image?: T;
   gallery?:
     | T
@@ -447,6 +488,24 @@ export interface CarsSelect<T extends boolean = true> {
         id?: T;
       };
   interactive_model?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery_select".
+ */
+export interface GallerySelect<T extends boolean = true> {
+  title?: T;
+  title_eng?: T;
+  date?: T;
+  category?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
