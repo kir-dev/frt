@@ -3,7 +3,7 @@ import { CollectionConfig } from "payload";
 export const Cars: CollectionConfig = {
   slug: "cars",
   admin: {
-    description: "Az autók listája részletekkel és képekkel.",
+    description: "Az autó leírása részletekkel és képekkel.",
     useAsTitle: "name",
   },
   fields: [
@@ -24,6 +24,12 @@ export const Cars: CollectionConfig = {
       type: "richText",
       required: true,
       label: "Autó rövid leírása",
+    },
+    {
+      name: "description_eng",
+      type: "richText",
+      required: true,
+      label: "Autó rövid leírása angolul",
     },
     {
       name: "image",
@@ -48,7 +54,8 @@ export const Cars: CollectionConfig = {
     },
     {
       name: "interactive_model",
-      type: "text",
+      type: "upload",
+      relationTo: "media",
       required: false,
       label: "Interaktív modell link",
     },
