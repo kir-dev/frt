@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     articles: Article;
     events: Event;
+    cars: Car;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -81,6 +82,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    cars: CarsSelect<false> | CarsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -256,6 +258,40 @@ export interface Event {
   createdAt: string;
 }
 /**
+ * Az autók listája részletekkel és képekkel.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cars".
+ */
+export interface Car {
+  id: number;
+  name: string;
+  year: number;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  image: number | Media;
+  gallery: {
+    image: number | Media;
+    id?: string | null;
+  }[];
+  interactive_model?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
@@ -277,6 +313,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'events';
         value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'cars';
+        value: number | Car;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -388,6 +428,25 @@ export interface EventsSelect<T extends boolean = true> {
   end_date?: T;
   location?: T;
   image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cars_select".
+ */
+export interface CarsSelect<T extends boolean = true> {
+  name?: T;
+  year?: T;
+  description?: T;
+  image?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  interactive_model?: T;
   updatedAt?: T;
   createdAt?: T;
 }
