@@ -73,6 +73,7 @@ export interface Config {
     events: Event;
     cars: Car;
     gallery: Gallery;
+    publications: Publication;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -85,6 +86,7 @@ export interface Config {
     events: EventsSelect<false> | EventsSelect<true>;
     cars: CarsSelect<false> | CarsSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
+    publications: PublicationsSelect<false> | PublicationsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -260,7 +262,7 @@ export interface Event {
   createdAt: string;
 }
 /**
- * Az autó leírása részletekkel és képekkel.
+ * Az autók listája részletekkel és képekkel.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cars".
@@ -328,6 +330,51 @@ export interface Gallery {
   createdAt: string;
 }
 /**
+ * Csapattagok által készített kutatási publikációk és szakdolgozatok tárolása.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publications".
+ */
+export interface Publication {
+  id: number;
+  title: string;
+  title_eng: string;
+  author: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  description_eng: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  link: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
@@ -357,6 +404,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'gallery';
         value: number | Gallery;
+      } | null)
+    | ({
+        relationTo: 'publications';
+        value: number | Publication;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -506,6 +557,20 @@ export interface GallerySelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "publications_select".
+ */
+export interface PublicationsSelect<T extends boolean = true> {
+  title?: T;
+  title_eng?: T;
+  author?: T;
+  description?: T;
+  description_eng?: T;
+  link?: T;
   updatedAt?: T;
   createdAt?: T;
 }

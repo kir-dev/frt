@@ -2,6 +2,10 @@ import { CollectionConfig } from "payload";
 
 export const Gallery: CollectionConfig = {
   slug: "gallery",
+  labels: {
+    singular: "Gallery",
+    plural: "Gallery",
+  },
   admin: {
     description: "Képek kategorizálása albumokba",
     useAsTitle: "title",
