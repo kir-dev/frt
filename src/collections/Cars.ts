@@ -3,7 +3,7 @@ import { CollectionConfig } from "payload";
 export const Cars: CollectionConfig = {
   slug: "cars",
   admin: {
-    description: "Az autó leírása részletekkel és képekkel.",
+    description: "Az autók listája részletekkel és képekkel.",
     useAsTitle: "name",
   },
   fields: [
