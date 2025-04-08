@@ -54,7 +54,7 @@ export const Sponsors: CollectionConfig = {
                     value: "bme"
                 }
             ],
-            required: false,
+            required: true,
             label: "Támogatói fokozat",
         }
     ]
