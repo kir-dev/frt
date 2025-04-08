@@ -74,6 +74,7 @@ export interface Config {
     cars: Car;
     gallery: Gallery;
     publications: Publication;
+    sponsors: Sponsor;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -87,6 +88,7 @@ export interface Config {
     cars: CarsSelect<false> | CarsSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
     publications: PublicationsSelect<false> | PublicationsSelect<true>;
+    sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -375,6 +377,21 @@ export interface Publication {
   createdAt: string;
 }
 /**
+ * Támogató adatai
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors".
+ */
+export interface Sponsor {
+  id: number;
+  name: string;
+  logo: number | Media;
+  website: string;
+  tier?: ('diamond' | 'gold' | 'silver' | 'copper' | 'other' | 'bme') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
@@ -408,6 +425,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'publications';
         value: number | Publication;
+      } | null)
+    | ({
+        relationTo: 'sponsors';
+        value: number | Sponsor;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -571,6 +592,18 @@ export interface PublicationsSelect<T extends boolean = true> {
   description?: T;
   description_eng?: T;
   link?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors_select".
+ */
+export interface SponsorsSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  website?: T;
+  tier?: T;
   updatedAt?: T;
   createdAt?: T;
 }
