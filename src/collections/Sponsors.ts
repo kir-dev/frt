@@ -28,8 +28,33 @@ export const Sponsors: CollectionConfig = {
         },
         {
             name: "tier",
-            type: "text",
-            required: true,
+            type: "select",
+            options: [
+                {
+                    label: "Gyémánt",
+                    value: "diamond"
+                }, {
+                    label: "Arany",
+                    value: "gold"
+                },
+                {
+                    label: "Ezüst",
+                    value: "silver"
+                },
+                {
+                    label: "Bronz",
+                    value: "copper"
+                },
+                {
+                    label: "További",
+                    value: "other"
+                },
+                {
+                    label: "Budapesti Műszaki és Gazdaságtudományi Egyetem",
+                    value: "bme"
+                }
+            ],
+            required: false,
             label: "Támogatói fokozat",
         }
     ]
