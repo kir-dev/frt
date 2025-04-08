@@ -15,7 +15,6 @@ import { Cars } from "./collections/Cars";
 import { Gallery } from "./collections/Gallery";
 import { Publications } from "./collections/Publications";
 import {Sponsors} from "@/collections/Sponsors";
-
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
