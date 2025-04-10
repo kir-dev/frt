@@ -74,6 +74,7 @@ export interface Config {
     cars: Car;
     gallery: Gallery;
     publications: Publication;
+    members: Member;
     sponsors: Sponsor;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,6 +89,7 @@ export interface Config {
     cars: CarsSelect<false> | CarsSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
     publications: PublicationsSelect<false> | PublicationsSelect<true>;
+    members: MembersSelect<false> | MembersSelect<true>;
     sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -377,6 +379,31 @@ export interface Publication {
   createdAt: string;
 }
 /**
+ * Csapattagok profiljai, a hozzájuk tartozó csoport és kép.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "members".
+ */
+export interface Member {
+  id: number;
+  name: string;
+  group:
+    | 'vezetoseg'
+    | 'mechanikai_csoport'
+    | 'elektronika_csoport'
+    | 'jarmudinamika_csoport'
+    | 'aerodinamika_csoport'
+    | 'vaz_csoport'
+    | 'operativ_csoport'
+    | 'elektromos_hajtaslanc_csoport'
+    | 'driverless_csoport'
+    | 'szponzoracios_csoport';
+  position?: string | null;
+  picture: number | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Támogató adatai
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -387,7 +414,7 @@ export interface Sponsor {
   name: string;
   logo: number | Media;
   website: string;
-  tier?: ('diamond' | 'gold' | 'silver' | 'copper' | 'other' | 'bme') | null;
+  tier: 'diamond' | 'gold' | 'silver' | 'copper' | 'other' | 'bme';
   updatedAt: string;
   createdAt: string;
 }
@@ -425,6 +452,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'publications';
         value: number | Publication;
+      } | null)
+    | ({
+        relationTo: 'members';
+        value: number | Member;
       } | null)
     | ({
         relationTo: 'sponsors';
@@ -592,6 +623,18 @@ export interface PublicationsSelect<T extends boolean = true> {
   description?: T;
   description_eng?: T;
   link?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "members_select".
+ */
+export interface MembersSelect<T extends boolean = true> {
+  name?: T;
+  group?: T;
+  position?: T;
+  picture?: T;
   updatedAt?: T;
   createdAt?: T;
 }
