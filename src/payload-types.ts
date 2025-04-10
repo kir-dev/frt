@@ -414,7 +414,7 @@ export interface Sponsor {
   name: string;
   logo: number | Media;
   website: string;
-  tier?: ('diamond' | 'gold' | 'silver' | 'copper' | 'other' | 'bme') | null;
+  tier: 'diamond' | 'gold' | 'silver' | 'copper' | 'other' | 'bme';
   updatedAt: string;
   createdAt: string;
 }
