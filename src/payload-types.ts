@@ -76,6 +76,7 @@ export interface Config {
     publications: Publication;
     members: Member;
     sponsors: Sponsor;
+    recruitment: Recruitment;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -91,6 +92,7 @@ export interface Config {
     publications: PublicationsSelect<false> | PublicationsSelect<true>;
     members: MembersSelect<false> | MembersSelect<true>;
     sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
+    recruitment: RecruitmentSelect<false> | RecruitmentSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -419,6 +421,85 @@ export interface Sponsor {
   createdAt: string;
 }
 /**
+ * Nyitott pozíciók a csoportokon belül, funkcionális területek szerint csoportosítva.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "recruitment".
+ */
+export interface Recruitment {
+  id: number;
+  groupName: string;
+  groupNameEng: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  descriptionEng: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  positions: {
+    positionName: string;
+    positionNameEng: string;
+    positionDescription: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    positionDescriptionEng: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    positionOpen: boolean;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
@@ -460,6 +541,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'sponsors';
         value: number | Sponsor;
+      } | null)
+    | ({
+        relationTo: 'recruitment';
+        value: number | Recruitment;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -647,6 +732,28 @@ export interface SponsorsSelect<T extends boolean = true> {
   logo?: T;
   website?: T;
   tier?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "recruitment_select".
+ */
+export interface RecruitmentSelect<T extends boolean = true> {
+  groupName?: T;
+  groupNameEng?: T;
+  description?: T;
+  descriptionEng?: T;
+  positions?:
+    | T
+    | {
+        positionName?: T;
+        positionNameEng?: T;
+        positionDescription?: T;
+        positionDescriptionEng?: T;
+        positionOpen?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
