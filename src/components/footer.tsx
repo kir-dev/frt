@@ -8,7 +8,7 @@ export default function Footer() {
                 <p className="text-sm mb-4">Copyright © 2025 BME Formula Racing Team</p>
                 <div className="flex space-x-4 mb-4">
                     <Link
-                        href="https://facebook.com/frt"
+                        href="https://www.facebook.com/FormulaRacingTeam"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-frtRed hover:text-red-400"
@@ -17,7 +17,7 @@ export default function Footer() {
                         <span className="sr-only">Facebook</span>
                     </Link>
                     <Link
-                        href="https://instagram.com/frt"
+                        href="https://www.instagram.com/bme_formularacingteam/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-frtRed hover:text-red-400"
@@ -26,7 +26,7 @@ export default function Footer() {
                         <span className="sr-only">Instagram</span>
                     </Link>
                     <Link
-                        href="https://twitter.com/frt"
+                        href="https://twitter.com/bme_frt"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-frtRed hover:text-red-400"
@@ -35,7 +35,7 @@ export default function Footer() {
                         <span className="sr-only">Twitter</span>
                     </Link>
                     <Link
-                        href="https://youtube.com/frt"
+                        href="https://www.youtube.com/user/bmeFRT"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-frtRed hover:text-red-400"
@@ -44,7 +44,7 @@ export default function Footer() {
                         <span className="sr-only">YouTube</span>
                     </Link>
                     <Link
-                        href="https://linkedin.com/company/frt"
+                        href="https://www.linkedin.com/company/bmefrt/mycompany/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-frtRed hover:text-red-400"
@@ -53,7 +53,7 @@ export default function Footer() {
                         <span className="sr-only">LinkedIn</span>
                     </Link>
                     <Link
-                        href="mailto:contact@frt.com"
+                        href="mailto:info.bme.frt@gmail.com"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-frtRed hover:text-red-400"
@@ -62,7 +62,7 @@ export default function Footer() {
                         <span className="sr-only">Email</span>
                     </Link>
                 </div>
-                <p className="text-sm text-gray-400">Made with ❤️ by Kir-Dev</p>
+                <p className="text-xs text-gray-400">Made with ❤️ by Kir-Dev</p>
             </div>
         </footer>
     )
