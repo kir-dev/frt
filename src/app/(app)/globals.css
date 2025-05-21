@@ -10,6 +10,7 @@
       --color-foreground: var(--foreground);
       --font-sans: Arial, Helvetica, sans-serif;
       --font-mono: "Courier New", Courier, monospace;
+        --color-frtRed: #D51028;
     }
 
     @font-face {
