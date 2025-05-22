@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { getSponsors } from "@/lib/payload-cms"
+import {Sponsor} from "@/payload-types";
 
 export const metadata = {
     title: "Támogatók",
@@ -27,7 +28,7 @@ export default async function SponsorsPage(props: any) {
             acc[tier].push(sponsor)
             return acc
         },
-        {} as Record<string, typeof sponsors>,
+        {} as Record<string, Sponsor[]>,
     )
 
     // Define tier order and translations
