@@ -110,8 +110,8 @@ export default function Navbar() {
                                 <Link
                                     href={item.href}
                                     className={cn(
-                                        "px-3 py-2 text-white hover:text-red-500 transition-colors",
-                                        pathname === item.href && "text-red-500",
+                                        "px-3 py-2 text-white hover:text-frtRed transition-colors",
+                                        pathname === item.href && "text-frtRed",
                                     )}
                                 >
                                     {language === "hu" ? item.name : item.nameEn}
@@ -172,8 +172,8 @@ export default function Navbar() {
                                     <button
                                         onClick={(e) => toggleMobileDropdown(item.name, e)}
                                         className={cn(
-                                            "w-full text-left px-3 py-2 text-white hover:text-red-500 transition-colors flex items-center justify-between",
-                                            pathname === item.href && "text-red-500",
+                                            "w-full text-left px-3 py-2 text-white hover:text-frtRed transition-colors flex items-center justify-between",
+                                            pathname === item.href && "text-frtRed",
                                         )}
                                     >
                                         <span>{language === "hu" ? item.name : item.nameEn}</span>
@@ -196,7 +196,7 @@ export default function Navbar() {
                                             <Link
                                                 key={dropdownItem.name}
                                                 href={dropdownItem.href}
-                                                className="block px-3 py-2 text-white hover:text-red-500 transition-colors"
+                                                className="block px-3 py-2 text-white hover:text-frtRed transition-colors"
                                             >
                                                 {language === "hu" ? dropdownItem.name : dropdownItem.nameEn}
                                             </Link>
@@ -207,8 +207,8 @@ export default function Navbar() {
                                 <Link
                                     href={item.href}
                                     className={cn(
-                                        "block px-3 py-2 text-white hover:text-red-500 transition-colors",
-                                        pathname === item.href && "text-red-500",
+                                        "block px-3 py-2 text-white hover:text-frtRed transition-colors",
+                                        pathname === item.href && "text-frtRed",
                                     )}
                                 >
                                     {language === "hu" ? item.name : item.nameEn}
@@ -221,7 +221,7 @@ export default function Navbar() {
                     <div className="mt-2">
                         <button
                             onClick={toggleLanguage}
-                            className="flex items-center px-3 py-2 text-white hover:text-red-500 transition-colors"
+                            className="flex items-center px-3 py-2 text-white hover:text-frtRed transition-colors"
                         >
                             <div className="w-8 h-8 flex items-center justify-center bg-gray-500 text-white font-bold rounded-lg mr-2">
                                 {language === "hu" ? "EN" : "HU"}
@@ -233,7 +233,7 @@ export default function Navbar() {
             </div>
 
             {/* Red line under navbar */}
-            <div className="h-1 bg-red-600 w-full"></div>
+            <div className="h-1 bg-frtRed w-full"></div>
         </nav>
     )
 }
