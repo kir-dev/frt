@@ -5,7 +5,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -32,7 +32,7 @@ const navItems = [
         nameEn: "Sponsors",
         href: "/tamogatas",
         dropdown: [
-            { name: "Támogatók", nameEn: "Sponsors", href: "/tamogatas/tamogatok" },
+            { name: "Támogatók", nameEn: "Sponsors", href: "/tamogatok" },
             { name: "Támogass minket", nameEn: "Support Us", href: "/tamogatas/tamogass-minket" },
         ],
     },
@@ -55,6 +55,8 @@ export default function Navbar() {
     const [language, setLanguage] = useState("hu") // Default language is Hungarian
     const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null)
     const pathname = usePathname()
+    const router = useRouter();
+    const searchParams = useSearchParams();
 
     // Handle scroll event to change navbar appearance
     useEffect(() => {
@@ -80,7 +82,11 @@ export default function Navbar() {
 
     // Toggle language
     const toggleLanguage = () => {
-        setLanguage(language === "hu" ? "en" : "hu")
+        const newLang = language === "hu" ? "en" : "hu";
+        setLanguage(newLang);
+        const params = new URLSearchParams(Array.from(searchParams.entries()));
+        params.set("lang", newLang);
+        router.replace(`${pathname}?${params.toString()}`);
     }
 
     return (
@@ -137,7 +143,7 @@ export default function Navbar() {
                         {/* Language Switcher */}
                         <button
                             onClick={toggleLanguage}
-                            className="ml-4 w-10 h-10 flex items-center justify-center bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg transition-colors"
+                            className="ml-4 w-10 h-10 flex items-center justify-center bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
                         >
                             {language === "hu" ? "EN" : "HU"}
                         </button>
