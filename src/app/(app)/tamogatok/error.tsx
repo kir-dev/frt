@@ -20,7 +20,7 @@ export default function Error({
                 <h2 className="text-2xl font-bold mb-4">Hiba történt</h2>
                 <p className="mb-6 text-gray-400">Nem sikerült betölteni a támogatók listáját.</p>
                 <Button onClick={reset} variant="outline">
-                    Próbálja újra
+                    <p className="text-black">Próbálja újra</p>
                 </Button>
             </div>
         </div>
