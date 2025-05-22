@@ -4,7 +4,7 @@ import { Facebook, Instagram, Twitter, Youtube, Linkedin, Mail } from "lucide-re
 export default function Footer() {
     return (
         <footer className="bg-black text-white border-t border-frtRed">
-            <div className="container mx-auto py-6 flex flex-col items-center justify-center">
+            <div className="container mx-auto py-6 flex flex-col items-center justify-center font-frtszoveg">
                 <p className="text-sm mb-4">Copyright © 2025 BME Formula Racing Team</p>
                 <div className="flex space-x-4 mb-4">
                     <Link

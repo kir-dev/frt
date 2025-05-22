@@ -90,7 +90,7 @@ export default function Navbar() {
                 isScrolled ? "bg-black shadow-lg" : "bg-black bg-opacity-90",
             )}
         >
-            <div className="container min-w-screen px-4">
+            <div className="container min-w-screen px-6 font-frtszoveg text-xl">
                 <div className="flex items-center justify-between h-20">
                     {/* Logo */}
                     <Link href="/" className="flex items-center">
