@@ -15,11 +15,13 @@
     "@payloadcms/payload-cloud": "^3.31.0",
     "@payloadcms/richtext-lexical": "^3.31.0",
     "graphql": "^16.8.1",
+    "image-size": "^1.2.1",
+    "lucide-react": "^0.511.0",
     "next": "15.2.4",
     "payload": "^3.31.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "image-size": "^1.2.1"
+    "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -27,11 +29,11 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "esbuild": "^0.25.2",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
-    "tailwindcss": "^4",
-    "typescript": "^5",
-    "esbuild": "^0.25.2"
+    "tailwindcss": "^4.1.7",
+    "typescript": "^5"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

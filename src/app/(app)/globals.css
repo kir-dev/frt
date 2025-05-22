@@ -10,11 +10,19 @@
       --color-foreground: var(--foreground);
       --font-sans: Arial, Helvetica, sans-serif;
       --font-mono: "Courier New", Courier, monospace;
+        --color-frtRed: #D51028;
+        --font-frtFocimek: "BANKGOTHIC";
+        --font-frtszoveg: "RAJDHANI";
     }
 
     @font-face {
       font-family: "BANKGOTHIC";
       src: url("/BankGothicLtBTLight.ttf") format("truetype");
+    }
+
+    @font-face {
+      font-family: "RAJDHANI";
+      src: url("/rajdhani.medium.ttf") format("truetype");
     }
 
     @media (prefers-color-scheme: dark) {
@@ -29,3 +37,4 @@
       color: var(--foreground);
       font-family: Arial, Helvetica, sans-serif;
     }
+
