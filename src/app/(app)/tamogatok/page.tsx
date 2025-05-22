@@ -49,14 +49,17 @@ export default async function SponsorsPage({ searchParams }: { searchParams: { l
                             {tierTranslations[tier as keyof typeof tierTranslations] || tier}
                         </h2>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6${["copper", "other", "bme"].includes(tier) ? " md:grid-cols-3 lg:grid-cols-6" : ""}${tier === "silver" ? " md:grid-cols-3 lg:grid-cols-4" : ""}`}>
                             {sponsorsByTier[tier].map((sponsor) => {
                                 let logoUrl = "/placeholder.svg";
                                 if (sponsor.logo && typeof sponsor.logo === "object" && "url" in sponsor.logo) {
                                     logoUrl = sponsor.logo.url as string;
                                 }
+                                // Make the last three tiers' cards narrower, and silver a bit narrower
+                                const isNarrow = ["copper", "other", "bme"].includes(tier);
+                                const isSilver = tier === "silver";
                                 return (
-                                    <div key={sponsor.id} className="bg-white rounded-lg p-4 flex items-center justify-center h-40">
+                                    <div key={sponsor.id} className={`bg-white rounded-lg p-4 flex items-center justify-center h-40${isNarrow ? " max-w-full" : isSilver ? " max-w-full " : ""}`}>
                                         {sponsor.website ? (
                                             <Link
                                                 href={sponsor.website}
