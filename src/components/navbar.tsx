@@ -166,7 +166,7 @@ export default function Navbar() {
             >
                 <div className="container mx-auto px-4 py-2">
                     {navItems.map((item) => (
-                        <div key={item.name} className="py-1 border-b border-gray-800">
+                        <div key={item.name} className="">
                             {item.dropdown ? (
                                 <>
                                     <button
@@ -218,7 +218,7 @@ export default function Navbar() {
                     ))}
 
                     {/* Mobile Language Switcher */}
-                    <div className="py-1 border-t border-gray-800 mt-2">
+                    <div className="mt-2">
                         <button
                             onClick={toggleLanguage}
                             className="flex items-center px-3 py-2 text-white hover:text-red-500 transition-colors"
