@@ -20,7 +20,7 @@ const navItems = [
     {
         name: "Versenyzés",
         nameEn: "Racing",
-        href: "/versenyzes",
+        href: "/",
         dropdown: [
             { name: "Esemény naptár", nameEn: "Event calendar", href: "/versenyzes/esemeny-naptar" },
             { name: "Formula Student", nameEn: "Formula Student", href: "/versenyzes/formula-student" },
@@ -30,7 +30,7 @@ const navItems = [
     {
         name: "Támogatás",
         nameEn: "Sponsors",
-        href: "/tamogatas",
+        href: "/",
         dropdown: [
             { name: "Támogatók", nameEn: "Sponsors", href: "/tamogatok" },
             { name: "Támogass minket", nameEn: "Support Us", href: "/tamogatas/tamogass-minket" },
@@ -39,7 +39,7 @@ const navItems = [
     {
         name: "Rólunk",
         nameEn: "About us",
-        href: "/rolunk",
+        href: "/",
         dropdown: [
             { name: "Egyesület", nameEn: "Association", href: "/rolunk/egyesulet" },
             { name: "Publikációk", nameEn: "Publications", href: "/rolunk/publikaciok" },
