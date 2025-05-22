@@ -1,9 +1,12 @@
 "use client"
 
+import type React from "react"
+
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
+import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 // Define the dropdown menu structure based on the requirements
@@ -50,6 +53,7 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
     const [language, setLanguage] = useState("hu") // Default language is Hungarian
+    const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null)
     const pathname = usePathname()
 
     // Handle scroll event to change navbar appearance
@@ -62,8 +66,16 @@ export default function Navbar() {
     }, [])
 
     // Toggle mobile menu
-    const toggleMenu = () => {
+    const toggleMenu = (e: React.MouseEvent) => {
+        e.stopPropagation()
         setIsOpen(!isOpen)
+    }
+
+    // Toggle mobile dropdown
+    const toggleMobileDropdown = (name: string, e: React.MouseEvent) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setOpenMobileDropdown(openMobileDropdown === name ? null : name)
     }
 
     // Toggle language
@@ -150,33 +162,57 @@ export default function Navbar() {
                     "lg:hidden bg-black overflow-hidden transition-all duration-300",
                     isOpen ? "max-h-screen" : "max-h-0",
                 )}
+                onClick={(e) => e.stopPropagation()}
             >
                 <div className="container mx-auto px-4 py-2">
                     {navItems.map((item) => (
-                        <div key={item.name} className="py-1">
-                            <Link
-                                href={item.href}
-                                className={cn(
-                                    "block px-3 py-2 text-white hover:text-red-500 transition-colors",
-                                    pathname === item.href && "text-red-500",
-                                )}
-                            >
-                                {language === "hu" ? item.name : item.nameEn}
-                            </Link>
+                        <div key={item.name} className="py-1 border-b border-gray-800">
+                            {item.dropdown ? (
+                                <>
+                                    <button
+                                        onClick={(e) => toggleMobileDropdown(item.name, e)}
+                                        className={cn(
+                                            "w-full text-left px-3 py-2 text-white hover:text-red-500 transition-colors flex items-center justify-between",
+                                            pathname === item.href && "text-red-500",
+                                        )}
+                                    >
+                                        <span>{language === "hu" ? item.name : item.nameEn}</span>
+                                        <ChevronDown
+                                            className={cn(
+                                                "h-4 w-4 transition-transform duration-200",
+                                                openMobileDropdown === item.name ? "rotate-180" : "rotate-0",
+                                            )}
+                                        />
+                                    </button>
 
-                            {/* Mobile Dropdown */}
-                            {item.dropdown && (
-                                <div className="pl-6 space-y-1">
-                                    {item.dropdown.map((dropdownItem) => (
-                                        <Link
-                                            key={dropdownItem.name}
-                                            href={dropdownItem.href}
-                                            className="block px-3 py-2 text-white hover:text-red-500 transition-colors"
-                                        >
-                                            {language === "hu" ? dropdownItem.name : dropdownItem.nameEn}
-                                        </Link>
-                                    ))}
-                                </div>
+                                    {/* Mobile Dropdown */}
+                                    <div
+                                        className={cn(
+                                            "pl-6 space-y-1 overflow-hidden transition-all duration-300",
+                                            openMobileDropdown === item.name ? "max-h-96 py-2" : "max-h-0",
+                                        )}
+                                    >
+                                        {item.dropdown.map((dropdownItem) => (
+                                            <Link
+                                                key={dropdownItem.name}
+                                                href={dropdownItem.href}
+                                                className="block px-3 py-2 text-white hover:text-red-500 transition-colors"
+                                            >
+                                                {language === "hu" ? dropdownItem.name : dropdownItem.nameEn}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </>
+                            ) : (
+                                <Link
+                                    href={item.href}
+                                    className={cn(
+                                        "block px-3 py-2 text-white hover:text-red-500 transition-colors",
+                                        pathname === item.href && "text-red-500",
+                                    )}
+                                >
+                                    {language === "hu" ? item.name : item.nameEn}
+                                </Link>
                             )}
                         </div>
                     ))}
