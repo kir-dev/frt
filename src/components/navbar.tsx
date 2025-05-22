@@ -52,7 +52,7 @@ const navItems = [
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
-    const [language, setLanguage] = useState("hu") // Default language is Hungarian
+    const [language, setLanguage] = useState("hu")
     const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null)
     const pathname = usePathname()
     const router = useRouter();
