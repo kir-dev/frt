@@ -117,7 +117,6 @@ export default function Navbar() {
                                     href={item.href}
                                     className={cn(
                                         "px-3 py-2 text-white hover:text-frtRed transition-colors",
-                                        pathname === item.href && "text-frtRed",
                                     )}
                                 >
                                     {language === "hu" ? item.name : item.nameEn}
