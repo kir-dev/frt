@@ -1,11 +1,15 @@
 import React from "react";
 
-export default function PageTitle({ title }: { title: string }) {
+type Props = {
+    title: string;
+    className?: string;
+}
+export default function PageTitle({ title, className = "" }: Props) {
     return (
         <>
-            <div className="mb-12">
+            <div className="mb-12 font-frtFocimek">
                 <div className="flex items-center gap-4 mb-4">
-                    <h2 className="text-2xl font-bold tracking-tigh">
+                    <h2 className={`text-2xl font-bold tracking-tigh ${className}`}>
                         {title}
                     </h2>
                 </div>
