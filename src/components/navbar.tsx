@@ -43,7 +43,7 @@ const navItems = [
         dropdown: [
             { name: "Egyesület", nameEn: "Association", href: "/rolunk/egyesulet" },
             { name: "Publikációk", nameEn: "Publications", href: "/rolunk/publikaciok" },
-            { name: "Tag felvétel", nameEn: "Joining process", href: "/rolunk/tag-felvetel" },
+            { name: "Tag felvétel", nameEn: "Joining process", href: "/tagfelvetel" },
             { name: "Galéria", nameEn: "Gallery", href: "/rolunk/galeria" },
         ],
     },

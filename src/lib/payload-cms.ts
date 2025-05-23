@@ -11,3 +11,24 @@ export async function getSponsors(): Promise<Sponsor[]> {
 
     return sponsors.docs as Sponsor[]
 }
+
+export async function getRecruitmentData() {
+    const payload = await getPayload({ config })
+    const recruitmentData = await payload.find({
+        collection: "recruitment",
+        limit: 1000,
+    })
+
+    recruitmentData.docs.map(doc => {
+        doc.description.root.children.map(child => {
+            console.log(child)
+        })
+        // doc.positions.map(position => {
+        //     position.positionDescription.root.children.map(child => {
+        //         console.log(child)
+        //     })
+        // })
+    })
+
+    return recruitmentData.docs
+}
