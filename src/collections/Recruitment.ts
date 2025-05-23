@@ -1,10 +1,11 @@
 import { CollectionConfig } from "payload";
+import { FixedToolbarFeature, lexicalEditor} from '@payloadcms/richtext-lexical'; // Ezt importálnod kell!
 
 export const Recruitment: CollectionConfig = {
   slug: "recruitment",
   admin: {
     description:
-      "Nyitott pozíciók a csoportokon belül, funkcionális területek szerint csoportosítva.",
+        "Nyitott pozíciók a csoportokon belül, funkcionális területek szerint csoportosítva.",
     useAsTitle: "groupName",
   },
   fields: [
@@ -25,12 +26,25 @@ export const Recruitment: CollectionConfig = {
       type: "richText",
       required: true,
       label: "Csoport leírása",
+      // Itt adhatod hozzá az editor konfigurációt
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          FixedToolbarFeature(),
+        ]
+      })
     },
     {
       name: "descriptionEng",
       type: "richText",
       required: true,
       label: "Csoport leírása angolul",
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+            FixedToolbarFeature(),
+        ]
+      })
     },
     {
       name: "positions",
@@ -55,12 +69,24 @@ export const Recruitment: CollectionConfig = {
           type: "richText",
           required: true,
           label: "Pozíció leírása",
+          editor: lexicalEditor({
+            features: ({ defaultFeatures }) => [
+              ...defaultFeatures,
+                FixedToolbarFeature(),
+            ]
+          })
         },
         {
           name: "positionDescriptionEng",
           type: "richText",
           required: true,
           label: "Pozíció leírása (angolul)",
+          editor: lexicalEditor({
+            features: ({ defaultFeatures }) => [
+              ...defaultFeatures,
+                FixedToolbarFeature(),
+            ]
+          })
         },
         {
           name: "positionOpen",
