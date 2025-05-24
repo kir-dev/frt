@@ -53,8 +53,8 @@ export default async function RecruitmentPage(props: any) {
                     const isLastGroup = recruitmentData.filter(g => g.positions.some(p => p.positionOpen)).length - 1 === groupIdx;
 
                     return (
-                        <>
-                            <section key={group.id} className="mb-16">
+                        <div key={group.id}>
+                            <section className="mb-16">
                                 <div className="bg-red-950/50 rounded-lg p-6 hover:bg-red-900/50 transition-colors mb-8">
                                     <h2 className="text-3xl font-bold mb-4">{lang === 'en' ? group.groupNameEng : group.groupName}</h2>
                                     <div className="rich-text-content text-gray-300">
@@ -78,7 +78,7 @@ export default async function RecruitmentPage(props: any) {
                             {!isLastGroup && (
                                 <div className="border-t border-frtRed my-12 mx-auto max-w-7xl"></div>
                             )}
-                        </>
+                        </div>
                     )
                 })}
 

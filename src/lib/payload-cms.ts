@@ -18,17 +18,5 @@ export async function getRecruitmentData() {
         collection: "recruitment",
         limit: 1000,
     })
-
-    recruitmentData.docs.map(doc => {
-        doc.description.root.children.map(child => {
-            console.log(child)
-        })
-        // doc.positions.map(position => {
-        //     position.positionDescription.root.children.map(child => {
-        //         console.log(child)
-        //     })
-        // })
-    })
-
     return recruitmentData.docs
 }
