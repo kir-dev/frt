@@ -54,13 +54,13 @@ export function TableOfContents({ items, lang }: TableOfContentsProps) {
 
     return (
         <div className="fixed left-4 top-1/2 transform -translate-y-1/2 bg-red-950/80 backdrop-blur-sm rounded-lg p-4 max-w-xs z-50 hidden lg:block">
-            <h3 className="text-sm font-bold mb-3 text-red-400">{tocTitle}</h3>
+            <h3 className="text-base font-bold mb-3 text-red-400">{tocTitle}</h3>
             <nav className="space-y-2">
                 {items.map((item) => (
                     <button
                         key={item.id}
                         onClick={() => scrollToSection(item.id)}
-                        className={`block text-left text-sm transition-colors hover:text-red-400 w-full ${
+                        className={`block text-left transition-colors hover:text-red-400 w-full ${
                             activeId === item.id ? "text-red-400 font-medium" : "text-gray-300"
                         } ${item.level === 2 ? "pl-3" : ""}`}
                     >

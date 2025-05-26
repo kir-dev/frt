@@ -7,11 +7,18 @@ export const metadata = {
 }
 
 export default async function RecruitmentPage(props: any) {
+    // Nyelvi paraméter kezelése
+    let lang = 'hu';
+    if (props?.searchParams) {
+        const sp = typeof props.searchParams.then === 'function' ? await props.searchParams : props.searchParams;
+        lang = sp?.lang === 'en' ? 'en' : 'hu';
+    }
+
     // Fetch data on the server
     const recruitmentData = await getRecruitmentData()
 
     return <RecruitmentPageClient
         recruitmentData={recruitmentData}
-        searchParams={props.searchParams}
+        lang={lang}
     />
 }

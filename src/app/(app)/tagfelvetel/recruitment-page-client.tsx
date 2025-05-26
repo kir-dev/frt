@@ -1,6 +1,5 @@
 "use client"
 import { RichText } from "@payloadcms/richtext-lexical/react"
-import { useEffect, useState } from "react"
 
 interface TOCItem {
     id: string
@@ -8,17 +7,12 @@ interface TOCItem {
     level: number
 }
 
-export default function RecruitmentPageClient({ recruitmentData, searchParams }: any) {
-    // Nyelvi paraméter kezelése, hasonlóan a támogatók oldalhoz
-    const [lang, setLang] = useState("hu")
+interface RecruitmentPageClientProps {
+    recruitmentData: any[]
+    lang: string
+}
 
-    useEffect(() => {
-        if (searchParams) {
-            const sp = searchParams
-            setLang(sp?.lang === "en" ? "en" : "hu")
-        }
-    }, [searchParams])
-
+export default function RecruitmentPageClient({ recruitmentData, lang }: RecruitmentPageClientProps) {
     // Check if there are any open positions
     const hasOpenPositions = recruitmentData.some((group) => group.positions.some((position) => position.positionOpen))
 
@@ -40,7 +34,7 @@ export default function RecruitmentPageClient({ recruitmentData, searchParams }:
             tocItems.push({
                 id: `group-${group.id}`,
                 title: lang === "en" ? group.groupNameEng : group.groupName,
-                level: 1,
+                level: 0,
             })
         }
     })
@@ -123,6 +117,18 @@ export default function RecruitmentPageClient({ recruitmentData, searchParams }:
                         </div>
                     )
                 })}
+
+                <div id="application-section" className="mt-12 text-center">
+                    <p className="text-xl mb-4">{translations.interested}</p>
+                    <a
+                        href="https://docs.google.com/forms/d/e/1FAIpQLSfoRr50h0nzuhrctVWgNhOOm003Yd38Vw1jNdhWAvOocf16zQ/viewform?usp=header"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                    >
+                        {translations.apply}
+                    </a>
+                </div>
             </div>
 
             <div className="fixed right-4 top-[196px] z-50 hidden lg:block">
@@ -134,7 +140,7 @@ export default function RecruitmentPageClient({ recruitmentData, searchParams }:
                             <button
                                 key={item.id}
                                 onClick={() => scrollToSection(item.id)}
-                                className={`block text-left text-sm transition-colors hover:text-red-400 w-full 
+                                className={`block text-left transition-colors hover:text-red-400 w-full 
                                     ${item.level === 1 ? "pl-3" : ""}`}
                             >
                                 {item.title}
