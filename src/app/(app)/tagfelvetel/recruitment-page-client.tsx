@@ -118,7 +118,7 @@ export default function RecruitmentPageClient({ recruitmentData, lang }: Recruit
                     )
                 })}
 
-                <div id="application-section" className="mt-12 text-center">
+                <div id="application-section" className="lg:hidden mt-12 text-center">
                     <p className="text-xl mb-4">{translations.interested}</p>
                     <a
                         href="https://docs.google.com/forms/d/e/1FAIpQLSfoRr50h0nzuhrctVWgNhOOm003Yd38Vw1jNdhWAvOocf16zQ/viewform?usp=header"
