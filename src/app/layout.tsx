@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
+import "./(app)/globals.css";
 
 export const metadata: Metadata = {
   title: "BME Formula Racing Team",
@@ -14,15 +12,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
     return (
-        <>
-        <Navbar />
+        <html lang="en">
+        <body>
         <div
-            className="min-h-screen bg-black text-white font-frtszoveg pt-16 pb-20"
-            style={{ minHeight: "100vh" }}
-        >
+            className="min-h-screen bg-black text-white font-frtszoveg pb-20">
             {children}
         </div>
-        <Footer />
-        </>
+        </body>
+        </html>
     );
 }

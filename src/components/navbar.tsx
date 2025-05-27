@@ -143,12 +143,12 @@ function NavbarContent() {
 
                                 {/* Dropdown Menu (appears on hover) */}
                                 {item.dropdown && (
-                                    <div className="absolute left-0 mt-2 w-48 bg-black bg-opacity-90 shadow-lg rounded-md overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 origin-top-left">
+                                    <div className="absolute left-0 z-50 mt-2 w-48 bg-black bg-opacity-90 shadow-lg rounded-md overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 origin-top-left">
                                         {item.dropdown.map((dropdownItem) => (
                                             <Link
                                                 key={dropdownItem.name}
                                                 href={addLangToHref(dropdownItem.href)}
-                                                className="block px-4 py-2 text-white hover:bg-gray-600 hover:text-white transition-colors"
+                                                className="block px-4 py-2 z-50 text-white hover:bg-gray-600 hover:text-white transition-colors"
                                             >
                                                 {language === "hu" ? dropdownItem.name : dropdownItem.nameEn}
                                             </Link>
