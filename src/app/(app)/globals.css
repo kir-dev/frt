@@ -134,3 +134,25 @@
       }
 }
 
+.rich-text-content ul {
+  list-style-type: disc; /* Vagy 'circle', 'square' */
+  margin-left: 1.5em; /* Behúzás */
+  padding-left: 0; /* Alapértelmezett padding kikapcsolása */
+}
+
+.rich-text-content ol {
+  list-style-type: decimal;
+  margin-left: 1.5em;
+  padding-left: 0;
+}
+
+.rich-text-content li {
+  margin-bottom: 0.5em; /* Kis térköz a listaelemek között */
+}
+
+/* Egyéb formázások, ha szükséges (pl. linkek, címsorok, stb.) */
+.rich-text-content a {
+  color: theme('colors.red.600'); /* Példa: Tailwind piros szín */
+  text-decoration: underline;
+}
+

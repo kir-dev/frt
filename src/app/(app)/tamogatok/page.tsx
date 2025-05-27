@@ -8,13 +8,17 @@ export const metadata = {
     description: "Támogatóink listája",
 }
 
+type SponsorsPageProps = {
+    searchParams?: Promise<Record<string, string>>;
+}
+
 // Use searchParams in the server component
-export default async function SponsorsPage(props: any) {
+export default async function SponsorsPage(props: SponsorsPageProps) {
     // Await searchParams if it's a promise (Next.js 14+)
     let lang = 'hu';
     if (props?.searchParams) {
-        const sp = typeof props.searchParams.then === 'function' ? await props.searchParams : props.searchParams;
-        lang = sp?.lang === 'en' ? 'en' : 'hu';
+        const sp = await props.searchParams;
+        lang = sp && 'lang' in sp && sp.lang === 'en' ? 'en' : 'hu';
     }
     const sponsors = await getSponsors()
 

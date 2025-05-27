@@ -8,6 +8,7 @@ import Image from "next/image"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Suspense } from "react"
 
 // Define the dropdown menu structure based on the requirements
 const navItems = [
@@ -43,13 +44,14 @@ const navItems = [
         dropdown: [
             { name: "Egyesület", nameEn: "Association", href: "/rolunk/egyesulet" },
             { name: "Publikációk", nameEn: "Publications", href: "/rolunk/publikaciok" },
-            { name: "Tag felvétel", nameEn: "Joining process", href: "/rolunk/tag-felvetel" },
+            { name: "Tag felvétel", nameEn: "Joining process", href: "/tagfelvetel" },
             { name: "Galéria", nameEn: "Gallery", href: "/rolunk/galeria" },
         ],
     },
 ]
 
-export default function Navbar() {
+// Create a client component that uses the search params
+function NavbarContent() {
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
     const [language, setLanguage] = useState("hu")
@@ -57,6 +59,14 @@ export default function Navbar() {
     const pathname = usePathname()
     const router = useRouter();
     const searchParams = useSearchParams();
+
+    // Initialize language from URL on component mount
+    useEffect(() => {
+        const langParam = searchParams.get("lang");
+        if (langParam === "en" || langParam === "hu") {
+            setLanguage(langParam);
+        }
+    }, [searchParams]);
 
     // Handle scroll event to change navbar appearance
     useEffect(() => {
@@ -89,6 +99,15 @@ export default function Navbar() {
         router.replace(`${pathname}?${params.toString()}`);
     }
 
+    function addLangToHref(href: string) {
+        // Ha már tartalmaz query paramétert, akkor hozzáfűzzük, különben új query stringet kezdünk
+        const params = new URLSearchParams(Array.from(searchParams.entries()));
+        params.set("lang", language);
+        // Ha van már más query paraméter, akkor &-tel fűzzük hozzá
+        const hasQuery = href.includes("?");
+        return hasQuery ? `${href}&${params.toString()}` : `${href}?${params.toString()}`;
+    }
+
     return (
         <nav
             className={cn(
@@ -99,7 +118,7 @@ export default function Navbar() {
             <div className="container min-w-screen px-6 font-frtszoveg text-xl">
                 <div className="flex items-center justify-between h-20">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center">
+                    <Link href={addLangToHref("/")} className="flex items-center">
                         <Image
                             src="/FRT_felirat_white.svg"
                             alt="BME Formula Racing Team"
@@ -114,7 +133,7 @@ export default function Navbar() {
                         {navItems.map((item) => (
                             <div key={item.name} className="relative group">
                                 <Link
-                                    href={item.href}
+                                    href={addLangToHref(item.href)}
                                     className={cn(
                                         "px-3 py-2 text-white hover:text-frtRed transition-colors",
                                     )}
@@ -128,7 +147,7 @@ export default function Navbar() {
                                         {item.dropdown.map((dropdownItem) => (
                                             <Link
                                                 key={dropdownItem.name}
-                                                href={dropdownItem.href}
+                                                href={addLangToHref(dropdownItem.href)}
                                                 className="block px-4 py-2 text-white hover:bg-gray-600 hover:text-white transition-colors"
                                             >
                                                 {language === "hu" ? dropdownItem.name : dropdownItem.nameEn}
@@ -240,5 +259,25 @@ export default function Navbar() {
             {/* Red line under navbar */}
             <div className="h-1 bg-frtRed w-full"></div>
         </nav>
-    )
+    );
 }
+
+// Navbar component that wraps the content in a Suspense boundary
+export default function Navbar() {
+    return (
+        <Suspense fallback={
+            <nav className="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-90">
+                <div className="container min-w-screen px-6 font-frtszoveg text-xl">
+                    <div className="flex items-center justify-between h-20">
+                        <div className="flex items-center">
+                            <div className="h-12 w-[150px]"></div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        }>
+            <NavbarContent />
+        </Suspense>
+    );
+}
+
