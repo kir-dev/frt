@@ -1,5 +1,6 @@
 "use client"
 import { RichText } from "@payloadcms/richtext-lexical/react"
+import {Recruitment} from "@/payload-types";
 
 interface TOCItem {
     id: string
@@ -8,7 +9,7 @@ interface TOCItem {
 }
 
 interface RecruitmentPageClientProps {
-    recruitmentData: any[]
+    recruitmentData: Recruitment[]
     lang: string
 }
 
