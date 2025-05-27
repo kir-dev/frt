@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import "./(app)/globals.css"
 import { Home, ArrowLeft, Search } from "lucide-react"
 
 export default function NotFound() {

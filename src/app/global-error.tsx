@@ -1,6 +1,5 @@
 "use client"
 import Link from "next/link"
-import "./(app)/globals.css"
 import { AlertTriangle, Home, RefreshCw } from "lucide-react"
 
 export default function GlobalError({

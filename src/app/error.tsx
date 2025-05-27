@@ -1,10 +1,8 @@
 "use client"
 import Link from "next/link"
-import "./(app)/globals.css"
 import { AlertCircle, Home, RefreshCw } from "lucide-react"
 
 export default function Error({
-                                  error,
                                   reset,
                               }: {
     error: Error & { digest?: string }
