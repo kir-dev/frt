@@ -102,7 +102,7 @@ export default function RecruitmentPageClient({ recruitmentData, lang }: Recruit
                                             key={position.id}
                                             className="bg-red-950/50 rounded-lg p-6 hover:bg-red-900/50 transition-colors"
                                         >
-                                            <h3 className="text-xl font-bold mb-3 text-red-500">
+                                            <h3 className="text-xl font-bold mb-3 text-frtRed">
                                                 {lang === "en" ? position.positionNameEng : position.positionName}
                                             </h3>
                                             <div className="rich-text-content text-gray-300">
