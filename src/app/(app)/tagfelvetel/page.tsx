@@ -6,12 +6,16 @@ export const metadata = {
     description: "Nyitott pozíciók a csapatunkban",
 }
 
-export default async function RecruitmentPage(props: any) {
+type RecruitmentPageProps = {
+    searchParams?: Promise<Record<string, string>>;
+}
+
+export default async function RecruitmentPage(props: RecruitmentPageProps) {
     // Nyelvi paraméter kezelése
     let lang = 'hu';
     if (props?.searchParams) {
-        const sp = typeof props.searchParams.then === 'function' ? await props.searchParams : props.searchParams;
-        lang = sp?.lang === 'en' ? 'en' : 'hu';
+        const sp = await props.searchParams;
+        lang = sp && 'lang' in sp && sp.lang === 'en' ? 'en' : 'hu';
     }
 
     // Fetch data on the server
