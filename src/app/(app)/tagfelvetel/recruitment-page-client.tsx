@@ -132,7 +132,7 @@ export default function RecruitmentPageClient({ recruitmentData, lang }: Recruit
                 </div>
             </div>
 
-            <div className="fixed right-4 top-[196px] hidden lg:block">
+            <div className="fixed right-4 z-40 top-[196px] hidden lg:block">
                 {/* Table of Contents Section */}
                 <div className="bg-red-950/80 backdrop-blur-sm rounded-lg p-5 w-64 mb-4">
                     <h3 className="text-base font-bold mb-4 text-red-400">{lang === "en" ? "Table of Contents" : "Tartalomjegyzék"}</h3>

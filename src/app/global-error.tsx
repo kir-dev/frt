@@ -10,8 +10,6 @@ export default function GlobalError({
     reset: () => void
 }) {
     return (
-        <html>
-        <body className="bg-black text-white">
         <main className="min-h-screen flex items-center justify-center">
             <div className="container mx-auto px-4 py-12 max-w-5xl text-center">
                 {/* Error Icon */}
@@ -56,7 +54,5 @@ export default function GlobalError({
                 )}
             </div>
         </main>
-        </body>
-        </html>
     )
 }
