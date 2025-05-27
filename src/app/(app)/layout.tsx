@@ -14,8 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-        <body>
+        <>
         <Navbar />
         <div
             className="min-h-screen bg-black text-white font-frtszoveg pt-16 pb-20"
@@ -24,7 +23,6 @@ export default function RootLayout({
             {children}
         </div>
         <Footer />
-        </body>
-        </html>
+        </>
     );
 }

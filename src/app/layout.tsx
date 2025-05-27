@@ -12,15 +12,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-        <body>
         <div
-            className="min-h-screen bg-black text-white font-frtszoveg pt-16 pb-20"
+            className="min-h-screen bg-black text-white font-frtszoveg pb-20"
             style={{ minHeight: "100vh" }}
         >
             {children}
         </div>
-        </body>
-        </html>
     );
 }
