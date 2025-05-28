@@ -13,39 +13,45 @@ import { Suspense } from "react"
 // Define the dropdown menu structure based on the requirements
 const navItems = [
     {
+        name: "Admin",
+        nameEn: "Admin",
+        href: "/admin",
+        dropdown: null,
+    },
+    {
         name: "Hírek",
         nameEn: "News",
-        href: "/hirek",
+        href: "/not-found",
         dropdown: null,
     },
     {
         name: "Versenyzés",
         nameEn: "Racing",
-        href: "/",
+        href: "",
         dropdown: [
-            { name: "Esemény naptár", nameEn: "Event calendar", href: "/versenyzes/esemeny-naptar" },
-            { name: "Formula Student", nameEn: "Formula Student", href: "/versenyzes/formula-student" },
-            { name: "Autók", nameEn: "Cars", href: "/versenyzes/autok" },
+            { name: "Esemény naptár", nameEn: "Event calendar", href: "/not-found" },
+            { name: "Formula Student", nameEn: "Formula Student", href: "/not-found" },
+            { name: "Autók", nameEn: "Cars", href: "/not-found" },
         ],
     },
     {
         name: "Támogatás",
         nameEn: "Sponsors",
-        href: "/",
+        href: "",
         dropdown: [
             { name: "Támogatók", nameEn: "Sponsors", href: "/tamogatok" },
-            { name: "Támogass minket", nameEn: "Support Us", href: "/tamogatas/tamogass-minket" },
+            { name: "Támogass minket", nameEn: "Support Us", href: "/not-found" },
         ],
     },
     {
         name: "Rólunk",
         nameEn: "About us",
-        href: "/",
+        href: "",
         dropdown: [
-            { name: "Egyesület", nameEn: "Association", href: "/rolunk/egyesulet" },
-            { name: "Publikációk", nameEn: "Publications", href: "/rolunk/publikaciok" },
+            { name: "Egyesület", nameEn: "Association", href: "/not-found" },
+            { name: "Publikációk", nameEn: "Publications", href: "/not-found" },
             { name: "Tag felvétel", nameEn: "Joining process", href: "/tagfelvetel" },
-            { name: "Galéria", nameEn: "Gallery", href: "/rolunk/galeria" },
+            { name: "Galéria", nameEn: "Gallery", href: "/not-found" },
         ],
     },
 ]

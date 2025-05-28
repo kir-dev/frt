@@ -14,15 +14,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
     return (
-        <>
-        <Navbar />
-        <div
-            className="min-h-screen bg-black text-white font-frtszoveg pt-16 pb-20"
-            style={{ minHeight: "100vh" }}
-        >
-            {children}
-        </div>
-        <Footer />
-        </>
+        <html><body>
+            <Navbar/>
+            <div
+                className="min-h-screen bg-black text-white font-frtszoveg pt-16 pb-20"
+                style={{minHeight: "100vh"}}
+            >
+                {children}
+            </div>
+            <Footer/>
+        </body>
+        </html>
     );
 }

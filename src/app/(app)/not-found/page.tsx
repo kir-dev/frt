@@ -123,7 +123,7 @@ function NotFoundContent() {
     )
 }
 
-export default function NotFound() {
+export default function Page() {
     return (
         <Suspense>
             <NotFoundContent />
