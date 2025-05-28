@@ -72,7 +72,7 @@ function NavbarContent() {
     useEffect(() => {
         setIsOpen(false);
         setOpenMobileDropdown(null);
-        setOpenDesktopDropdown(null); // asztali dropdown is záródjon oldalváltáskor
+        setOpenDesktopDropdown(null); // Ensure the desktop dropdown closes when the page changes
     }, [pathname]);
 
     // Handle scroll event to change navbar appearance
