@@ -56,6 +56,7 @@ function NavbarContent() {
     const [isScrolled, setIsScrolled] = useState(false)
     const [language, setLanguage] = useState("hu")
     const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null)
+    const [openDesktopDropdown, setOpenDesktopDropdown] = useState<string | null>(null)
     const pathname = usePathname()
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -67,6 +68,11 @@ function NavbarContent() {
             setLanguage(langParam);
         }
     }, [searchParams]);
+
+    useEffect(() => {
+        setIsOpen(false);
+        setOpenMobileDropdown(null);
+    }, [pathname]);
 
     // Handle scroll event to change navbar appearance
     useEffect(() => {
@@ -97,6 +103,12 @@ function NavbarContent() {
         const params = new URLSearchParams(Array.from(searchParams.entries()));
         params.set("lang", newLang);
         router.replace(`${pathname}?${params.toString()}`);
+    }
+
+    // Desktop dropdown kattintás kezelése
+    const handleDesktopDropdownClick = (name: string, e: React.MouseEvent) => {
+        e.preventDefault();
+        setOpenDesktopDropdown(openDesktopDropdown === name ? null : name);
     }
 
     function addLangToHref(href: string) {
@@ -137,13 +149,24 @@ function NavbarContent() {
                                     className={cn(
                                         "px-3 py-2 text-white hover:text-frtRed transition-colors",
                                     )}
+                                    onClick={item.dropdown ? (e) => handleDesktopDropdownClick(item.name, e) : undefined}
                                 >
                                     {language === "hu" ? item.name : item.nameEn}
+                                    {item.dropdown && (
+                                        <ChevronDown className="inline ml-1 w-4 h-4" />
+                                    )}
                                 </Link>
 
-                                {/* Dropdown Menu (appears on hover) */}
+                                {/* Dropdown Menu (hoverre vagy kattintásra is nyílik) */}
                                 {item.dropdown && (
-                                    <div className="absolute left-0 z-50 mt-2 w-48 bg-black bg-opacity-90 shadow-lg rounded-md overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 origin-top-left">
+                                    <div
+                                        className={cn(
+                                            "absolute left-0 z-50 mt-2 w-48 bg-black shadow-lg rounded-md overflow-hidden transition-all duration-300 origin-top-left",
+                                            (openDesktopDropdown === item.name || (typeof window !== 'undefined' && document.activeElement && document.activeElement === document.body && false)) ? "opacity-100 visible" : "opacity-0 invisible",
+                                            "group-hover:opacity-100 group-hover:visible"
+                                        )}
+                                        onMouseLeave={() => setOpenDesktopDropdown(null)}
+                                    >
                                         {item.dropdown.map((dropdownItem) => (
                                             <Link
                                                 key={dropdownItem.name}
@@ -197,7 +220,6 @@ function NavbarContent() {
                                         onClick={(e) => toggleMobileDropdown(item.name, e)}
                                         className={cn(
                                             "w-full text-left px-3 py-2 text-white hover:text-frtRed transition-colors flex items-center justify-between",
-                                            pathname === item.href && "text-frtRed",
                                         )}
                                     >
                                         <span>{language === "hu" ? item.name : item.nameEn}</span>
