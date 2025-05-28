@@ -48,6 +48,12 @@ const navItems = [
             { name: "Galéria", nameEn: "Gallery", href: "/rolunk/galeria" },
         ],
     },
+    {
+        name: "Admin",
+        nameEn: "Admin",
+        href: "/admin",
+        dropdown: null,
+    },
 ]
 
 // Create a client component that uses the search params

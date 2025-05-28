@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Formula Student Team from Budapest University of Technology and Economics",
 };
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;

@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { AlertTriangle, Home, RefreshCw } from "lucide-react"
 
-import "./(app)/globals.css";
+import "./globals.css";
 
 export default function GlobalError({
                                         error,

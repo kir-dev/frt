@@ -1,5 +1,5 @@
 "use client"
-import "./(app)/globals.css";
+import "./globals.css";
 import Link from "next/link"
 import { AlertCircle, Home, RefreshCw } from "lucide-react"
 import { useSearchParams } from "next/navigation"
@@ -65,7 +65,7 @@ export default function Error({
                         </button>
 
                         <Link
-                            href={`/?lang=${language}`}
+                            href={`/public?lang=${language}`}
                             className="inline-flex items-center gap-2 bg-red-950/50 hover:bg-red-900/50 text-white font-bold py-3 px-6 rounded-lg transition-colors border border-frtRed"
                         >
                             <Home size={20}/>

@@ -28,6 +28,12 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    // Add these lines for Next.js App Router integration
+    next: {
+      appDir: true, // Crucial for App Router compatibility
+      // You might also need to specify a bundler if you're not using the default one
+      // bundler: webpackBundler(), // Ha webpack-et használsz
+    },
   },
   collections: [
     Users,
@@ -40,7 +46,7 @@ export default buildConfig({
     Members,
     Sponsors,
     Recruitment,
-      Group
+    Group
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
