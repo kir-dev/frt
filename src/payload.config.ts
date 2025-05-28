@@ -17,6 +17,7 @@ import { Publications } from "./collections/Publications";
 import { Members } from "./collections/Members";
 import { Recruitment } from "./collections/Recruitment";
 import { Sponsors } from "@/collections/Sponsors";
+import {Group} from "@/collections/Group";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -39,6 +40,7 @@ export default buildConfig({
     Members,
     Sponsors,
     Recruitment,
+      Group
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",

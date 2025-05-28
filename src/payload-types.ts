@@ -77,6 +77,7 @@ export interface Config {
     members: Member;
     sponsors: Sponsor;
     recruitment: Recruitment;
+    csoport: Csoport;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -93,6 +94,7 @@ export interface Config {
     members: MembersSelect<false> | MembersSelect<true>;
     sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     recruitment: RecruitmentSelect<false> | RecruitmentSelect<true>;
+    csoport: CsoportSelect<false> | CsoportSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -500,6 +502,22 @@ export interface Recruitment {
   createdAt: string;
 }
 /**
+ * Csoportok, amelyekhez tagokat lehet rendelni.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "csoport".
+ */
+export interface Csoport {
+  id: number;
+  nev: string;
+  name_en: string;
+  leiras: string;
+  description_en: string;
+  members?: (number | Member)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
@@ -545,6 +563,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'recruitment';
         value: number | Recruitment;
+      } | null)
+    | ({
+        relationTo: 'csoport';
+        value: number | Csoport;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -754,6 +776,19 @@ export interface RecruitmentSelect<T extends boolean = true> {
         positionOpen?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "csoport_select".
+ */
+export interface CsoportSelect<T extends boolean = true> {
+  nev?: T;
+  name_en?: T;
+  leiras?: T;
+  description_en?: T;
+  members?: T;
   updatedAt?: T;
   createdAt?: T;
 }

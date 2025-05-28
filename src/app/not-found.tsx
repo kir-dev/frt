@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Home, ArrowLeft, Search } from "lucide-react"
 import { useSearchParams } from "next/navigation"
 import { useState, useEffect, Suspense } from "react"
+import "./(app)/globals.css";
 
 function NotFoundContent() {
     const searchParams = useSearchParams();
