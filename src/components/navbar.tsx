@@ -5,56 +5,81 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Suspense } from "react"
 
 // Define the dropdown menu structure based on the requirements
 const navItems = [
     {
+        name: "Admin",
+        nameEn: "Admin",
+        href: "/admin",
+        dropdown: null,
+    },
+    {
         name: "Hírek",
         nameEn: "News",
-        href: "/hirek",
+        href: "/not-found",
         dropdown: null,
     },
     {
         name: "Versenyzés",
         nameEn: "Racing",
-        href: "/versenyzes",
+        href: "",
         dropdown: [
-            { name: "Esemény naptár", nameEn: "Event calendar", href: "/versenyzes/esemeny-naptar" },
-            { name: "Formula Student", nameEn: "Formula Student", href: "/versenyzes/formula-student" },
-            { name: "Autók", nameEn: "Cars", href: "/versenyzes/autok" },
+            { name: "Esemény naptár", nameEn: "Event calendar", href: "/not-found" },
+            { name: "Formula Student", nameEn: "Formula Student", href: "/not-found" },
+            { name: "Autók", nameEn: "Cars", href: "/not-found" },
         ],
     },
     {
         name: "Támogatás",
         nameEn: "Sponsors",
-        href: "/tamogatas",
+        href: "",
         dropdown: [
-            { name: "Támogatók", nameEn: "Sponsors", href: "/tamogatas/tamogatok" },
-            { name: "Támogass minket", nameEn: "Support Us", href: "/tamogatas/tamogass-minket" },
+            { name: "Támogatók", nameEn: "Sponsors", href: "/tamogatok" },
+            { name: "Támogass minket", nameEn: "Support Us", href: "/not-found" },
         ],
     },
     {
         name: "Rólunk",
         nameEn: "About us",
-        href: "/rolunk",
+        href: "",
         dropdown: [
-            { name: "Egyesület", nameEn: "Association", href: "/rolunk/egyesulet" },
-            { name: "Publikációk", nameEn: "Publications", href: "/rolunk/publikaciok" },
-            { name: "Tag felvétel", nameEn: "Joining process", href: "/rolunk/tag-felvetel" },
-            { name: "Galéria", nameEn: "Gallery", href: "/rolunk/galeria" },
+            { name: "Egyesület", nameEn: "Association", href: "/not-found" },
+            { name: "Publikációk", nameEn: "Publications", href: "/not-found" },
+            { name: "Tag felvétel", nameEn: "Joining process", href: "/tagfelvetel" },
+            { name: "Galéria", nameEn: "Gallery", href: "/not-found" },
         ],
     },
 ]
 
-export default function Navbar() {
+// Create a client component that uses the search params
+function NavbarContent() {
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
-    const [language, setLanguage] = useState("hu") // Default language is Hungarian
+    const [language, setLanguage] = useState("hu")
     const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null)
+    const [openDesktopDropdown, setOpenDesktopDropdown] = useState<string | null>(null)
     const pathname = usePathname()
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    // Initialize language from URL on component mount
+    useEffect(() => {
+        const langParam = searchParams.get("lang");
+        if (langParam === "en" || langParam === "hu") {
+            setLanguage(langParam);
+        }
+    }, [searchParams]);
+
+    useEffect(() => {
+        setIsOpen(false);
+        setOpenMobileDropdown(null);
+        setOpenDesktopDropdown(null); // Ensure the desktop dropdown closes when the page changes
+    }, [pathname]);
 
     // Handle scroll event to change navbar appearance
     useEffect(() => {
@@ -80,7 +105,26 @@ export default function Navbar() {
 
     // Toggle language
     const toggleLanguage = () => {
-        setLanguage(language === "hu" ? "en" : "hu")
+        const newLang = language === "hu" ? "en" : "hu";
+        setLanguage(newLang);
+        const params = new URLSearchParams(Array.from(searchParams.entries()));
+        params.set("lang", newLang);
+        router.replace(`${pathname}?${params.toString()}`);
+    }
+
+    // Desktop dropdown kattintás kezelése
+    const handleDesktopDropdownClick = (name: string, e: React.MouseEvent) => {
+        e.preventDefault();
+        setOpenDesktopDropdown(openDesktopDropdown === name ? null : name);
+    }
+
+    function addLangToHref(href: string) {
+        // Ha már tartalmaz query paramétert, akkor hozzáfűzzük, különben új query stringet kezdünk
+        const params = new URLSearchParams(Array.from(searchParams.entries()));
+        params.set("lang", language);
+        // Ha van már más query paraméter, akkor &-tel fűzzük hozzá
+        const hasQuery = href.includes("?");
+        return hasQuery ? `${href}&${params.toString()}` : `${href}?${params.toString()}`;
     }
 
     return (
@@ -93,7 +137,7 @@ export default function Navbar() {
             <div className="container min-w-screen px-6 font-frtszoveg text-xl">
                 <div className="flex items-center justify-between h-20">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center">
+                    <Link href={addLangToHref("/")} className="flex items-center">
                         <Image
                             src="/FRT_felirat_white.svg"
                             alt="BME Formula Racing Team"
@@ -108,23 +152,33 @@ export default function Navbar() {
                         {navItems.map((item) => (
                             <div key={item.name} className="relative group">
                                 <Link
-                                    href={item.href}
+                                    href={addLangToHref(item.href)}
                                     className={cn(
                                         "px-3 py-2 text-white hover:text-frtRed transition-colors",
-                                        pathname === item.href && "text-frtRed",
                                     )}
+                                    onClick={item.dropdown ? (e) => handleDesktopDropdownClick(item.name, e) : undefined}
                                 >
                                     {language === "hu" ? item.name : item.nameEn}
+                                    {item.dropdown && (
+                                        <ChevronDown className="inline ml-1 w-4 h-4" />
+                                    )}
                                 </Link>
 
-                                {/* Dropdown Menu (appears on hover) */}
+                                {/* Dropdown Menu (hoverre vagy kattintásra is nyílik) */}
                                 {item.dropdown && (
-                                    <div className="absolute left-0 mt-2 w-48 bg-black bg-opacity-90 shadow-lg rounded-md overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 origin-top-left">
+                                    <div
+                                        className={cn(
+                                            "absolute left-0 z-50 mt-2 w-48 bg-black shadow-lg rounded-md overflow-hidden transition-all duration-300 origin-top-left",
+                                            (openDesktopDropdown === item.name || (typeof window !== 'undefined' && document.activeElement && document.activeElement === document.body && false)) ? "opacity-100 visible" : "opacity-0 invisible",
+                                            "group-hover:opacity-100 group-hover:visible"
+                                        )}
+                                        onMouseLeave={() => setOpenDesktopDropdown(null)}
+                                    >
                                         {item.dropdown.map((dropdownItem) => (
                                             <Link
                                                 key={dropdownItem.name}
-                                                href={dropdownItem.href}
-                                                className="block px-4 py-2 text-white hover:bg-gray-600 hover:text-white transition-colors"
+                                                href={addLangToHref(dropdownItem.href)}
+                                                className="block px-4 py-2 z-50 text-white hover:bg-gray-600 hover:text-white transition-colors"
                                             >
                                                 {language === "hu" ? dropdownItem.name : dropdownItem.nameEn}
                                             </Link>
@@ -137,7 +191,7 @@ export default function Navbar() {
                         {/* Language Switcher */}
                         <button
                             onClick={toggleLanguage}
-                            className="ml-4 w-10 h-10 flex items-center justify-center bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg transition-colors"
+                            className="ml-4 w-10 h-10 flex items-center justify-center bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
                         >
                             {language === "hu" ? "EN" : "HU"}
                         </button>
@@ -173,7 +227,6 @@ export default function Navbar() {
                                         onClick={(e) => toggleMobileDropdown(item.name, e)}
                                         className={cn(
                                             "w-full text-left px-3 py-2 text-white hover:text-frtRed transition-colors flex items-center justify-between",
-                                            pathname === item.href && "text-frtRed",
                                         )}
                                     >
                                         <span>{language === "hu" ? item.name : item.nameEn}</span>
@@ -235,5 +288,25 @@ export default function Navbar() {
             {/* Red line under navbar */}
             <div className="h-1 bg-frtRed w-full"></div>
         </nav>
-    )
+    );
 }
+
+// Navbar component that wraps the content in a Suspense boundary
+export default function Navbar() {
+    return (
+        <Suspense fallback={
+            <nav className="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-90">
+                <div className="container min-w-screen px-6 font-frtszoveg text-xl">
+                    <div className="flex items-center justify-between h-20">
+                        <div className="flex items-center">
+                            <div className="h-12 w-[150px]"></div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        }>
+            <NavbarContent />
+        </Suspense>
+    );
+}
+
