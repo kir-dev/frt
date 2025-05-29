@@ -15,49 +15,8 @@ export const Members: CollectionConfig = {
     },
     {
       name: "group",
-      type: "select",
-      options: [
-        {
-          label: "Vezetőség",
-          value: "vezetoseg",
-        },
-        {
-          label: "Mechanikai csoport",
-          value: "mechanikai_csoport",
-        },
-        {
-          label: "Elektronika csoport",
-          value: "elektronika_csoport",
-        },
-        {
-          label: "Járműdinamika csoport",
-          value: "jarmudinamika_csoport",
-        },
-        {
-          label: "Aerodinamika csoport",
-          value: "aerodinamika_csoport",
-        },
-        {
-          label: "Váz csoport",
-          value: "vaz_csoport",
-        },
-        {
-          label: "Operatív csoport",
-          value: "operativ_csoport",
-        },
-        {
-          label: "Elektromos hajtáslánc csoport",
-          value: "elektromos_hajtaslanc_csoport",
-        },
-        {
-          label: "Driverless csoport",
-          value: "driverless_csoport",
-        },
-        {
-          label: "Szponzorációs csoport",
-          value: "szponzoracios_csoport",
-        },
-      ],
+      type: "relationship",
+      relationTo: "groups",
       required: true,
       label: "Csoport",
     },
