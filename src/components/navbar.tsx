@@ -30,7 +30,7 @@ const navItems = [
         href: "",
         dropdown: [
             { name: "Esemény naptár", nameEn: "Event calendar", href: "/not-found" },
-            { name: "Formula Student", nameEn: "Formula Student", href: "/not-found" },
+            { name: "Formula Student", nameEn: "Formula Student", href: "/formula-student" },
             { name: "Autók", nameEn: "Cars", href: "/not-found" },
         ],
     },

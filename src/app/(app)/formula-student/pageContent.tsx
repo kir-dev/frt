@@ -1,9 +1,3 @@
-"use client";
-import React from "react";
-import PageTitle from "@/components/PageTitle";
-import PageSubtitle from "@/components/PageSubtitle";
-import Image from "next/image";
-
 type Images = {
     src: string;
     alt: string;
@@ -34,7 +28,11 @@ type PageItem = {
     images?: Images[];
 }
 
-const pageItems : PageItem[] = [
+export interface PageProps {
+    lang: "hu" | "en";
+}
+
+export const pageItems : PageItem[] = [
     {
         title: "Formula Student",
         titleEng: "Formula Student",
@@ -54,7 +52,7 @@ const pageItems : PageItem[] = [
                     {
                         src: "/FRT_FormulaStudent1.jpg",
                         alt: "FRT Formula Student Cheer",
-                        width: 700,
+                        width: 1000,
                         height: 50
                     },
                     
@@ -72,15 +70,7 @@ const pageItems : PageItem[] = [
                 ],
                 paragraphsEng: [
                     "Several events are held on different days of the competitions, but the first is always the scrutineering, where judges check the compliance of the race car with the safety and technical regulations. Scrutineering is followed by “static” and “dynamic” events. Static events are worth 40% of the total score, while dynamic events account for the remaining 60%."
-                ],
-                images: [
-                    {
-                        src: "/FRT_FormulaStudent2.jpg",
-                        alt: "FRT Formula Student Car",
-                        width: 1000,
-                        height: 50
-                    },
-                ],   
+                ]
             }
         ],
         
@@ -104,6 +94,14 @@ const pageItems : PageItem[] = [
                     "<strong>Endurance:</strong><br/>During this event, the spotlight is on the durability and fuel/energy consumption of the car. Two pilots have to drive the car for 22 kilometres. The track is similar to the one used for autocross, but the distance between cones is expanded by 2-5 metres. Due to the narrow track, the cars don't race head to head, but if two cars meet, the slower car is shown the blue flag. One of the most critical parts of this event is the driver change, where the engine has to be stopped and restarted. In many cases, the restart is unsuccessful, meaning an early retire for the participating team.<br/><strong>Average speed:</strong> 60-70 km/h / <strong>Top speed:</strong> approx 120 km/h",
                     "<strong>Efficiency:</strong><br/>During the Endurance event, the cars have to complete 22 kilometers, therefore the most important factors are durability and energy consumption. The latter is scored in the Efficiency event, by measuring which team could complete the distance most efficiently regarding average speed and energy/fuel consumption. In case of electric vehicles, scoring is based on used energy and runtime. Energy recovered with regenerative braking has a 0.9 multiplier, and is deducted from the used energy. Efficiency scores are only awarded to teams that could complete the endurance event."
                 ],
+                images: [
+                    {
+                        src: "/FRT_FormulaStudent2.jpg",
+                        alt: "FRT Formula Student Car",
+                        width: 1000,
+                        height: 50
+                    },
+                ],  
             },
             {
                 subTitle: "Statikus versenyszámok",
@@ -132,60 +130,3 @@ const pageItems : PageItem[] = [
         ]   
     }
 ]
-
-export default function Page() {
-    return (
-        <div className = "bg-black flex flex-col text-white gap-8 min-h-screen justify-between items-center selection:bg-red-700 selection:text-white leading-loose">
-            {pageItems.map((item, idx) => (
-                <div key={idx} className="md:w-1/2 font-frtszoveg">
-                    <PageTitle title={item.title} />
-                    <div className="pl-10 pr-10">
-                        <div className="gap-6">
-                            {item.sections.map((section, idx) => (
-                                <div key={idx} className="mb-6">
-                                    {section.paragraphs.map((paragraph, idx) => (
-                                        <p key={idx} className="text-m mb-6" dangerouslySetInnerHTML={{ __html: paragraph }} />
-                                    ))}
-                                    {section.images?.map((image, idx) => (
-                                        <Image
-                                        key={idx}
-                                        src={image.src}
-                                        alt={image.alt}
-                                        height={image.height}
-                                        width={image.width}
-                                        className="h-auto w-auto rounded-2xl mb-6"
-                                        />
-                                    ))}       
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    {item.subsections?.map((subsection, idx) => (
-                        <div key={idx}>
-                            <PageSubtitle title={subsection.subTitle ?? ""} />
-                            <div className="pl-10 pr-10">
-                                <div className="mb-6">
-                                    {subsection.paragraphs[0] && (
-                                        <p className="text-m mb-6" dangerouslySetInnerHTML={{ __html: subsection.paragraphs[0] }}/>
-                                        )}
-                                        {subsection.images?.map((image, idx) => (
-                                        <Image
-                                            key={idx}
-                                            src={image.src}
-                                            alt={image.alt}
-                                            height={image.height}
-                                            width={image.width}
-                                            className="h-auto w-auto rounded-2xl mb-6"
-                                        />
-                                        ))}
-                                    {subsection.paragraphs.slice(1).map((paragraph, idx) => (
-                                        <p key={idx} className="text-m mb-6" dangerouslySetInnerHTML={{ __html: paragraph }}/>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                        ))}
-                </div>
-            ))}
-        </div>);
-}
