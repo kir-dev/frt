@@ -1,6 +1,6 @@
 import {getPayload} from "payload";
 import config from "@payload-config";
-import {Recruitment, Sponsor} from "@/payload-types";
+import {Group, Member, Recruitment, Sponsor} from "@/payload-types";
 
 export async function getSponsors(): Promise<Sponsor[]> {
     const payload = await getPayload({ config })
@@ -19,4 +19,26 @@ export async function getRecruitmentData() : Promise<Recruitment[]> {
         limit: 1000,
     })
     return recruitmentData.docs
+}
+
+export async function getMembers() : Promise<Member[]> {
+    const payload = await getPayload({ config })
+    const members = await payload.find({
+        collection: "members",
+        limit: 1000,
+        sort: "order",
+    })
+
+    return members.docs
+}
+
+export async function getGroups() : Promise<Group[]> {
+    const payload = await getPayload({ config })
+    const groups = await payload.find({
+        collection: "groups",
+        limit: 1000,
+        sort: "order",
+    })
+
+    return groups.docs
 }

@@ -394,6 +394,7 @@ export interface Member {
   group: number | Group;
   position?: string | null;
   picture: number | Media;
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -437,6 +438,7 @@ export interface Group {
     };
     [k: string]: unknown;
   };
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -759,6 +761,7 @@ export interface MembersSelect<T extends boolean = true> {
   group?: T;
   position?: T;
   picture?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -805,6 +808,7 @@ export interface GroupsSelect<T extends boolean = true> {
   nameEn?: T;
   description?: T;
   descriptionEng?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
