@@ -33,5 +33,11 @@ export const Members: CollectionConfig = {
       required: true,
       label: "Profilkép",
     },
+    {
+      name: "order",
+      type: "number",
+      required: false,
+      label: "Rendezési szám",
+    }
   ],
 };

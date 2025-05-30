@@ -48,6 +48,12 @@ const Group: CollectionConfig = {
               ]
           })
       },
+    {
+        name: "order",
+        type: "number",
+        required: false,
+        label: "Rendezési szám",
+    }
   ],
 };
 
