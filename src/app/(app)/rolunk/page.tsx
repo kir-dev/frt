@@ -51,7 +51,7 @@ export default async function AboutUsPage() {
                                     <div key={member.id} className="relative group">
                                         <div className="w-80 h-96 overflow-hidden bg-gray-900 relative">
                                             <Image
-                                                src={member.picture.url || "/placeholder.svg"}
+                                                src={typeof member.picture === 'object' && member.picture.url ? member.picture.url : "/placeholder.svg"}
                                                 alt={member.name}
                                                 width={320}
                                                 height={384}
