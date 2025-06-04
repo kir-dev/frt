@@ -48,6 +48,7 @@ const navItems = [
         nameEn: "About us",
         href: "",
         dropdown: [
+            { name: "Csapat", nameEn: "Team", href: "/rolunk" },
             { name: "Egyesület", nameEn: "Association", href: "/not-found" },
             { name: "Publikációk", nameEn: "Publications", href: "/not-found" },
             { name: "Tag felvétel", nameEn: "Joining process", href: "/tagfelvetel" },
@@ -69,9 +70,11 @@ function NavbarContent() {
 
     // Initialize language from URL on component mount
     useEffect(() => {
-        const langParam = searchParams.get("lang");
-        if (langParam === "en" || langParam === "hu") {
-            setLanguage(langParam);
+        if (searchParams) {
+            const langParam = searchParams.get("lang");
+            if (langParam === "en" || langParam === "hu") {
+                setLanguage(langParam);
+            }
         }
     }, [searchParams]);
 
@@ -107,8 +110,20 @@ function NavbarContent() {
     const toggleLanguage = () => {
         const newLang = language === "hu" ? "en" : "hu";
         setLanguage(newLang);
-        const params = new URLSearchParams(Array.from(searchParams.entries()));
-        params.set("lang", newLang);
+
+        const params = new URLSearchParams();
+        if (searchParams) {
+            params.set("lang", newLang);
+            // Copy over any existing params
+            searchParams.forEach((value, key) => {
+                if (key !== 'lang') {
+                    params.set(key, value);
+                }
+            });
+        } else {
+            params.set("lang", newLang);
+        }
+
         router.replace(`${pathname}?${params.toString()}`);
     }
 
@@ -120,8 +135,17 @@ function NavbarContent() {
 
     function addLangToHref(href: string) {
         // Ha már tartalmaz query paramétert, akkor hozzáfűzzük, különben új query stringet kezdünk
-        const params = new URLSearchParams(Array.from(searchParams.entries()));
+        const params = new URLSearchParams();
+        if (searchParams) {
+            // Copy existing params
+            searchParams.forEach((value, key) => {
+                if (key !== 'lang') { // Skip the lang param as we'll set it next
+                    params.set(key, value);
+                }
+            });
+        }
         params.set("lang", language);
+
         // Ha van már más query paraméter, akkor &-tel fűzzük hozzá
         const hasQuery = href.includes("?");
         return hasQuery ? `${href}&${params.toString()}` : `${href}?${params.toString()}`;
