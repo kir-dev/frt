@@ -77,6 +77,7 @@ export interface Config {
     members: Member;
     sponsors: Sponsor;
     recruitment: Recruitment;
+    groups: Group;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -93,6 +94,7 @@ export interface Config {
     members: MembersSelect<false> | MembersSelect<true>;
     sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     recruitment: RecruitmentSelect<false> | RecruitmentSelect<true>;
+    groups: GroupsSelect<false> | GroupsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -389,19 +391,54 @@ export interface Publication {
 export interface Member {
   id: number;
   name: string;
-  group:
-    | 'vezetoseg'
-    | 'mechanikai_csoport'
-    | 'elektronika_csoport'
-    | 'jarmudinamika_csoport'
-    | 'aerodinamika_csoport'
-    | 'vaz_csoport'
-    | 'operativ_csoport'
-    | 'elektromos_hajtaslanc_csoport'
-    | 'driverless_csoport'
-    | 'szponzoracios_csoport';
+  group: number | Group;
   position?: string | null;
   picture: number | Media;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Csoportok, amelyek a csapattagokat tartalmazzák.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "groups".
+ */
+export interface Group {
+  id: number;
+  name: string;
+  nameEn: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  descriptionEng: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -545,6 +582,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'recruitment';
         value: number | Recruitment;
+      } | null)
+    | ({
+        relationTo: 'groups';
+        value: number | Group;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -720,6 +761,7 @@ export interface MembersSelect<T extends boolean = true> {
   group?: T;
   position?: T;
   picture?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -754,6 +796,19 @@ export interface RecruitmentSelect<T extends boolean = true> {
         positionOpen?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "groups_select".
+ */
+export interface GroupsSelect<T extends boolean = true> {
+  name?: T;
+  nameEn?: T;
+  description?: T;
+  descriptionEng?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -17,6 +17,7 @@ import { Publications } from "./collections/Publications";
 import { Members } from "./collections/Members";
 import { Recruitment } from "./collections/Recruitment";
 import { Sponsors } from "@/collections/Sponsors";
+import Groups from "@/collections/Groups";
 import {s3Storage} from "@payloadcms/storage-s3";
 
 const filename = fileURLToPath(import.meta.url);
@@ -33,6 +34,7 @@ const collections = [
       Members,
       Sponsors,
       Recruitment,
+      Groups,
     ]
 
 
