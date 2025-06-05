@@ -10,11 +10,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@lexical/rich-text": "0.28.0",
-    "@payloadcms/db-postgres": "^3.31.0",
-    "@payloadcms/next": "^3.31.0",
-    "@payloadcms/payload-cloud": "^3.31.0",
-    "@payloadcms/richtext-lexical": "^3.40.0",
+    "@payloadcms/db-postgres": "3.40.0",
+    "@payloadcms/drizzle": "3.40.0",
+    "@payloadcms/email-nodemailer": "3.40.0",
+    "@payloadcms/next": "3.40.0",
+    "@payloadcms/payload-cloud": "3.40.0",
+    "@payloadcms/richtext-lexical": "3.40.0",
+    "@payloadcms/storage-s3": "3.40.0",
     "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -22,7 +24,7 @@
     "image-size": "^1.2.1",
     "lucide-react": "^0.511.0",
     "next": "15.2.4",
-    "payload": "^3.31.0",
+    "payload": "3.40.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.3.0"
