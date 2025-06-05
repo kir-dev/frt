@@ -10,10 +10,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@lexical/rich-text": "0.28.0",
     "@payloadcms/db-postgres": "^3.31.0",
     "@payloadcms/next": "^3.31.0",
     "@payloadcms/payload-cloud": "^3.31.0",
-    "@payloadcms/richtext-lexical": "^3.39.1",
+    "@payloadcms/richtext-lexical": "^3.40.0",
     "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
