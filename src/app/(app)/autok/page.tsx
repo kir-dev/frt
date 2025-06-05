@@ -21,9 +21,13 @@ export default async function CarsPage(props: CarsPageProps) {
   return (
     <main className="bg-black text-white">
       <div className="container mx-auto px-4 py-12 max-w-7xl">
-        {cars.map((car) => (
-          <CarSection car={car} key={car.id} lang={lang} />
-        ))}
+        {cars.length == 0 ? (
+          <h1 className="text-center text-2xl my-10">
+            {lang == "en" ? "No cars found" : "Nem található autó"}
+          </h1>
+        ) : (
+          cars.map((car) => <CarSection car={car} key={car.id} lang={lang} />)
+        )}
       </div>
     </main>
   );
