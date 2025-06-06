@@ -39,7 +39,7 @@ export async function getMembers() : Promise<Member[]> {
         sort: "order",
     })
 
-    return members.docs
+    return members.docs as Member[]
 }
 
 export async function getGroups() : Promise<Group[]> {
@@ -50,5 +50,5 @@ export async function getGroups() : Promise<Group[]> {
         sort: "order",
     })
 
-    return groups.docs
+    return groups.docs as Group[]
 }
