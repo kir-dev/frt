@@ -22,6 +22,7 @@ export async function getRecruitmentData() : Promise<Recruitment[]> {
 }
 
 export async function getMembers() : Promise<Member[]> {
+    console.log("Fetching members from Payload CMS...")
     const payload = await getPayload({ config })
     const members = await payload.find({
         collection: "members",
@@ -29,10 +30,11 @@ export async function getMembers() : Promise<Member[]> {
         sort: "order",
     })
 
-    return members.docs
+    return members.docs as Member[]
 }
 
 export async function getGroups() : Promise<Group[]> {
+    console.log("Fetching groups from Payload CMS...")
     const payload = await getPayload({ config })
     const groups = await payload.find({
         collection: "groups",
@@ -40,5 +42,5 @@ export async function getGroups() : Promise<Group[]> {
         sort: "order",
     })
 
-    return groups.docs
+    return groups.docs as Group[]
 }
