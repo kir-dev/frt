@@ -9,7 +9,20 @@ export const metadata = {
     description: "Ismerje meg csapatunkat",
 }
 
-export default async function AboutUsPage() {
+// Next.js cache letiltása ezen az oldalon
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+type AboutUsPageProps = {
+    searchParams?: Promise<Record<string, string>>;
+}
+
+export default async function AboutUsPage(props: AboutUsPageProps) {
+    // Await searchParams to force dynamic rendering
+    if (props?.searchParams) {
+        await props.searchParams;
+    }
+
     const groups = await getGroups()
     const members = await getMembers()
 
