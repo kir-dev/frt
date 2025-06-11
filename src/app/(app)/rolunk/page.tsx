@@ -9,7 +9,17 @@ export const metadata = {
     description: "Ismerje meg csapatunkat",
 }
 
-export default async function AboutUsPage() {
+// Új típus a searchParams-hoz
+export type AboutUsPageProps = {
+    searchParams?: Promise<Record<string, string>>;
+}
+
+export default async function AboutUsPage(props: AboutUsPageProps) {
+    let lang = 'hu';
+    if (props?.searchParams) {
+        const sp = await props.searchParams;
+        lang = sp && 'lang' in sp && sp.lang === 'en' ? 'en' : 'hu';
+    }
     const groups = await getGroups()
     const members = await getMembers()
 
@@ -38,11 +48,11 @@ export default async function AboutUsPage() {
                         )}
                         <div className="container mx-auto px-4 py-16 max-w-5xl">
                             {/* Group title - left aligned */}
-                            <h2 className="text-4xl font-bold mb-8 text-left">{group.name}</h2>
+                            <h2 className="text-4xl font-bold mb-8 text-left">{lang === 'en' ? group.nameEn : group.name}</h2>
 
                             {/* Group description - left aligned */}
                             <div className="text-gray-300 text-left max-w-5xl">
-                                <RichText data={group.description} />
+                                <RichText data={lang === 'en' ? group.descriptionEng : group.description} />
                             </div>
 
                             {/* Member photos in a horizontal row */}
@@ -51,16 +61,16 @@ export default async function AboutUsPage() {
                                     <div key={member.id} className="relative group">
                                         <div className="w-80 h-96 overflow-hidden bg-gray-900 relative">
                                             <Image
-                                                src={member.picture.url || "/placeholder.svg"}
+                                                src={typeof member.picture === 'object' && member.picture !== null && 'url' in member.picture && member.picture.url ? member.picture.url : "/placeholder.svg"}
                                                 alt={member.name}
                                                 width={320}
                                                 height={384}
                                                 className="object-cover w-full h-full"
                                             />
                                             {/* Name and position overlay */}
-                                            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-80 p-4">
+                                            <div className="absolute bottom-0 left-0 mb-4 ml-4 px-4 py-2 rounded bg-black/80 backdrop-blur-sm max-w-[90%]">
                                                 <h3 className="font-bold text-lg text-white">{member.name}</h3>
-                                                {member.position && <p className="text-gray-300 text-sm">{member.position}</p>}
+                                                {member.position && <p className="text-gray-300 text-sm">{lang === 'en' && member.positionEn ? member.positionEn : member.position}</p>}
                                             </div>
                                         </div>
                                     </div>
