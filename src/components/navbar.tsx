@@ -70,6 +70,7 @@ function NavbarContent() {
 
     // Initialize language from URL on component mount
     useEffect(() => {
+        if (!searchParams) return;
         const langParam = searchParams.get("lang");
         if (langParam === "en" || langParam === "hu") {
             setLanguage(langParam);
@@ -108,6 +109,7 @@ function NavbarContent() {
     const toggleLanguage = () => {
         const newLang = language === "hu" ? "en" : "hu";
         setLanguage(newLang);
+        if (!searchParams) return;
         const params = new URLSearchParams(Array.from(searchParams.entries()));
         params.set("lang", newLang);
         router.replace(`${pathname}?${params.toString()}`);
@@ -120,10 +122,9 @@ function NavbarContent() {
     }
 
     function addLangToHref(href: string) {
-        // Ha már tartalmaz query paramétert, akkor hozzáfűzzük, különben új query stringet kezdünk
+        if (!searchParams) return href;
         const params = new URLSearchParams(Array.from(searchParams.entries()));
         params.set("lang", language);
-        // Ha van már más query paraméter, akkor &-tel fűzzük hozzá
         const hasQuery = href.includes("?");
         return hasQuery ? `${href}&${params.toString()}` : `${href}?${params.toString()}`;
     }
@@ -310,4 +311,3 @@ export default function Navbar() {
         </Suspense>
     );
 }
-

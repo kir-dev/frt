@@ -9,6 +9,7 @@ function NotFoundContent() {
     const searchParams = useSearchParams();
     const [language, setLanguage] = useState("hu");
     useEffect(() => {
+        if (!searchParams) return;
         const langParam = searchParams.get("lang");
         if (langParam === "en" || langParam === "hu") {
             setLanguage(langParam);
@@ -130,4 +131,3 @@ export default function Page() {
         </Suspense>
     );
 }
-
