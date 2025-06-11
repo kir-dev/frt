@@ -71,100 +71,103 @@ export default function RecruitmentPageClient({ recruitmentData, lang }: Recruit
 
     return (
         <main className="min-h-screen bg-black text-white">
-            <div className="container mx-auto px-4 py-12 max-w-5xl lg:mr-80">
-                <h1 id="main-title" className="text-3xl font-bold text-center mb-12">
-                    {translations.title}
-                </h1>
+            <div className="flex flex-col lg:flex-row justify-center gap-8 container mx-auto px-4 py-12">
+                {/* Main Content */}
+                <div className="w-full max-w-4xl">
+                    <h1 id="main-title" className="text-3xl font-bold text-center mb-12">
+                        {translations.title}
+                    </h1>
 
-                {recruitmentData.map((group, groupIdx) => {
-                    // Filter only open positions
-                    const openPositions = group.positions.filter((position) => position.positionOpen)
+                    {recruitmentData.map((group, groupIdx) => {
+                        // Filter only open positions
+                        const openPositions = group.positions.filter((position) => position.positionOpen)
 
-                    // Skip groups with no open positions
-                    if (openPositions.length === 0) return null
+                        // Skip groups with no open positions
+                        if (openPositions.length === 0) return null
 
-                    const isLastGroup =
-                        recruitmentData.filter((g) => g.positions.some((p) => p.positionOpen)).length - 1 === groupIdx
+                        const isLastGroup =
+                            recruitmentData.filter((g) => g.positions.some((p) => p.positionOpen)).length - 1 === groupIdx
 
-                    return (
-                        <div key={group.id}>
-                            <section id={`group-${group.id}`} className="mb-16">
-                                <div className="bg-red-950/50 rounded-lg p-6 hover:bg-red-900/50 transition-colors mb-8">
-                                    <h2 className="text-3xl font-bold mb-4">{lang === "en" ? group.groupNameEng : group.groupName}</h2>
-                                    <div className="rich-text-content text-gray-300">
-                                        <RichText data={lang === "en" ? group.descriptionEng : group.description} />
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {openPositions.map((position) => (
-                                        <div
-                                            key={position.id}
-                                            className="bg-red-950/50 rounded-lg p-6 hover:bg-red-900/50 transition-colors"
-                                        >
-                                            <h3 className="text-xl font-bold mb-3 text-frtRed">
-                                                {lang === "en" ? position.positionNameEng : position.positionName}
-                                            </h3>
-                                            <div className="rich-text-content text-gray-300">
-                                                <RichText
-                                                    data={lang === "en" ? position.positionDescriptionEng : position.positionDescription}
-                                                />
-                                            </div>
+                        return (
+                            <div key={group.id}>
+                                <section id={`group-${group.id}`} className="mb-16">
+                                    <div className="bg-red-950/50 rounded-lg p-6 hover:bg-red-900/50 transition-colors mb-8">
+                                        <h2 className="text-3xl font-bold mb-4">{lang === "en" ? group.groupNameEng : group.groupName}</h2>
+                                        <div className="rich-text-content text-gray-300">
+                                            <RichText data={lang === "en" ? group.descriptionEng : group.description} />
                                         </div>
-                                    ))}
-                                </div>
-                            </section>
-                            {!isLastGroup && <div className="border-t border-frtRed my-12 mx-auto max-w-7xl"></div>}
-                        </div>
-                    )
-                })}
+                                    </div>
 
-                <div id="application-section" className="lg:hidden mt-12 text-center">
-                    <p className="text-xl mb-4">{translations.interested}</p>
-                    <a
-                        href="https://docs.google.com/forms/d/e/1FAIpQLSfoRr50h0nzuhrctVWgNhOOm003Yd38Vw1jNdhWAvOocf16zQ/viewform?usp=header"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
-                    >
-                        {translations.apply}
-                    </a>
-                </div>
-            </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        {openPositions.map((position) => (
+                                            <div
+                                                key={position.id}
+                                                className="bg-red-950/50 rounded-lg p-6 hover:bg-red-900/50 transition-colors"
+                                            >
+                                                <h3 className="text-xl font-bold mb-3 text-frtRed">
+                                                    {lang === "en" ? position.positionNameEng : position.positionName}
+                                                </h3>
+                                                <div className="rich-text-content text-gray-300">
+                                                    <RichText
+                                                        data={lang === "en" ? position.positionDescriptionEng : position.positionDescription}
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                                {!isLastGroup && <div className="border-t border-frtRed my-12 mx-auto max-w-7xl"></div>}
+                            </div>
+                        )
+                    })}
 
-            <div className="fixed right-4 z-40 top-[196px] hidden lg:block">
-                {/* Table of Contents Section */}
-                <div className="bg-red-950/80 backdrop-blur-sm rounded-lg p-5 w-64 mb-4">
-                    <h3 className="text-base font-bold mb-4 text-red-400">{lang === "en" ? "Table of Contents" : "Tartalomjegyzék"}</h3>
-                    <nav className="space-y-3">
-                        {tocItems.map((item) => (
-                            <button
-                                key={item.id}
-                                onClick={() => scrollToSection(item.id)}
-                                className={`block text-left transition-colors hover:text-red-400 w-full 
-                                    ${item.level === 1 ? "pl-3" : ""}`}
-                            >
-                                {item.title}
-                            </button>
-                        ))}
-                    </nav>
-                </div>
-
-                {/* Application Button Section - Separate from TOC */}
-                {hasOpenPositions && (
-                    <div className="bg-red-950/80 backdrop-blur-sm rounded-lg p-5 text-center">
+                    <div id="application-section" className="lg:hidden mt-12 text-center">
+                        <p className="text-xl mb-4">{translations.interested}</p>
                         <a
                             href="https://docs.google.com/forms/d/e/1FAIpQLSfoRr50h0nzuhrctVWgNhOOm003Yd38Vw1jNdhWAvOocf16zQ/viewform?usp=header"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-base w-full"
+                            className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
                         >
                             {translations.apply}
                         </a>
                     </div>
-                )}
+                </div>
+
+                {/* Table of Contents Section - Now centered alongside content */}
+                <div className="hidden lg:block sticky top-[196px] self-start">
+                    <div className="bg-red-950/80 backdrop-blur-sm rounded-lg p-5 w-64 mb-4">
+                        <h3 className="text-base font-bold mb-4 text-red-400">{lang === "en" ? "Table of Contents" : "Tartalomjegyzék"}</h3>
+                        <nav className="space-y-3">
+                            {tocItems.map((item) => (
+                                <button
+                                    key={item.id}
+                                    onClick={() => scrollToSection(item.id)}
+                                    className={`block text-left transition-colors hover:text-red-400 w-full 
+                                        ${item.level === 1 ? "pl-3" : ""}`}
+                                >
+                                    {item.title}
+                                </button>
+                            ))}
+                        </nav>
+                    </div>
+
+                    {/* Application Button Section - Separate from TOC */}
+                    {hasOpenPositions && (
+                        <div className="bg-red-950/80 backdrop-blur-sm rounded-lg p-5 text-center">
+                            <p className="text-sm mb-2">{translations.interested}</p>
+                            <a
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSfoRr50h0nzuhrctVWgNhOOm003Yd38Vw1jNdhWAvOocf16zQ/viewform?usp=header"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-base w-full"
+                            >
+                                {translations.apply}
+                            </a>
+                        </div>
+                    )}
+                </div>
             </div>
         </main>
     )
 }
-

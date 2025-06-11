@@ -18,9 +18,25 @@ import { Members } from "./collections/Members";
 import { Recruitment } from "./collections/Recruitment";
 import { Sponsors } from "@/collections/Sponsors";
 import Groups from "@/collections/Groups";
+import {s3Storage} from "@payloadcms/storage-s3";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
+
+const collections = [
+      Users,
+      Media,
+      Articles,
+      Events,
+      Cars,
+      Gallery,
+      Publications,
+      Members,
+      Sponsors,
+      Recruitment,
+      Groups,
+    ]
+
 
 export default buildConfig({
   admin: {
@@ -29,19 +45,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [
-    Users,
-    Media,
-    Articles,
-    Events,
-    Cars,
-    Gallery,
-    Publications,
-    Members,
-    Sponsors,
-    Recruitment,
-      Groups,
-  ],
+  collections: collections,
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
@@ -55,6 +59,22 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
+    s3Storage({
+      collections: {
+          media: true
+      },
+      bucket: process.env.S3_BUCKET!,
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+        },
+        forcePathStyle: true,
+        region: process.env.S3_REGION,
+        endpoint: process.env.S3_ENDPOINT,
+        // ... Other S3 configuration
+      },
+    }),
     // storage-adapter-placeholder
   ],
 });
