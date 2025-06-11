@@ -393,6 +393,7 @@ export interface Member {
   name: string;
   group: number | Group;
   position?: string | null;
+  positionEn?: string | null;
   picture: number | Media;
   order?: number | null;
   updatedAt: string;
@@ -760,6 +761,7 @@ export interface MembersSelect<T extends boolean = true> {
   name?: T;
   group?: T;
   position?: T;
+  positionEn?: T;
   picture?: T;
   order?: T;
   updatedAt?: T;

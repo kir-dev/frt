@@ -27,6 +27,12 @@ export const Members: CollectionConfig = {
       label: "Pozíció",
     },
     {
+      name: "positionEn",
+      type: "text",
+      required: false,
+      label: "Pozíció (English)",
+    },
+    {
       name: "picture",
       type: "upload",
       relationTo: "media",
