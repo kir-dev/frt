@@ -1,4 +1,4 @@
-import { CollectionConfig } from "payload";
+import {CollectionConfig} from "payload";
 
 export const Articles: CollectionConfig = {
   slug: "articles",
@@ -18,6 +18,18 @@ export const Articles: CollectionConfig = {
       type: "text",
       required: true,
       label: "Angol Cím",
+    },
+    {
+      name: "short_description",
+      type: "richText",
+      required: true,
+      label: "Rövid Leírás",
+    },
+    {
+      name: "short_description_eng",
+      type: "richText",
+      required: true,
+      label: "Angol Rövid Leírás",
     },
     {
       name: "content",
@@ -69,6 +81,37 @@ export const Articles: CollectionConfig = {
       type: "text",
       required: true,
       label: "Angol Kategória neve (pl. „Competitions”, „Team Life”)",
+    },
+    {
+      name: "slug",
+      type: "text",
+      required: true,
+      unique: true,
+      label: "Slug",
+      admin: {
+        description: "URL-barát azonosító (pl. automatikusan generált a cím alapján)",
+        hidden: true,
+      },
+      hooks: {
+        beforeValidate: [({ data, value }) => {
+          if (value) return value;
+          if (data?.title) {
+            // Hungarian accented character replacements
+            const accentsMap = {
+              'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ö': 'o', 'ő': 'o',
+              'ú': 'u', 'ü': 'u', 'ű': 'u',
+              'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ö': 'O', 'Ő': 'O',
+              'Ú': 'U', 'Ü': 'U', 'Ű': 'U',
+            };
+            return data.title
+                .toLowerCase()
+                .replace(/[áéíóöőúüű]/g, (m: string) => accentsMap[m as keyof typeof accentsMap])
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/(^-|-$)+/g, "");
+          }
+          return value;
+        }],
+      },
     },
   ],
 };

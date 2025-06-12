@@ -52,3 +52,30 @@ export async function getGroups() : Promise<Group[]> {
 
     return groups.docs as Group[]
 }
+
+export async function getArticles() {
+    const payload = await getPayload({ config })
+    const articles = await payload.find({
+        collection: "articles",
+        limit: 1000,
+        sort: "-published_date",
+    })
+
+    return articles.docs
+}
+
+export async function getArticleBySlug(slug: string) {
+    const payload = await getPayload({ config })
+    const article = await payload.find({
+        collection: "articles",
+        where: {
+            slug: {
+                equals: slug,
+            },
+        },
+        limit: 1,
+    })
+
+    return article.docs.length > 0 ? article.docs[0] : null
+}
+

@@ -21,7 +21,7 @@ const navItems = [
     {
         name: "Hírek",
         nameEn: "News",
-        href: "/not-found",
+        href: "/hirek",
         dropdown: null,
     },
     {
