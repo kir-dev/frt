@@ -14,11 +14,15 @@ interface NewsPageProps {
     searchParams?: Record<string, string>;
 }
 
-export default async function NewsPage(props: NewsPageProps) {
+export default async function NewsPage(props: NewsPageProps & { searchParams?: Promise<Record<string, string>> }) {
     // Nyelvi paraméter kezelése
     let lang = 'hu';
-    if (props?.searchParams && typeof props.searchParams === 'object') {
-        lang = props.searchParams.lang === 'en' ? 'en' : 'hu';
+    let sp: Record<string, string> | undefined = undefined;
+    if (props?.searchParams) {
+        sp = await props.searchParams;
+        if (sp && typeof sp.lang === 'string' && sp.lang === 'en') {
+            lang = 'en';
+        }
     }
 
     const translations = {
@@ -55,7 +59,7 @@ export default async function NewsPage(props: NewsPageProps) {
                             <article key={article.id} className="bg-[#230505] rounded-lg overflow-hidden">
                                 <div className="md:flex">
                                     <div className="md:w-1/2 flex items-center p-2">
-                                        <Link href={`/hirek/${article.slug}`} className="w-full">
+                                        <Link href={{ pathname: `/hirek/${article.slug}`, query: { lang } }} className="w-full">
                                             <div className={isPortrait ? "aspect-[3/4] relative bg-[#230505] flex items-center justify-center max-h-80 md:max-h-96 w-full h-full" : "aspect-[16/9] relative bg-[#230505] flex items-center justify-center max-h-80 md:max-h-96 w-full h-full"}>
                                                 <Image
                                                     src={article.featured_image.url || "/placeholder.svg"}
@@ -73,14 +77,14 @@ export default async function NewsPage(props: NewsPageProps) {
                                             <span className="mx-2">•</span>
                                             <span>{lang === 'en' ? article.category_eng : article.category}</span>
                                         </div>
-                                        <Link href={`/hirek/${article.slug}`} className="hover:text-frtRed transition-colors">
+                                        <Link href={{ pathname: `/hirek/${article.slug}`, query: { lang } }} className="hover:text-frtRed transition-colors">
                                             <h2 className="text-2xl font-bold mb-3">{lang === 'en' ? article.title_eng : article.title}</h2>
                                         </Link>
                                         <div className="text-gray-300 mb-4">
                                             <RichText data={lang === 'en' ? article.short_description_eng : article.short_description} />
                                         </div>
                                         <Link
-                                            href={`/hirek/${article.slug}`}
+                                            href={{ pathname: `/hirek/${article.slug}`, query: { lang } }}
                                             className="inline-block text-frtRed hover:text-red-400 transition-colors"
                                         >
                                             {translations.readMore}
@@ -95,7 +99,3 @@ export default async function NewsPage(props: NewsPageProps) {
         </main>
     );
 }
-
-
-
-

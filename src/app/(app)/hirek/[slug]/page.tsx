@@ -13,13 +13,21 @@ interface ArticlePageProps {
     }
 }
 
-export default async function ArticlePage({ params }: ArticlePageProps) {
+export default async function ArticlePage({ params, searchParams }: ArticlePageProps & { searchParams?: Promise<Record<string, string>> }) {
+    // Nyelvi paraméter kezelése
+    let lang = 'hu';
+    let sp: Record<string, string> | undefined = undefined;
+    if (searchParams) {
+        sp = await searchParams;
+        if (sp && typeof sp.lang === 'string' && sp.lang === 'en') {
+            lang = 'en';
+        }
+    }
     // Await params if needed (Next.js 15+)
     const awaitedParams = await params;
-    const article = await getArticleBySlug(awaitedParams.slug)
-
+    const article = await getArticleBySlug(awaitedParams.slug);
     if (!article) {
-        notFound()
+        notFound();
     }
 
     // Transform gallery images for the ImageGallery component
@@ -42,44 +50,41 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     return (
         <main className="min-h-screen bg-black text-white">
             <div className="container mx-auto px-4 py-12 max-w-4xl">
-                <Link href="/hirek" className="inline-flex items-center text-gray-400 hover:text-red-500 mb-8">
+                <Link href={{ pathname: "/hirek", query: { lang } }} className="inline-flex items-center text-gray-400 hover:text-red-500 mb-8">
                     <ChevronLeft size={20} />
-                    <span>Vissza a hírekhez</span>
+                    <span>{lang === 'en' ? 'Back to news' : 'Vissza a hírekhez'}</span>
                 </Link>
-
                 <article>
                     <header className="mb-8">
                         <div className="flex items-center text-gray-400 text-sm mb-2">
                             <span>{formatDate(article.published_date)}</span>
                             <span className="mx-2">•</span>
-                            <span>{article.category}</span>
+                            <span>{lang === 'en' ? article.category_eng : article.category}</span>
                         </div>
-                        <h1 className="text-3xl font-bold mb-6">{article.title}</h1>
+                        <h1 className="text-3xl font-bold mb-6">{lang === 'en' ? article.title_eng : article.title}</h1>
                     </header>
-
-                    <div className="mb-8 aspect-[16/9] relative">
+                    <div className="mb-8 w-full flex items-center justify-center rounded-lg">
                         <Image
                             src={featuredImage?.url || "/placeholder.svg"}
-                            alt={featuredImage?.alt || article.title}
-                            fill
-                            className="object-cover rounded-lg"
+                            alt={featuredImage?.alt || (lang === 'en' ? article.title_eng : article.title)}
+                            width={featuredImage?.width || 800}
+                            height={featuredImage?.height || 1200}
+                            className="object-contain object-center rounded-lg"
+                            style={{maxWidth: '100%', height: 'auto', backgroundColor: 'transparent'}}
                             priority
                         />
                     </div>
-
                     <div className="prose prose-invert max-w-none">
-                        <RichText data={article.content} />
+                        <RichText data={lang === 'en' ? article.content_eng : article.content} />
                     </div>
-
                     {galleryImages.length > 0 && (
                         <div className="mt-12">
-                            <h2 className="text-2xl font-bold mb-4">Galéria</h2>
+                            <h2 className="text-2xl font-bold mb-4">{lang === 'en' ? 'Gallery' : 'Galéria'}</h2>
                             <ImageGallery images={galleryImages} />
                         </div>
                     )}
                 </article>
             </div>
         </main>
-    )
+    );
 }
-
