@@ -179,6 +179,36 @@ export interface Article {
   id: number;
   title: string;
   title_eng: string;
+  short_description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  short_description_eng: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   content: {
     root: {
       type: string;
@@ -219,6 +249,10 @@ export interface Article {
     | null;
   category: string;
   category_eng: string;
+  /**
+   * URL-barát azonosító (pl. automatikusan generált a cím alapján)
+   */
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -670,6 +704,8 @@ export interface MediaSelect<T extends boolean = true> {
 export interface ArticlesSelect<T extends boolean = true> {
   title?: T;
   title_eng?: T;
+  short_description?: T;
+  short_description_eng?: T;
   content?: T;
   content_eng?: T;
   published_date?: T;
@@ -682,6 +718,7 @@ export interface ArticlesSelect<T extends boolean = true> {
       };
   category?: T;
   category_eng?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
