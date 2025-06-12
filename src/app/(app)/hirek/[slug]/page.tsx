@@ -7,13 +7,14 @@ import { formatDate } from "@/lib/utils"
 import { ChevronLeft } from "lucide-react"
 import {RichText} from "@payloadcms/richtext-lexical/react";
 
+// --- TÍPUS JAVÍTÁS ---
+
 interface ArticlePageProps {
-    params: {
-        slug: string
-    }
+    params: Promise<{ slug: string }>;
+    searchParams?: Promise<Record<string, string>>;
 }
 
-export default async function ArticlePage({ params, searchParams }: ArticlePageProps & { searchParams?: Promise<Record<string, string>> }) {
+export default async function ArticlePage({ params, searchParams }: ArticlePageProps) {
     // Nyelvi paraméter kezelése
     let lang = 'hu';
     let sp: Record<string, string> | undefined = undefined;

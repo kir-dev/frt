@@ -31,7 +31,7 @@ export default async function NewsPage(props: NewsPageProps & { searchParams?: P
         readMore: lang === 'en' ? 'Read more →' : 'Tovább olvasom →',
     };
 
-    const articles = await getArticles(lang);
+    const articles = await getArticles();
 
     if (articles.length === 0) {
         return (
@@ -52,8 +52,10 @@ export default async function NewsPage(props: NewsPageProps & { searchParams?: P
                 <div className="space-y-12">
                     {articles.map((article) => {
                         // Try to detect orientation if width/height is available
-                        const isPortrait = article.featured_image?.width && article.featured_image?.height
-                            ? article.featured_image.height > article.featured_image.width
+                        // Fix: handle case when article.featured_image is a number (id) or a Media object
+                        const featuredImageObj = typeof article.featured_image === 'object' && article.featured_image !== null ? article.featured_image : undefined;
+                        const isPortrait = featuredImageObj?.width && featuredImageObj?.height
+                            ? featuredImageObj.height > featuredImageObj.width
                             : false;
                         return (
                             <article key={article.id} className="bg-[#230505] rounded-lg overflow-hidden">
@@ -62,18 +64,18 @@ export default async function NewsPage(props: NewsPageProps & { searchParams?: P
                                         <Link href={{ pathname: `/hirek/${article.slug}`, query: { lang } }} className="w-full">
                                             <div className={isPortrait ? "aspect-[3/4] relative bg-[#230505] flex items-center justify-center max-h-80 md:max-h-96 w-full h-full" : "aspect-[16/9] relative bg-[#230505] flex items-center justify-center max-h-80 md:max-h-96 w-full h-full"}>
                                                 <Image
-                                                    src={article.featured_image.url || "/placeholder.svg"}
-                                                    alt={article.featured_image.alt || article.title}
+                                                    src={featuredImageObj?.url || "/placeholder.svg"}
+                                                    alt={featuredImageObj?.alt || article.title}
                                                     fill
                                                     className={isPortrait ? "object-contain object-center" : "object-cover object-center"}
-                                                    style={{maxHeight: isPortrait ? '24rem' : undefined, backgroundColor: 'transparent'}}
+                                                    style={isPortrait ? {maxHeight: '24rem', backgroundColor: 'transparent'} : {backgroundColor: 'transparent'}}
                                                 />
                                             </div>
                                         </Link>
                                     </div>
                                     <div className="p-6 md:w-1/2 flex flex-col justify-start">
                                         <div className="flex items-center text-gray-400 text-sm mb-2">
-                                            <span>{formatDate(article.published_date, lang)}</span>
+                                            <span>{formatDate(article.published_date)}</span>
                                             <span className="mx-2">•</span>
                                             <span>{lang === 'en' ? article.category_eng : article.category}</span>
                                         </div>
