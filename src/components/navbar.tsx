@@ -145,7 +145,7 @@ function NavbarContent() {
                             alt="BME Formula Racing Team"
                             width={150}
                             height={50}
-                            className="h-12 w-auto"
+                            className="h-10 w-auto lg:h-12 transition-all duration-200"
                         />
                     </Link>
 
@@ -311,4 +311,3 @@ export default function Navbar() {
         </Suspense>
     );
 }
-
