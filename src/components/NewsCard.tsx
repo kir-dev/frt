@@ -2,15 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import { Article, Media } from "@/payload-types";
 
 interface NewsCardProps {
-  article: any;
+  article: Article;
   lang?: string;
   readMoreText?: string;
 }
 
 export default function NewsCard({ article, lang = 'hu', readMoreText = 'Tovább olvasom →' }: NewsCardProps) {
-  const featuredImageObj = typeof article.featured_image === 'object' && article.featured_image !== null ? article.featured_image : undefined;
+  const featuredImageObj = typeof article.featured_image === 'object' && article.featured_image !== null ? article.featured_image as Media : undefined;
   const isPortrait = featuredImageObj?.width && featuredImageObj?.height
     ? featuredImageObj.height > featuredImageObj.width
     : false;
@@ -54,4 +55,3 @@ export default function NewsCard({ article, lang = 'hu', readMoreText = 'Tovább
     </article>
   );
 }
-

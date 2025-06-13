@@ -9,7 +9,7 @@ export default async function SocialFeed() {
     let error = false;
     try {
         posts = await getAllSocialPosts();
-    } catch (e) {
+    } catch {
         error = true;
     }
 
