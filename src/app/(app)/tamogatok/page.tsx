@@ -46,6 +46,17 @@ export default async function SponsorsPage(props: SponsorsPageProps) {
         other: lang === 'en' ? "Other Sponsors" : "További támogatóink",
     }
 
+    // Function to get grid class names based on tier
+    const getGridClassNames = (tier: string) => {
+                return (
+                    `grid ` +
+                    `${["diamond", "gold"].includes(tier) ? "grid-cols-2" : "grid-cols-3"} ` +
+                    `sm:grid-cols-2 lg:grid-cols-3 gap-6 ` +
+                    `${["copper", "other", "bme"].includes(tier) ? "md:grid-cols-3 lg:grid-cols-6 " : ""}` +
+                    `${tier === "silver" ? "md:grid-cols-3 lg:grid-cols-4 " : ""}`
+                ).replace(/\s+/g, ' ').trim();
+            }
+
     // Sort tiers by predefined order
     const sortedTiers = Object.keys(sponsorsByTier).sort((a, b) => tierOrder.indexOf(a) - tierOrder.indexOf(b))
 
