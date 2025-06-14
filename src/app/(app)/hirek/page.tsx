@@ -1,9 +1,6 @@
-import Image from "next/image"
-import Link from "next/link"
 import { getArticles } from "@/lib/payload-cms"
-import { formatDate } from "@/lib/utils"
-import {RichText} from "@payloadcms/richtext-lexical/react";
 import { Metadata } from "next";
+import NewsCard from "@/components/NewsCard";
 
 export const metadata: Metadata = {
     title: "Hírek",
@@ -50,52 +47,9 @@ export default async function NewsPage(props: NewsPageProps & { searchParams?: P
                 <h1 className="text-3xl font-bold mb-12">{translations.title}</h1>
 
                 <div className="space-y-12">
-                    {articles.map((article) => {
-                        // Try to detect orientation if width/height is available
-                        // Fix: handle case when article.featured_image is a number (id) or a Media object
-                        const featuredImageObj = typeof article.featured_image === 'object' && article.featured_image !== null ? article.featured_image : undefined;
-                        const isPortrait = featuredImageObj?.width && featuredImageObj?.height
-                            ? featuredImageObj.height > featuredImageObj.width
-                            : false;
-                        return (
-                            <article key={article.id} className="bg-[#230505] rounded-lg overflow-hidden">
-                                <div className="md:flex">
-                                    <div className="md:w-1/2 flex items-center p-2">
-                                        <Link href={{ pathname: `/hirek/${article.slug}`, query: { lang } }} className="w-full">
-                                            <div className={isPortrait ? "aspect-[3/4] relative bg-[#230505] flex items-center justify-center max-h-80 md:max-h-96 w-full h-full" : "aspect-[16/9] relative bg-[#230505] flex items-center justify-center max-h-80 md:max-h-96 w-full h-full"}>
-                                                <Image
-                                                    src={featuredImageObj?.url || "/placeholder.svg"}
-                                                    alt={featuredImageObj?.alt || article.title}
-                                                    fill
-                                                    className={isPortrait ? "object-contain object-center" : "object-cover object-center"}
-                                                    style={isPortrait ? {maxHeight: '24rem', backgroundColor: 'transparent'} : {backgroundColor: 'transparent'}}
-                                                />
-                                            </div>
-                                        </Link>
-                                    </div>
-                                    <div className="p-6 md:w-1/2 flex flex-col justify-start">
-                                        <div className="flex items-center text-gray-400 text-sm mb-2">
-                                            <span>{formatDate(article.published_date)}</span>
-                                            <span className="mx-2">•</span>
-                                            <span>{lang === 'en' ? article.category_eng : article.category}</span>
-                                        </div>
-                                        <Link href={{ pathname: `/hirek/${article.slug}`, query: { lang } }} className="hover:text-frtRed transition-colors">
-                                            <h2 className="text-2xl font-bold mb-3">{lang === 'en' ? article.title_eng : article.title}</h2>
-                                        </Link>
-                                        <div className="text-gray-300 mb-4">
-                                            <RichText data={lang === 'en' ? article.short_description_eng : article.short_description} />
-                                        </div>
-                                        <Link
-                                            href={{ pathname: `/hirek/${article.slug}`, query: { lang } }}
-                                            className="inline-block text-frtRed hover:text-red-400 transition-colors"
-                                        >
-                                            {translations.readMore}
-                                        </Link>
-                                    </div>
-                                </div>
-                            </article>
-                        );
-                    })}
+                    {articles.map((article) => (
+                        <NewsCard key={article.id} article={article} lang={lang} readMoreText={translations.readMore} />
+                    ))}
                 </div>
             </div>
         </main>

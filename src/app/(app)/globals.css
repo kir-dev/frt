@@ -9,6 +9,7 @@
       --font-sans: Arial, Helvetica, sans-serif;
       --font-mono: "Courier New", Courier, monospace;
         --color-frtRed: #D51028;
+        --color-frtcardBG: #230505;
         --font-frtFocimek: "BANKGOTHIC";
         --font-frtszoveg: "RAJDHANI";
         --color-sidebar-ring: var(--sidebar-ring);
@@ -152,7 +153,7 @@
 
 /* Egyéb formázások, ha szükséges (pl. linkek, címsorok, stb.) */
 .rich-text-content a {
-  color: theme('colors.red.600'); /* Példa: Tailwind piros szín */
+  color: theme('colors.frtRed');
   text-decoration: underline;
 }
 
