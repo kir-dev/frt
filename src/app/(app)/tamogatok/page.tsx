@@ -60,12 +60,7 @@ export default async function SponsorsPage(props: SponsorsPageProps) {
                         </h2>
 
                         <div
-                            className={`grid 
-                                ${["diamond", "gold"].includes(tier) ? "grid-cols-2" : "grid-cols-3"} 
-                                sm:grid-cols-2 lg:grid-cols-3 gap-6
-                                ${["copper", "other", "bme"].includes(tier) ? " md:grid-cols-3 lg:grid-cols-6" : ""}
-                                ${tier === "silver" ? " md:grid-cols-3 lg:grid-cols-4" : ""}
-                            `.replace(/\s+/g, ' ')}
+                            className={getGridClassNames(tier)}
                         >
                             {sponsorsByTier[tier].map((sponsor) => {
                                 let logoUrl = "/placeholder.svg";
