@@ -59,7 +59,14 @@ export default async function SponsorsPage(props: SponsorsPageProps) {
                             {tierTranslations[tier as keyof typeof tierTranslations] || tier}
                         </h2>
 
-                        <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6${["copper", "other", "bme"].includes(tier) ? " md:grid-cols-3 lg:grid-cols-6" : ""}${tier === "silver" ? " md:grid-cols-3 lg:grid-cols-4" : ""}`}>
+                        <div
+                            className={`grid 
+                                ${["diamond", "gold"].includes(tier) ? "grid-cols-2" : "grid-cols-3"} 
+                                sm:grid-cols-2 lg:grid-cols-3 gap-6
+                                ${["copper", "other", "bme"].includes(tier) ? " md:grid-cols-3 lg:grid-cols-6" : ""}
+                                ${tier === "silver" ? " md:grid-cols-3 lg:grid-cols-4" : ""}
+                            `.replace(/\s+/g, ' ')}
+                        >
                             {sponsorsByTier[tier].map((sponsor) => {
                                 let logoUrl = "/placeholder.svg";
                                 if (sponsor.logo && typeof sponsor.logo === "object" && "url" in sponsor.logo) {
@@ -113,4 +120,3 @@ export default async function SponsorsPage(props: SponsorsPageProps) {
         </main>
     )
 }
-
