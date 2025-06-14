@@ -42,7 +42,7 @@ export default async function SocialFeed() {
             {posts.map((post) => (
                 <div
                     key={post.id}
-                    className="bg-[#230505] rounded-lg overflow-hidden shadow-md flex flex-col transition-transform duration-200 hover:scale-105 hover:shadow-lg"
+                    className="bg-frtcardBG rounded-lg overflow-hidden shadow-md flex flex-col transition-transform duration-200 hover:scale-105 hover:shadow-lg"
                 >
                     <Link
                         href={post.link}

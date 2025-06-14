@@ -17,11 +17,11 @@ export default function NewsCard({ article, lang = 'hu', readMoreText = 'Tovább
     : false;
 
   return (
-    <article className="bg-[#230505] rounded-lg overflow-hidden">
+    <article className="bg-frtcardBG rounded-lg overflow-hidden">
       <div className="md:flex">
         <div className="md:w-1/2 flex items-center p-2">
           <Link href={{ pathname: `/hirek/${article.slug}`, query: { lang } }} className="w-full">
-            <div className={isPortrait ? "aspect-[3/4] relative bg-[#230505] flex items-center justify-center max-h-80 md:max-h-96 w-full h-full" : "aspect-[16/9] relative bg-[#230505] flex items-center justify-center max-h-80 md:max-h-96 w-full h-full"}>
+            <div className={isPortrait ? "aspect-[3/4] relative bg-frtcardBG flex items-center justify-center max-h-80 md:max-h-96 w-full h-full" : "aspect-[16/9] relative bg-frtcardBG flex items-center justify-center max-h-80 md:max-h-96 w-full h-full"}>
               <Image
                 src={featuredImageObj?.url || "/placeholder.svg"}
                 alt={featuredImageObj?.alt || article.title}
