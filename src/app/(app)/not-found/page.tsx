@@ -16,7 +16,7 @@ function NotFoundContent() {
         }
     }, [searchParams]);
 
-    const texts: Record<string, { notFound: string; msg1: string; msg2: string; home: string; back: string; links: string; recruitment: string; about: string; contact: string }> = {
+    const texts: Record<string, { notFound: string; msg1: string; msg2: string; home: string; back: string; links: string; news:string; recruitment: string; about: string; supportUs: string }> = {
         hu: {
             notFound: "Oldal nem található",
             msg1: "A keresett oldal nem létezik vagy áthelyezték.",
@@ -24,9 +24,10 @@ function NotFoundContent() {
             home: "Főoldal",
             back: "Vissza",
             links: "Hasznos linkek",
+            news: "Hírek",
             recruitment: "Tagfelvétel",
             about: "Rólunk",
-            contact: "Kapcsolat"
+            supportUs: "Támogass minket"
         },
         en: {
             notFound: "Page not found",
@@ -35,9 +36,10 @@ function NotFoundContent() {
             home: "Home",
             back: "Back",
             links: "Useful links",
+            news: "News",
             recruitment: "Recruitment",
             about: "About us",
-            contact: "Contact"
+            supportUs: "Support us"
         }
     };
     const t = texts[language];
@@ -85,10 +87,10 @@ function NotFoundContent() {
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Link
-                            href={`/?lang=${language}`}
+                            href={`/hirek?lang=${language}`}
                             className="block p-3 bg-red-950/50 hover:bg-red-900/50 rounded-lg transition-colors text-center"
                         >
-                            <span className="font-medium">{t.home}</span>
+                            <span className="font-medium">{t.news}</span>
                         </Link>
                         <Link
                             href={`/tagfelvetel?lang=${language}`}
@@ -97,16 +99,16 @@ function NotFoundContent() {
                             <span className="font-medium">{t.recruitment}</span>
                         </Link>
                         <Link
-                            href={`/?lang=${language}`}
+                            href={`/rolunk?lang=${language}`}
                             className="block p-3 bg-red-950/50 hover:bg-red-900/50 rounded-lg transition-colors text-center"
                         >
                             <span className="font-medium">{t.about}</span>
                         </Link>
                         <Link
-                            href={`/?lang=${language}`}
+                            href={`/not-found?lang=${language}`}
                             className="block p-3 bg-red-950/50 hover:bg-red-900/50 rounded-lg transition-colors text-center"
                         >
-                            <span className="font-medium">{t.contact}</span>
+                            <span className="font-medium">{t.supportUs}</span>
                         </Link>
                     </div>
                 </div>
