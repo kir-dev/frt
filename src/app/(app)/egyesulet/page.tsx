@@ -14,7 +14,7 @@ export default async function AssociationPage() {
         return (
             <main className="min-h-screen bg-black text-white">
                 <div className="container mx-auto px-4 py-12 max-w-5xl">
-                    <div className="bg-gray-900 rounded-lg p-8 text-center">
+                    <div className="bg-frtcardBG rounded-lg p-8 text-center">
                         <Building2 size={48} className="mx-auto mb-4 text-gray-600" />
                         <h1 className="text-2xl font-bold mb-4">Egyesület információ nem elérhető</h1>
                         <p className="text-gray-400">Az egyesület adatai jelenleg nem tölthetők be.</p>
@@ -28,7 +28,6 @@ export default async function AssociationPage() {
         <main className="min-h-screen bg-black text-white">
             <div className="container mx-auto px-4 py-16 max-w-4xl">
                 <div className="flex items-center gap-3 mb-8">
-                    <Building2 size={32} className="text-red-500" />
                     <h1 className="text-4xl font-bold">{association.title}</h1>
                 </div>
 
@@ -36,15 +35,14 @@ export default async function AssociationPage() {
                     <RichText data={association.content} />
                 </div>
 
-                <div className="mt-12 bg-gray-900 rounded-lg p-6">
+                <div className="mt-12 bg-frtcardBG rounded-lg p-6">
                     <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                        <Mail size={24} className="text-red-500" />
                         Kapcsolatfelvétel
                     </h3>
                     <div className="space-y-3 text-gray-300">
                         <div className="flex items-center gap-3">
                             <Mail size={18} className="text-gray-400" />
-                            <a href="mailto:info@bmeformularacing.hu" className="hover:text-red-500 transition-colors">
+                            <a href="mailto:info@bmeformularacing.hu" className="hover:text-frtRed transition-colors">
                                 info@bmeformularacing.hu
                             </a>
                         </div>
@@ -55,7 +53,7 @@ export default async function AssociationPage() {
                     </div>
                 </div>
 
-                <div className="mt-8 bg-gray-900 rounded-lg p-6">
+                <div className="mt-8 bg-frtcardBG rounded-lg p-6">
                     <h3 className="text-xl font-bold mb-4">Támogatás</h3>
                     <p className="text-gray-300 mb-4">
                         Ha szeretné támogatni az egyesület munkáját és a csapat tevékenységét, kérjük, vegye fel velünk a
@@ -64,7 +62,7 @@ export default async function AssociationPage() {
                     <div className="flex flex-wrap gap-4">
                         <a
                             href="mailto:info@bmeformularacing.hu?subject=Támogatás"
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-frtRed hover:bg-red-800 text-white rounded-lg transition-colors"
                         >
                             <Mail size={16} />
                             Kapcsolatfelvétel
