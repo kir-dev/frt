@@ -78,6 +78,7 @@ export interface Config {
     sponsors: Sponsor;
     recruitment: Recruitment;
     groups: Group;
+    association: Association;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -95,6 +96,7 @@ export interface Config {
     sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     recruitment: RecruitmentSelect<false> | RecruitmentSelect<true>;
     groups: GroupsSelect<false> | GroupsSelect<true>;
+    association: AssociationSelect<false> | AssociationSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -572,6 +574,49 @@ export interface Recruitment {
   createdAt: string;
 }
 /**
+ * Az egyesület szerkeszthető tartalmai
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "association".
+ */
+export interface Association {
+  id: number;
+  title: string;
+  title_en: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  content_en: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
@@ -621,6 +666,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'groups';
         value: number | Group;
+      } | null)
+    | ({
+        relationTo: 'association';
+        value: number | Association;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -848,6 +897,18 @@ export interface GroupsSelect<T extends boolean = true> {
   description?: T;
   descriptionEng?: T;
   order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "association_select".
+ */
+export interface AssociationSelect<T extends boolean = true> {
+  title?: T;
+  title_en?: T;
+  content?: T;
+  content_en?: T;
   updatedAt?: T;
   createdAt?: T;
 }
