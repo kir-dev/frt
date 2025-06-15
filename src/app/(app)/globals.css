@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@plugin "@tailwindcss/typography";
+
 @custom-variant dark (&:is(.dark *));
 
     @theme inline {
@@ -155,6 +157,17 @@
 .rich-text-content a {
   color: theme('colors.frtRed');
   text-decoration: underline;
+}
+
+.rich-text-content h1 {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+.rich-text-content h2 {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
 }
 
 

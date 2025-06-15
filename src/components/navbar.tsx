@@ -49,7 +49,7 @@ const navItems = [
         href: "",
         dropdown: [
             { name: "Csapat", nameEn: "Team", href: "/rolunk" },
-            { name: "Egyesület", nameEn: "Association", href: "/not-found" },
+            { name: "Egyesület", nameEn: "Association", href: "/egyesulet" },
             { name: "Publikációk", nameEn: "Publications", href: "/publikaciok" },
             { name: "Tag felvétel", nameEn: "Joining process", href: "/tagfelvetel" },
             { name: "Galéria", nameEn: "Gallery", href: "/not-found" },

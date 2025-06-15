@@ -90,3 +90,13 @@ export async function getPublications() {
     return publications.docs
 }
 
+export async function getAssociation() {
+    const payload = await getPayload({ config })
+    const association = await payload.find({
+        collection: "association",
+        limit: 1,
+    })
+
+    return association.docs.length > 0 ? association.docs[0] : null
+}
+
