@@ -79,3 +79,14 @@ export async function getArticleBySlug(slug: string) {
     return article.docs.length > 0 ? article.docs[0] : null
 }
 
+export async function getPublications() {
+    const payload = await getPayload({ config })
+    const publications = await payload.find({
+        collection: "publications",
+        limit: 1000,
+        sort: "-createdAt",
+    })
+
+    return publications.docs
+}
+
