@@ -8,7 +8,7 @@ const Association: CollectionConfig = {
     description: 'Az egyesület szerkeszthető tartalmai',
   },
   access: {
-    create: async ({ req, data }) => {
+    create: async ({}) => {
       const payload = await getPayload({ config })
       const docs = await payload.find({ collection: 'association', limit: 1 });
       return docs.totalDocs === 0;

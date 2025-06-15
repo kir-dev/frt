@@ -8,14 +8,18 @@ export const metadata = {
 }
 
 interface AssociationPageProps {
-    searchParams?: Record<string, string>;
+    searchParams?: Promise<Record<string, string>>;
 }
 
 export default async function AssociationPage(props: AssociationPageProps) {
     // Nyelvi paraméter kezelése
     let lang = 'hu';
-    if (props?.searchParams && props.searchParams.lang === 'en') {
-        lang = 'en';
+    let sp: Record<string, string> | undefined = undefined;
+    if (props?.searchParams) {
+        sp = await props.searchParams;
+        if (sp && typeof sp.lang === 'string' && sp.lang === 'en') {
+            lang = 'en';
+        }
     }
 
     const translations = {
