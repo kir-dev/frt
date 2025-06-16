@@ -1,5 +1,6 @@
 import {CollectionConfig, getPayload} from 'payload';
 import config from "@payload-config";
+import {FixedToolbarFeature, lexicalEditor} from "@payloadcms/richtext-lexical";
 
 const Association: CollectionConfig = {
   slug: 'association',
@@ -35,12 +36,24 @@ const Association: CollectionConfig = {
       type: 'richText',
       label: 'Tartalom',
       required: true,
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          FixedToolbarFeature(),
+        ]
+      })
     },
     {
         name: 'content_en',
         type: 'richText',
         label: 'Tartalom (angol)',
         required: true,
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          FixedToolbarFeature(),
+        ]
+      })
     },
   ],
 };

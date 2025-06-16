@@ -41,7 +41,7 @@ export const CarSection = ({ car, lang }: Props) => {
           {car.year} - {car.name}
         </h1>
 
-        <div className="prose max-w-none mb-6">
+        <div className="prose max-w-none mb-6 text-white">
           <RichText
             data={lang == ENGLISH ? car.description_eng : car.description}
           />

@@ -24,7 +24,7 @@ export default function Error({
                 <Button
                     onClick={reset}
                     variant="outline"
-                    className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
+                    className="border-frtRed text-frtRed hover:bg-frtRed hover:text-white"
                 >
                     Próbálja újra
                 </Button>

@@ -48,40 +48,39 @@ export default async function PublicationsPage(props: PublicationsPageProps) {
                 <div className="space-y-8">
                     {publications.map((publication) => (
                         <article key={publication.id} className="bg-frtcardBG rounded-lg p-6 hover:bg-red-950 transition-colors">
-                            <div className="flex flex-col lg:flex-row lg:items-start gap-6">
-                                <div className="flex-1">
-                                    <div className="flex items-center gap-2 text-gray-400 text-sm mb-3">
-                                        <User size={16} />
-                                        <span>{publication.author}</span>
+                            <div className="flex flex-col gap-4">
+                                <div className="relative w-full">
+                                    <div className="flex flex-col">
+                                        <div className="flex items-center gap-2 text-gray-400 text-sm">
+                                            <User size={16} />
+                                            <span>{publication.author}</span>
+                                        </div>
+                                        <Link
+                                            href={publication.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="group inline-block"
+                                        >
+                                            <h2 className="text-xl font-bold group-hover:text-frtRed transition-colors flex items-center gap-2">
+                                                {lang === 'en' ? publication.title_eng : publication.title}
+                                                <ExternalLink size={18} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            </h2>
+                                        </Link>
                                     </div>
-
-                                    <Link
-                                        href={publication.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="group inline-block"
-                                    >
-                                        <h2 className="text-xl font-bold mb-4 group-hover:text-frtRed transition-colors flex items-center gap-2">
-                                            {lang === 'en' ? publication.title_eng : publication.title}
-                                            <ExternalLink size={18} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        </h2>
-                                    </Link>
-
-                                    <div className="text-gray-300 prose prose-invert max-w-none">
-                                        <RichText data={lang === 'en' ? publication.description_eng : publication.description} />
+                                    <div className="absolute top-0 right-0">
+                                        <Link
+                                            href={publication.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 px-4 py-2 bg-frtRed hover:bg-red-800 text-white rounded-lg transition-colors text-sm font-medium"
+                                        >
+                                            <ExternalLink size={16} />
+                                            {lang === 'en' ? 'View' : 'Megtekintés'}
+                                        </Link>
                                     </div>
                                 </div>
-
-                                <div className="lg:w-auto">
-                                    <Link
-                                        href={publication.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 px-4 py-2 bg-frtRed hover:bg-red-800 text-white rounded-lg transition-colors text-sm font-medium"
-                                    >
-                                        <ExternalLink size={16} />
-                                        {lang === 'en' ? 'View' : 'Megtekintés'}
-                                    </Link>
+                                <div className="text-gray-300 prose prose-invert max-w-none w-full">
+                                    <RichText data={lang === 'en' ? publication.description_eng : publication.description} />
                                 </div>
                             </div>
                         </article>
