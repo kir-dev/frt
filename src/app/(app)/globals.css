@@ -168,6 +168,13 @@
 .rich-text-content h2 {
   font-size: 1.5em;
   margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.rich-text-content h3 {
+  font-size: 1.25em;
+  margin-bottom: 0.5em;
+    font-weight: bold;
 }
 
 

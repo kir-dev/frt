@@ -1,4 +1,5 @@
 import { CollectionConfig } from "payload";
+import {FixedToolbarFeature, lexicalEditor} from "@payloadcms/richtext-lexical";
 
 export const Cars: CollectionConfig = {
   slug: "cars",
@@ -24,12 +25,24 @@ export const Cars: CollectionConfig = {
       type: "richText",
       required: true,
       label: "Autó rövid leírása",
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          FixedToolbarFeature(),
+        ]
+      })
     },
     {
       name: "description_eng",
       type: "richText",
       required: true,
       label: "Autó rövid leírása angolul",
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          FixedToolbarFeature(),
+        ]
+      })
     },
     {
       name: "image",

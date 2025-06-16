@@ -1,4 +1,5 @@
 import {CollectionConfig} from "payload";
+import {FixedToolbarFeature, lexicalEditor} from "@payloadcms/richtext-lexical";
 
 export const Articles: CollectionConfig = {
   slug: "articles",
@@ -36,12 +37,24 @@ export const Articles: CollectionConfig = {
       type: "richText",
       required: true,
       label: "Tartalom",
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          FixedToolbarFeature(),
+        ]
+      })
     },
     {
       name: "content_eng",
       type: "richText",
       required: true,
       label: "Angol Tartalom",
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          FixedToolbarFeature(),
+        ]
+      })
     },
     {
       name: "published_date",
