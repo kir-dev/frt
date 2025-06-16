@@ -15,7 +15,7 @@
     "@payloadcms/email-nodemailer": "3.40.0",
     "@payloadcms/next": "3.40.0",
     "@payloadcms/payload-cloud": "3.40.0",
-    "@payloadcms/richtext-lexical": "^3.40.0",
+    "@payloadcms/richtext-lexical": "3.40.0",
     "@payloadcms/storage-s3": "3.40.0",
     "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
