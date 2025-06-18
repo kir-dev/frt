@@ -66,17 +66,17 @@ export default async function PublicationsPage(props: PublicationsPageProps) {
                                                 <ExternalLink size={18} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                                             </h2>
                                         </Link>
-                                    </div>
-                                    <div className="absolute top-0 right-0">
-                                        <Link
-                                            href={publication.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-2 px-4 py-2 bg-frtRed hover:bg-red-800 text-white rounded-lg transition-colors text-sm font-medium"
-                                        >
-                                            <ExternalLink size={16} />
-                                            {lang === 'en' ? 'View' : 'Megtekintés'}
-                                        </Link>
+                                        <div className="mt-2 sm:mt-0 sm:absolute sm:top-0 sm:right-0 w-fit">
+                                            <Link
+                                                href={publication.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-1 px-3 py-2 sm:px-2 sm:py-1 bg-frtRed hover:bg-red-800 text-white rounded-md transition-colors text-xs font-medium"
+                                            >
+                                                <ExternalLink size={14} />
+                                                {lang === 'en' ? 'View' : 'Megtekintés'}
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="text-gray-300 prose prose-invert max-w-none w-full">
