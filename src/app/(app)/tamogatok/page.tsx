@@ -82,7 +82,7 @@ export default async function SponsorsPage(props: SponsorsPageProps) {
                                 const isNarrow = ["copper", "other", "bme"].includes(tier);
                                 const isSilver = tier === "silver";
                                 return (
-                                    <div key={sponsor.id} className={`bg-white rounded-lg p-4 flex items-center justify-center ${isNarrow ? " max-w-full h-20" : isSilver ? " max-w-full h-28 " : "h-40"}`}>
+                                    <div key={sponsor.id} className={`bg-white rounded-lg p-4 flex items-center justify-center h-28 md:h-36 lg:h-40${isNarrow ? " max-w-full sm:h-20 md:h-28 lg:h-40" : isSilver ? " max-w-full sm:h-28 md:h-32 lg:h-36 " : ""}`}>
                                         {sponsor.website ? (
                                             <Link
                                                 href={sponsor.website}
