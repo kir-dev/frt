@@ -48,14 +48,14 @@ export default async function SponsorsPage(props: SponsorsPageProps) {
 
     // Function to get grid class names based on tier
     const getGridClassNames = (tier: string) => {
-                return (
-                    `grid ` +
-                    `${["diamond", "gold"].includes(tier) ? "grid-cols-2" : "grid-cols-3"} ` +
-                    `sm:grid-cols-2 lg:grid-cols-3 gap-6 ` +
-                    `${["copper", "other", "bme"].includes(tier) ? "md:grid-cols-3 lg:grid-cols-6 " : ""}` +
-                    `${tier === "silver" ? "md:grid-cols-3 lg:grid-cols-4 " : ""}`
-                ).replace(/\s+/g, ' ').trim();
-            }
+        return (
+            `grid ` +
+            `${["diamond", "gold"].includes(tier) ? "grid-cols-2" : "grid-cols-3"} ` +
+            `gap-2 sm:gap-4 lg:gap-6 ` +
+            `${["copper", "other", "bme"].includes(tier) ? "md:grid-cols-3 lg:grid-cols-6 " : ""}` +
+            `${tier === "silver" ? "md:grid-cols-3 lg:grid-cols-4 " : ""}`
+        ).replace(/\s+/g, ' ').trim();
+    }
 
     // Sort tiers by predefined order
     const sortedTiers = Object.keys(sponsorsByTier).sort((a, b) => tierOrder.indexOf(a) - tierOrder.indexOf(b))
@@ -82,7 +82,7 @@ export default async function SponsorsPage(props: SponsorsPageProps) {
                                 const isNarrow = ["copper", "other", "bme"].includes(tier);
                                 const isSilver = tier === "silver";
                                 return (
-                                    <div key={sponsor.id} className={`bg-white rounded-lg p-4 flex items-center justify-center h-40${isNarrow ? " max-w-full" : isSilver ? " max-w-full " : ""}`}>
+                                    <div key={sponsor.id} className={`bg-white rounded-lg p-4 flex items-center justify-center ${isNarrow ? " max-w-full h-20" : isSilver ? " max-w-full h-28 " : "h-40"}`}>
                                         {sponsor.website ? (
                                             <Link
                                                 href={sponsor.website}
