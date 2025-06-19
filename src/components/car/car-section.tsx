@@ -61,7 +61,7 @@ export const CarSection = ({ car, lang }: Props) => {
           alt={(car.image as Media).alt || "Car image"}
           title={lang == ENGLISH ? "Open gallery" : "Galéria megnyitása"}
           onClick={showPictureViewer}
-          className="rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer w-full h-fit mb-6"
+          className="rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer w-full h-auto object-contain mb-6"
         />
 
         {isImageViewerVisible && (
