@@ -77,7 +77,7 @@ export const CarSection = ({ car, lang }: Props) => {
             model={car.interactive_model as Media}
           ></ModelViewer>
         )}
-        <hr className="border-frtRed border-2 rounded-full mt-10" />
+        <hr className="border-frtRed border-1 rounded-full mt-10" />
       </section>
     </>
   );
