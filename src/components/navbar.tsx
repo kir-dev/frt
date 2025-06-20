@@ -9,6 +9,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Suspense } from "react"
+import {ThemeToggle} from "@/components/theme-toggle";
 
 // Define the dropdown menu structure based on the requirements
 const navItems = [
@@ -189,6 +190,8 @@ function NavbarContent() {
                                 )}
                             </div>
                         ))}
+
+                        <ThemeToggle />
 
                         {/* Language Switcher */}
                         <button
