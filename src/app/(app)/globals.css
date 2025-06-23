@@ -178,23 +178,23 @@
 
 /* Custom color for FRT Red */
 .text-frtRed {
-  color: #D51028; /* red-600 */
+  color: #D51028; 
 }
 
 .bg-frtRed {
-  background-color: #D51028; /* red-600 */
+  background-color: #D51028; 
 }
 
 .border-frtRed {
-  border-color: #D51028; /* red-600 */
+  border-color: #D51028; 
 }
 
 .hover\:text-frtRed:hover {
-  color: #dc2626; /* red-600 */
+  color: #dc2626; 
 }
 
 .hover\:bg-frtRed:hover {
-  background-color: #dc2626; /* red-600 */
+  background-color: #dc2626; 
 }
 
 /* Theme-specific overrides */
@@ -216,6 +216,18 @@ html.light .bg-black {
 
 html.light .text-white {
   @apply !text-gray-900;
+}
+
+html.light .text-gray-200 {
+  @apply !text-gray-900;
+}
+
+html.light .text-gray-400 {
+  @apply !text-gray-900;
+}
+
+html.light .bg-white {
+  @apply !border-gray-200 border-2 !bg-white;
 }
 
 html.light .text-gray-300 {
@@ -260,6 +272,18 @@ html.light .hover\:text-red-500:hover {
 
 html.light .hover\:text-red-400:hover {
   @apply !text-red-400;
+}
+
+html.light .bg-frtcardBG {
+  @apply !bg-red-200;
+}
+
+html.light .bg-frtRed {
+  @apply !bg-red-200;
+}
+
+html.light .hover\:bg-red-800:hover {
+  @apply !bg-red-400;
 }
 
 /* Dark mode styles (default) */

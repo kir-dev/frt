@@ -5,7 +5,7 @@ import NewsCard from "@/components/NewsCard";
 import Image from "next/image"
 
 export const metadata = {
-    title: "Főoldal",
+    title: "BME Formula Racing Team",
     description: "Üdvözöljük a csapatunk hivatalos weboldalán",
 }
 
@@ -58,7 +58,7 @@ export default async function HomePage(props: HomePageProps) {
     const langKey = lang as Lang;
 
     return (
-        <main className="min-h-screen bg-black text-white">
+        <main className="min-h-screen font-frtszoveg bg-black text-white">
             {/* Team photo full width */}
             <div className="w-full">
                 <Image
@@ -66,7 +66,7 @@ export default async function HomePage(props: HomePageProps) {
                     alt={lang === 'en' ? "Team photo" : "Csapatkép"}
                     width={1920}
                     height={600}
-                    className="mt-5 w-full h-auto object-cover max-h-[600px]"
+                    className="w-full h-auto object-cover max-h-[600px]"
                     priority
                 />
             </div>
@@ -97,7 +97,7 @@ export default async function HomePage(props: HomePageProps) {
                         <div className="mt-6 text-center">
                             <Link
                                 href={lang === 'en' ? "/hirek?lang=en" : "/hirek"}
-                                className="inline-block px-6 py-3 bg-frtRed hover:bg-red-800 text-white rounded-lg transition-colors"
+                                className="px-6 py-3 bg-frtRed hover:bg-red-800 text-white rounded-lg transition-colors"
                             >
                                 {texts.allNews[langKey]}
                             </Link>

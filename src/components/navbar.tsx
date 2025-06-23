@@ -10,6 +10,7 @@ import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Suspense } from "react"
 import {ThemeToggle} from "@/components/theme-toggle";
+import { useTheme } from "@/components/theme-provider";
 
 // Define the dropdown menu structure based on the requirements
 const navItems = [
@@ -68,6 +69,7 @@ function NavbarContent() {
     const pathname = usePathname()
     const router = useRouter();
     const searchParams = useSearchParams();
+    const { theme } = useTheme();
 
     // Initialize language from URL on component mount
     useEffect(() => {
@@ -142,7 +144,7 @@ function NavbarContent() {
                     {/* Logo */}
                     <Link href={addLangToHref("/")} className="flex items-center">
                         <Image
-                            src="/FRT_felirat_white.svg"
+                            src={theme === "dark" ? "/FRT_felirat_white.svg" : "/FRT_felirat_black_1.svg"}
                             alt="BME Formula Racing Team"
                             width={150}
                             height={50}
