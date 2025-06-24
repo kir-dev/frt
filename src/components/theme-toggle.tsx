@@ -12,7 +12,14 @@ export function ThemeToggle() {
             variant="ghost"
             size="icon"
             onClick={toggleTheme}
-            className="w-10 h-10 text-white hover:text-red-500 hover:bg-gray-800 dark:text-white dark:hover:text-red-500 dark:hover:bg-gray-800 light:text-gray-900 light:hover:text-red-500 light:hover:bg-gray-100"
+            className={
+                `w-10 h-10
+                ${theme === "dark"
+                    ? "text-white hover:text-frtRed hover:bg-gray-800"
+                    : "text-gray-900 hover:text-frtRed hover:bg-gray-200"}
+                dark:text-white dark:hover:text-frtRed dark:hover:bg-gray-800
+                light:text-gray-900 light:hover:text-frtRed light:hover:bg-gray-200`
+            }
             aria-label="Toggle theme"
         >
             {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}

@@ -277,13 +277,27 @@ function NavbarContent() {
                         </div>
                     ))}
 
-                    {/* Mobile Language Switcher */}
-                    <div className="mt-2">
+                    {/* Mobile Language Switcher & ThemeToggle in one row */}
+                    <div className="mt-2 flex flex-row gap-2 items-center">
+                        <ThemeToggle />
                         <button
                             onClick={toggleLanguage}
-                            className="flex items-center px-3 py-2 text-white hover:text-frtRed transition-colors"
+                            className={
+                                `flex items-center px-3 py-2 font-bold transition-colors outline-none border-0 shadow-none
+                                ${theme === "dark"
+                                    ? "text-white bg-black hover:bg-gray-700 hover:text-frtRed"
+                                    : "text-gray-900 bg-white hover:bg-gray-200 hover:text-frtRed"}
+                                `
+                            }
+                            style={{ boxShadow: 'none', border: 'none' }}
                         >
-                            <div className="w-8 h-8 flex items-center justify-center bg-gray-500 text-white font-bold rounded-lg mr-2">
+                            <div className={
+                                `w-8 h-8 flex items-center justify-center font-bold rounded-lg mr-2
+                                ${theme === "dark"
+                                    ? "bg-gray-700 text-white"
+                                    : "bg-gray-200 text-gray-900"}
+                                `
+                            }>
                                 {language === "hu" ? "EN" : "HU"}
                             </div>
                             {language === "hu" ? "English" : "Magyar"}
