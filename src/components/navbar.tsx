@@ -2,15 +2,14 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { ChevronDown } from "lucide-react"
+import { useTheme } from "@/components/theme-provider"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { cn } from "@/lib/utils"
-import { Suspense } from "react"
-import {ThemeToggle} from "@/components/theme-toggle";
-import { useTheme } from "@/components/theme-provider";
+import { ChevronDown } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { Suspense, useEffect, useState } from "react"
 
 // Define the dropdown menu structure based on the requirements
 const navItems = [
@@ -21,17 +20,19 @@ const navItems = [
         dropdown: null,
     },
     {
-        name: "Hírek",
-        nameEn: "News",
-        href: "/hirek",
-        dropdown: null,
+        name: "Olvasni valók",
+        nameEn: "Reading Materials",
+        href: "",
+        dropdown: [
+            { name: "Hírek", nameEn: "News", href: "/hirek" },
+            { name: "Publikációk", nameEn: "Publications", href: "/publikaciok" },
+        ],
     },
     {
         name: "Versenyzés",
         nameEn: "Racing",
         href: "",
         dropdown: [
-            { name: "Esemény naptár", nameEn: "Event calendar", href: "/not-found" },
             { name: "Formula Student", nameEn: "Formula Student", href: "/formula-student" },
             { name: "Autók", nameEn: "Cars", href: "/autok" },
         ],
@@ -51,9 +52,10 @@ const navItems = [
         href: "",
         dropdown: [
             { name: "Csapat", nameEn: "Team", href: "/rolunk" },
+            { name: "Esemény naptár", nameEn: "Event calendar", href: "/not-found" },
+            { name: "Tagfelvétel", nameEn: "Joining process", href: "/tagfelvetel" },
+            { name: "Kapcsolat", nameEn: "Contact", href: "/not-found" },
             { name: "Egyesület", nameEn: "Association", href: "/egyesulet" },
-            { name: "Publikációk", nameEn: "Publications", href: "/publikaciok" },
-            { name: "Tag felvétel", nameEn: "Joining process", href: "/tagfelvetel" },
             { name: "Galéria", nameEn: "Gallery", href: "/not-found" },
         ],
     },
@@ -135,8 +137,8 @@ function NavbarContent() {
     return (
         <nav
             className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-                isScrolled ? "bg-black shadow-lg" : "bg-black bg-opacity-90",
+                "fixed top-0 left-0 right-0 z-50 transition-all duration-300 !bg-frtRed",
+                isScrolled ? "shadow-lg" : "",
             )}
         >
             <div className="container min-w-screen px-6 font-frtszoveg text-xl">
@@ -144,7 +146,7 @@ function NavbarContent() {
                     {/* Logo */}
                     <Link href={addLangToHref("/")} className="flex items-center">
                         <Image
-                            src={theme === "dark" ? "/FRT_felirat_white.svg" : "/FRT_felirat_black_1.svg"}
+                            src= "/FRT_felirat_white.svg"
                             alt="BME Formula Racing Team"
                             width={150}
                             height={50}
@@ -159,7 +161,7 @@ function NavbarContent() {
                                 <Link
                                     href={addLangToHref(item.href)}
                                     className={cn(
-                                        "px-3 py-2 text-white hover:text-frtRed transition-colors",
+                                        "px-3 py-2 !text-white hover:text-frtRed transition-colors",
                                     )}
                                     onClick={item.dropdown ? (e) => handleDesktopDropdownClick(item.name, e) : undefined}
                                 >
@@ -197,19 +199,19 @@ function NavbarContent() {
                         <button
                             onClick={toggleLanguage}
                             className={
-                                `flex items-center px-3 py-2 font-bold transition-colors outline-none border-0 shadow-none rounded-lg
+                                `flex items-center px-3 py-2 font-bold transition-colors outline-none border-0 shadow-none rounded-lg 
                                 ${theme === "dark"
-                                    ? "text-white bg-black  hover:text-frtRed"
-                                    : "text-gray-900 bg-white hover:bg-gray-200 hover:text-frtRed"}
+                                    ? "!text-white hover:text-white"
+                                    : "!text-white hover:text-white"}
                                 `
                             }
                             style={{ boxShadow: 'none', border: 'none' }}
                         >
                             <div className={
-                                `w-10 h-10 flex items-center justify-center font-bold rounded-lg mr-2
+                                `w-10 h-10 flex items-center justify-center font-bold rounded-lg mr-2 hover:bg-red-400
                                 ${theme === "dark"
-                                    ? "bg-gray-700 hover:bg-gray-800 hover:text-frtRed text-white"
-                                    : "bg-gray-200 hover:bg-gray-300 hover:text-frtRed text-gray-900"}
+                                    ? "!text-white"
+                                    : "!text-white"}
                                 `
                             }>
                                 {language === "hu" ? "EN" : "HU"}
@@ -329,7 +331,7 @@ function NavbarContent() {
 export default function Navbar() {
     return (
         <Suspense fallback={
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-90">
+            <nav className="fixed top-0 left-0 right-0 z-50 bg-frtRed">
                 <div className="container min-w-screen px-6 font-frtszoveg text-xl">
                     <div className="flex items-center justify-between h-20">
                         <div className="flex items-center">

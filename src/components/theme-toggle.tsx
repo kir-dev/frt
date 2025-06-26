@@ -2,27 +2,24 @@
 
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "./theme-provider"
-import { Button } from "@/components/ui/button"
 
 export function ThemeToggle() {
     const { theme, toggleTheme } = useTheme()
 
     return (
-        <Button
-            variant="ghost"
-            size="icon"
+        <button
             onClick={toggleTheme}
             className={
-                `w-10 h-10
+                `w-10 h-10 flex items-center justify-center font-bold transition-colors outline-none border-0 shadow-none rounded-lg hover:bg-red-400
                 ${theme === "dark"
-                    ? "text-white bg-gray-700 hover:text-frtRed hover:bg-gray-800"
-                    : "text-gray-900 bg-gray-200 hover:text-frtRed hover:bg-gray-300"}
-                dark:text-white dark:hover:text-frtRed dark:hover:bg-gray-800
-                light:text-gray-900 light:hover:text-frtRed light:hover:bg-gray-200`
+                    ? "!text-white hover:text-white"
+                    : "!text-white hover:text-white"}
+                `
             }
+            style={{ boxShadow: 'none', border: 'none' }}
             aria-label="Toggle theme"
         >
             {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-        </Button>
+        </button>
     )
 }
