@@ -19,7 +19,7 @@ export default function RootLayout({
         <ThemeProvider defaultTheme="dark" storageKey="bme-frt-theme">
             <div className="min-h-screen font-frtszoveg bg-black dark:bg-black light:bg-white text-white dark:text-white light:text-gray-900">
                 <Navbar />
-                <main className="pt-21 bg-black dark:bg-black light:bg-white text-white dark:text-white light:text-gray-900">
+                <main className="pt-20 bg-black dark:bg-black light:bg-white text-white dark:text-white light:text-gray-900">
                     {children}
                 </main>
             </div>
