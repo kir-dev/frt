@@ -45,13 +45,13 @@ export default async function AssociationPage(props: AssociationPageProps) {
     }
 
     return (
-        <main className="min-h-screen bg-black text-white">
+        <main className="min-h-screen bg-black text-white font-frtszoveg">
             <div className="container mx-auto px-4 py-16 max-w-4xl">
                 <div className="flex items-center gap-3 mb-8">
                     <h1 className="text-4xl font-bold">{lang === 'en' ? association.title_en : association.title}</h1>
                 </div>
 
-                <div className="prose prose-invert max-w-none">
+                <div className="rich-text-content">
                     <RichText data={lang === 'en' ? association.content_en : association.content} />
                 </div>
             </div>

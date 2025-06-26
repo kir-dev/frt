@@ -63,7 +63,7 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: black;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
@@ -91,7 +91,7 @@
 
   .dark {
     --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --foreground: white;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
@@ -152,18 +152,33 @@
   font-size: 2em;
   margin-bottom: 0.5em;
   font-weight: bold;
+  color: hsl(var(--foreground));
 }
 
 .rich-text-content h2 {
   font-size: 1.5em;
   margin-bottom: 0.5em;
-    font-weight: bold;
+  font-weight: bold;
+  color: hsl(var(--foreground));
 }
 
 .rich-text-content h3 {
   font-size: 1.25em;
   margin-bottom: 0.5em;
-    font-weight: bold;
+  font-weight: bold;
+  color: hsl(var(--foreground));
+}
+
+.rich-text-content p {
+  color: hsl(var(--foreground));
+  margin-bottom: 1em;
+}
+
+/* Erős specificitás a félkövér szövegnek */
+div.rich-text-content strong,
+div.rich-text-content b {
+  font-weight: bold !important;
+  color: #D51028 !important; /* FRT piros szín */
 }
 
 @layer base {
@@ -306,7 +321,3 @@ html.dark body {
 html.dark main {
   @apply bg-black text-white;
 }
-
-
-
-
