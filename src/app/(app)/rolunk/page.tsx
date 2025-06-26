@@ -68,10 +68,10 @@ export default async function AboutUsPage(props: AboutUsPageProps) {
                                                 className="object-cover w-full h-full"
                                             />
                                             {/* Name and position overlay */}
-                                            <div className="absolute bottom-0 left-0 mb-4 ml-4 px-4 py-2 rounded bg-black/80 backdrop-blur-sm max-w-[90%]">
-                                                <h3 className="font-bold text-lg text-white">{member.name}</h3>
-                                                {member.position && <p className="text-gray-300 text-sm">{lang === 'en' && member.positionEn ? member.positionEn : member.position}</p>}
-                                            </div>
+                                                <div className="absolute bottom-0 left-0 mb-4 ml-4 px-4 py-2 rounded bg-black/80 backdrop-blur-sm max-w-[90%]">
+                                                    <h3 className="font-bold text-lg !text-white">{member.name}</h3>
+                                                    {member.position && <p className="!text-gray-300 text-sm">{lang === 'en' && member.positionEn ? member.positionEn : member.position}</p>}
+                                                </div>
                                         </div>
                                     </div>
                                 ))}

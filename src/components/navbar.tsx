@@ -9,6 +9,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Suspense } from "react"
+import {ThemeToggle} from "@/components/theme-toggle";
+import { useTheme } from "@/components/theme-provider";
 
 // Define the dropdown menu structure based on the requirements
 const navItems = [
@@ -67,6 +69,7 @@ function NavbarContent() {
     const pathname = usePathname()
     const router = useRouter();
     const searchParams = useSearchParams();
+    const { theme } = useTheme();
 
     // Initialize language from URL on component mount
     useEffect(() => {
@@ -141,7 +144,7 @@ function NavbarContent() {
                     {/* Logo */}
                     <Link href={addLangToHref("/")} className="flex items-center">
                         <Image
-                            src="/FRT_felirat_white.svg"
+                            src={theme === "dark" ? "/FRT_felirat_white.svg" : "/FRT_felirat_black_1.svg"}
                             alt="BME Formula Racing Team"
                             width={150}
                             height={50}
@@ -166,7 +169,7 @@ function NavbarContent() {
                                     )}
                                 </Link>
 
-                                {/* Dropdown Menu (hoverre vagy kattintásra is nyílik) */}
+                                {/* Dropdown Menu */}
                                 {item.dropdown && (
                                     <div
                                         className={cn(
@@ -190,12 +193,27 @@ function NavbarContent() {
                             </div>
                         ))}
 
-                        {/* Language Switcher */}
+                        <ThemeToggle />
                         <button
                             onClick={toggleLanguage}
-                            className="ml-4 w-10 h-10 flex items-center justify-center bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                            className={
+                                `flex items-center px-3 py-2 font-bold transition-colors outline-none border-0 shadow-none rounded-lg
+                                ${theme === "dark"
+                                    ? "text-white bg-black  hover:text-frtRed"
+                                    : "text-gray-900 bg-white hover:bg-gray-200 hover:text-frtRed"}
+                                `
+                            }
+                            style={{ boxShadow: 'none', border: 'none' }}
                         >
-                            {language === "hu" ? "EN" : "HU"}
+                            <div className={
+                                `w-10 h-10 flex items-center justify-center font-bold rounded-lg mr-2
+                                ${theme === "dark"
+                                    ? "bg-gray-700 hover:bg-gray-800 hover:text-frtRed text-white"
+                                    : "bg-gray-200 hover:bg-gray-300 hover:text-frtRed text-gray-900"}
+                                `
+                            }>
+                                {language === "hu" ? "EN" : "HU"}
+                            </div>
                         </button>
                     </div>
 
@@ -272,13 +290,27 @@ function NavbarContent() {
                         </div>
                     ))}
 
-                    {/* Mobile Language Switcher */}
-                    <div className="mt-2">
+                    {/* Mobile Language Switcher & ThemeToggle in one row */}
+                    <div className="mt-2 flex flex-row gap-2 items-center">
+                        <ThemeToggle />
                         <button
                             onClick={toggleLanguage}
-                            className="flex items-center px-3 py-2 text-white hover:text-frtRed transition-colors"
+                            className={
+                                `flex items-center px-3 py-2 font-bold transition-colors outline-none border-0 shadow-none
+                                ${theme === "dark"
+                                    ? "text-white bg-black hover:bg-gray-700 hover:text-frtRed"
+                                    : "text-gray-900 bg-white hover:bg-gray-200 hover:text-frtRed"}
+                                `
+                            }
+                            style={{ boxShadow: 'none', border: 'none' }}
                         >
-                            <div className="w-8 h-8 flex items-center justify-center bg-gray-500 text-white font-bold rounded-lg mr-2">
+                            <div className={
+                                `w-8 h-8 flex items-center justify-center font-bold rounded-lg mr-2
+                                ${theme === "dark"
+                                    ? "bg-gray-700 text-white"
+                                    : "bg-gray-200 text-gray-900"}
+                                `
+                            }>
                                 {language === "hu" ? "EN" : "HU"}
                             </div>
                             {language === "hu" ? "English" : "Magyar"}
@@ -288,7 +320,7 @@ function NavbarContent() {
             </div>
 
             {/* Red line under navbar */}
-            <div className="h-1 bg-frtRed w-full"></div>
+            <div className="h-1 !bg-frtRed w-full"></div>
         </nav>
     );
 }

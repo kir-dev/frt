@@ -11,7 +11,7 @@ export default function Loading() {
                         alt="Csapatkép"
                         width={1920}
                         height={600}
-                        className="mt-5 w-full h-auto object-cover max-h-[600px] opacity-60 blur-sm select-none pointer-events-none"
+                        className=" w-full h-auto object-cover max-h-[600px] opacity-60 blur-sm select-none pointer-events-none"
                         priority
                     />
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
