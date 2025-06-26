@@ -169,7 +169,7 @@ function NavbarContent() {
                                     )}
                                 </Link>
 
-                                {/* Dropdown Menu (hoverre vagy kattintásra is nyílik) */}
+                                {/* Dropdown Menu */}
                                 {item.dropdown && (
                                     <div
                                         className={cn(
@@ -194,13 +194,26 @@ function NavbarContent() {
                         ))}
 
                         <ThemeToggle />
-
-                        {/* Language Switcher */}
                         <button
                             onClick={toggleLanguage}
-                            className="ml-4 w-10 h-10 flex items-center justify-center bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                            className={
+                                `flex items-center px-3 py-2 font-bold transition-colors outline-none border-0 shadow-none rounded-lg
+                                ${theme === "dark"
+                                    ? "text-white bg-black  hover:text-frtRed"
+                                    : "text-gray-900 bg-white hover:bg-gray-200 hover:text-frtRed"}
+                                `
+                            }
+                            style={{ boxShadow: 'none', border: 'none' }}
                         >
-                            {language === "hu" ? "EN" : "HU"}
+                            <div className={
+                                `w-10 h-10 flex items-center justify-center font-bold rounded-lg mr-2
+                                ${theme === "dark"
+                                    ? "bg-gray-700 hover:bg-gray-800 hover:text-frtRed text-white"
+                                    : "bg-gray-200 hover:bg-gray-300 hover:text-frtRed text-gray-900"}
+                                `
+                            }>
+                                {language === "hu" ? "EN" : "HU"}
+                            </div>
                         </button>
                     </div>
 
@@ -307,7 +320,7 @@ function NavbarContent() {
             </div>
 
             {/* Red line under navbar */}
-            <div className="h-1 bg-frtRed w-full"></div>
+            <div className="h-1 !bg-frtRed w-full"></div>
         </nav>
     );
 }

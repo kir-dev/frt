@@ -278,6 +278,14 @@ html.light .bg-frtcardBG {
   @apply !bg-red-200;
 }
 
+html.light .bg-red-950 {
+  @apply !bg-red-100;
+}
+
+html.light .hover\:bg-gray-600:hover {
+  @apply !bg-gray-300;
+}
+
 html.light .bg-frtRed {
   @apply !bg-red-200;
 }

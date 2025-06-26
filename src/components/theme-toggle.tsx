@@ -15,8 +15,8 @@ export function ThemeToggle() {
             className={
                 `w-10 h-10
                 ${theme === "dark"
-                    ? "text-white hover:text-frtRed hover:bg-gray-800"
-                    : "text-gray-900 hover:text-frtRed hover:bg-gray-200"}
+                    ? "text-white bg-gray-700 hover:text-frtRed hover:bg-gray-800"
+                    : "text-gray-900 bg-gray-200 hover:text-frtRed hover:bg-gray-300"}
                 dark:text-white dark:hover:text-frtRed dark:hover:bg-gray-800
                 light:text-gray-900 light:hover:text-frtRed light:hover:bg-gray-200`
             }
