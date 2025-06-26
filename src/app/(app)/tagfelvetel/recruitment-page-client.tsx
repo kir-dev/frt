@@ -74,7 +74,7 @@ export default function RecruitmentPageClient({ recruitmentData, lang }: Recruit
             <div className="flex flex-col lg:flex-row justify-center gap-8 container mx-auto px-4 py-12">
                 {/* Main Content */}
                 <div className="w-full max-w-4xl">
-                    <h1 id="main-title" className="text-3xl font-bold text-center mb-12">
+                    <h1 id="main-title" className="text-3xl font-bold text-center mb-8">
                         {translations.title}
                     </h1>
 
@@ -91,7 +91,7 @@ export default function RecruitmentPageClient({ recruitmentData, lang }: Recruit
                         return (
                             <div key={group.id}>
                                 <section id={`group-${group.id}`} className="mb-16">
-                                    <div className="bg-red-950/50 rounded-lg p-6 hover:bg-red-900/50 transition-colors mb-8">
+                                    <div className="bg-frtcardBG rounded-lg p-6 hover:bg-red-950 transition-colors mb-8">
                                         <h2 className="text-3xl font-bold mb-4">{lang === "en" ? group.groupNameEng : group.groupName}</h2>
                                         <div className="rich-text-content text-gray-300">
                                             <RichText data={lang === "en" ? group.descriptionEng : group.description} />
@@ -102,7 +102,7 @@ export default function RecruitmentPageClient({ recruitmentData, lang }: Recruit
                                         {openPositions.map((position) => (
                                             <div
                                                 key={position.id}
-                                                className="bg-red-950/50 rounded-lg p-6 hover:bg-red-900/50 transition-colors"
+                                                className="bg-frtcardBG rounded-lg p-6 hover:bg-red-950 transition-colors"
                                             >
                                                 <h3 className="text-xl font-bold mb-3 text-frtRed">
                                                     {lang === "en" ? position.positionNameEng : position.positionName}
@@ -135,8 +135,8 @@ export default function RecruitmentPageClient({ recruitmentData, lang }: Recruit
                 </div>
 
                 {/* Table of Contents Section - Now centered alongside content */}
-                <div className="hidden lg:block sticky top-[196px] self-start">
-                    <div className="bg-red-950/80 backdrop-blur-sm rounded-lg p-5 w-64 mb-4">
+                <div className="hidden lg:block sticky top-[200px] self-start">
+                    <div className="bg-frtcardBG backdrop-blur-sm rounded-lg p-5 w-64 mb-4">
                         <h3 className="text-base font-bold mb-4 text-red-400">{lang === "en" ? "Table of Contents" : "Tartalomjegyzék"}</h3>
                         <nav className="space-y-3">
                             {tocItems.map((item) => (
@@ -154,13 +154,13 @@ export default function RecruitmentPageClient({ recruitmentData, lang }: Recruit
 
                     {/* Application Button Section - Separate from TOC */}
                     {hasOpenPositions && (
-                        <div className="bg-red-950/80 backdrop-blur-sm rounded-lg p-5 text-center">
+                        <div className="bg-frtcardBG backdrop-blur-sm rounded-lg p-5 text-center">
                             <p className="text-sm mb-2">{translations.interested}</p>
                             <a
                                 href="https://docs.google.com/forms/d/e/1FAIpQLSfoRr50h0nzuhrctVWgNhOOm003Yd38Vw1jNdhWAvOocf16zQ/viewform?usp=header"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-base w-full"
+                                className="inline-block bg-red-600 hover:bg-red-700 !text-white font-bold py-2 px-4 rounded-lg transition-colors text-base w-full"
                             >
                                 {translations.apply}
                             </a>

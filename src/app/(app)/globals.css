@@ -265,6 +265,10 @@ html.light .bg-gray-950 {
   @apply !bg-gray-50;
 }
 
+html.light .text-red-400 {
+  @apply !text-red-600;
+}
+
 html.light .border-red-600 {
   @apply !border-red-600;
 }

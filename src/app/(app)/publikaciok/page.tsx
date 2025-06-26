@@ -63,7 +63,6 @@ export default async function PublicationsPage(props: PublicationsPageProps) {
                                         >
                                             <h2 className="text-xl font-bold group-hover:text-frtRed transition-colors flex items-center gap-2">
                                                 {lang === 'en' ? publication.title_eng : publication.title}
-                                                <ExternalLink size={18} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                                             </h2>
                                         </Link>
                                         <div className="mt-2 sm:mt-0 sm:absolute sm:top-0 sm:right-0 w-fit">
@@ -71,7 +70,7 @@ export default async function PublicationsPage(props: PublicationsPageProps) {
                                                 href={publication.link}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-1 px-3 py-2 sm:px-2 sm:py-1 bg-frtRed hover:bg-red-800 text-white rounded-md transition-colors text-xs font-medium"
+                                                className="inline-flex items-center gap-1 px-3 py-2 sm:px-2 sm:py-1 !bg-frtRed !hover:bg-red-800 !text-white rounded-md transition-colors text-xs font-medium"
                                             >
                                                 <ExternalLink size={14} />
                                                 {lang === 'en' ? 'View' : 'Megtekintés'}
