@@ -41,9 +41,9 @@ export const Members: CollectionConfig = {
     },
     {
       name: "linkedin",
-        type: "text",
-        required: false,
-        label: "LinkedIn profil link",
+      type: "text",
+      required: false,
+      label: "LinkedIn profil link",
     },
     {
       name: "order",
