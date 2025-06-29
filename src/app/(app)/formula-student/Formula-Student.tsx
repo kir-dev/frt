@@ -10,6 +10,25 @@ import { PageProps, pageItems } from "./pageContent";
 export default function Page({lang } : PageProps) {
     return (
         <main className = "bg-black text-white min-h-screen selection:bg-red-700 leading-loose pt-14 font-frtszoveg">
+            {/* Responsive YouTube video embed */}
+            <div className="w-full flex justify-center mb-8">
+                <div className="relative w-full max-w-6xl" style={{ paddingTop: '40%' }}>
+                    <iframe
+                        src="https://www.youtube.com/embed/kHkAc4df6dc?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&loop=1&playlist=kHkAc4df6dc"
+                        title=" "
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: '0.75rem', border: '2px solid #374151', pointerEvents: 'none' }}
+                        tabIndex={-1}
+                    ></iframe>
+                    <noscript>
+                        <div className="bg-gray-900 text-white p-4 rounded-xl border-2 border-gray-700 text-center">
+                            <p>Video cannot be displayed. <a href="https://www.youtube.com/watch?v=kHkAc4df6dc" target="_blank" rel="noopener noreferrer" className="underline text-blue-400">Watch on YouTube</a></p>
+                        </div>
+                    </noscript>
+                </div>
+            </div>
+
             {pageItems.map((item, idx) => (
                 <div key={idx} className="container mx-auto px-4 max-w-5xl">
                     <PageTitle title={lang === "hu" ? item.title : item.titleEng} />
