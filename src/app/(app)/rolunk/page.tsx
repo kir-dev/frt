@@ -60,18 +60,35 @@ export default async function AboutUsPage(props: AboutUsPageProps) {
                                 {groupMembers.map((member) => (
                                     <div key={member.id} className="relative group">
                                         <div className="w-80 h-96 overflow-hidden bg-frtcardBG relative">
-                                            <Image
-                                                src={typeof member.picture === 'object' && member.picture !== null && 'url' in member.picture && member.picture.url ? member.picture.url : "/placeholder.svg"}
-                                                alt={member.name}
-                                                width={320}
-                                                height={384}
-                                                className="object-cover w-full h-full"
-                                            />
+                                            {member.linkedin ? (
+                                                <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="block w-full h-full relative">
+                                                    <div className="absolute top-2 right-2 z-40" style={{pointerEvents: 'none'}}>
+                                                        <span className="bg-white/90 rounded-full p-1 shadow-lg flex items-center justify-center" style={{width: '32px', height: '32px'}}>
+                                                            <Image src="/linkedin.png" alt="LinkedIn" width={20} height={20} className="inline-block" />
+                                                        </span>
+                                                    </div>
+                                                    <Image
+                                                        src={typeof member.picture === 'object' && member.picture !== null && 'url' in member.picture && member.picture.url ? member.picture.url : "/placeholder.svg"}
+                                                        alt={member.name}
+                                                        width={320}
+                                                        height={384}
+                                                        className="object-cover w-full h-full cursor-pointer"
+                                                    />
+                                                </a>
+                                            ) : (
+                                                <Image
+                                                    src={typeof member.picture === 'object' && member.picture !== null && 'url' in member.picture && member.picture.url ? member.picture.url : "/placeholder.svg"}
+                                                    alt={member.name}
+                                                    width={320}
+                                                    height={384}
+                                                    className="object-cover w-full h-full"
+                                                />
+                                            )}
                                             {/* Name and position overlay */}
-                                                <div className="absolute bottom-0 left-0 mb-4 ml-4 px-4 py-2 rounded bg-black/80 backdrop-blur-sm max-w-[90%]">
-                                                    <h3 className="font-bold text-lg !text-white">{member.name}</h3>
-                                                    {member.position && <p className="!text-gray-300 text-sm">{lang === 'en' && member.positionEn ? member.positionEn : member.position}</p>}
-                                                </div>
+                                            <div className="absolute bottom-0 left-0 mb-4 ml-4 px-4 py-2 rounded bg-black/80 backdrop-blur-sm max-w-[90%]">
+                                                <h3 className="font-bold text-lg !text-white">{member.name}</h3>
+                                                {member.position && <p className="!text-gray-300 text-sm">{lang === 'en' && member.positionEn ? member.positionEn : member.position}</p>}
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
