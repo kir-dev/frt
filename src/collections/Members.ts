@@ -40,6 +40,12 @@ export const Members: CollectionConfig = {
       label: "Profilkép",
     },
     {
+      name: "linkedin",
+      type: "text",
+      required: false,
+      label: "LinkedIn profil link",
+    },
+    {
       name: "order",
       type: "number",
       required: false,
