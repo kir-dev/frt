@@ -10,15 +10,16 @@ import { PageProps, pageItems } from "./pageContent";
 export default function Page({lang } : PageProps) {
     return (
         <main className = "bg-black text-white min-h-screen selection:bg-red-700 leading-loose pt-14 font-frtszoveg">
+            <div className="max-w-5xl mx-auto"><PageTitle title={lang === "hu" ? pageItems[0].title : pageItems[0].titleEng}/></div>
             {/* Responsive YouTube video embed */}
             <div className="w-full flex justify-center mb-8">
-                <div className="relative w-full max-w-6xl" style={{ paddingTop: '40%' }}>
+                <div className="relative w-full max-w-5xl" style={{ paddingTop: '40%' }}>
                     <iframe
                         src="https://www.youtube.com/embed/kHkAc4df6dc?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&loop=1&playlist=kHkAc4df6dc"
                         title=" "
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen
-                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: '0.75rem', border: '2px solid #374151', pointerEvents: 'none' }}
+                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
                         tabIndex={-1}
                     ></iframe>
                     <noscript>
@@ -31,7 +32,6 @@ export default function Page({lang } : PageProps) {
 
             {pageItems.map((item, idx) => (
                 <div key={idx} className="container mx-auto px-4 max-w-5xl">
-                    <PageTitle title={lang === "hu" ? item.title : item.titleEng} />
                         <div className="mx-10">
                             {item.sections.map((section, idx) => (
                                 <div key={idx} className="mb-6">
