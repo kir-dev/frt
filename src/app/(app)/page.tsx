@@ -73,7 +73,7 @@ export default async function HomePage(props: HomePageProps) {
                 </div>
 
                 {/* Desktop video container - custom aspect ratio */}
-                <div className="hidden sm:block relative w-full" style={{ paddingTop: '37.9%' }}>
+                <div className="hidden sm:block relative w-full" style={{ paddingTop: '56.25%' }}>
                     <iframe
                         src="https://www.youtube.com/embed/5PokC77YMwA?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&loop=1&playlist=5PokC77YMwA"
                         title={lang === 'en' ? "BME Formula Racing Team Video" : "BME Formula Racing Team Videó"}
