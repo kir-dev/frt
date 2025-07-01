@@ -18,7 +18,7 @@ export default function Page({lang } : PageProps) {
                     <div className="block sm:hidden" style={{ paddingTop: '56.25%' }}>
                         <iframe
                             src="https://www.youtube.com/embed/kHkAc4df6dc?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&loop=1&playlist=kHkAc4df6dc"
-                            title=" "
+                            title="Formula Student Intro Video"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowFullScreen
                             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
