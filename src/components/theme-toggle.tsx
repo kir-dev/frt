@@ -12,9 +12,9 @@ export function ThemeToggle() {
             className={
                 `w-10 h-10 flex items-center justify-center font-bold transition-colors outline-none border-0 shadow-none rounded-lg hover:bg-red-400
                 ${theme === "dark"
-                    ? "!text-white hover:text-white"
-                    : "!text-black sm:!text-white hover:text-white"}
-                `
+                    ? "text-white"
+                    : "text-black sm:text-white"}
+                hover:text-white`
             }
             style={{ boxShadow: 'none', border: 'none' }}
             aria-label="Toggle theme"
