@@ -220,7 +220,7 @@ function NavbarContent() {
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <button onClick={toggleMenu} className="lg:hidden text-white focus:outline-none">
+                    <button onClick={toggleMenu} className="lg:hidden !text-white focus:outline-none">
                         <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             {isOpen ? (
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -300,8 +300,8 @@ function NavbarContent() {
                             className={
                                 `flex items-center px-3 py-2 font-bold transition-colors outline-none border-0 shadow-none
                                 ${theme === "dark"
-                                    ? "text-white bg-black hover:bg-gray-700 hover:text-frtRed"
-                                    : "text-gray-900 bg-white hover:bg-gray-200 hover:text-frtRed"}
+                                    ? "text-white hover:bg-gray-700 hover:text-frtRed"
+                                    : "text-gray-900 hover:bg-gray-200 hover:text-frtRed"}
                                 `
                             }
                             style={{ boxShadow: 'none', border: 'none' }}
