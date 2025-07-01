@@ -63,8 +63,8 @@ export default async function AboutUsPage(props: AboutUsPageProps) {
                                             {member.linkedin ? (
                                                 <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="block w-full h-full relative">
                                                     <div className="absolute top-2 right-2 z-40" style={{pointerEvents: 'none'}}>
-                                                        <span className="bg-white/90 rounded-full p-1 shadow-lg flex items-center justify-center" style={{width: '32px', height: '32px'}}>
-                                                            <Image src="/linkedin.png" alt="LinkedIn" width={20} height={20} className="inline-block" />
+                                                        <span className="!bg-black rounded-full p-1 shadow-lg flex items-center justify-center" style={{width: '32px', height: '32px'}}>
+                                                            <Image src="/linkedin.png" alt="LinkedIn" width={25} height={25} className="inline-block" />
                                                         </span>
                                                     </div>
                                                     <Image
