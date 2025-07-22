@@ -46,7 +46,6 @@ export default async function DonatePage(props: { searchParams?: Promise<Record<
                     </div>
                 ))}
             </div>
-            {/*<p className="text-xl">{lang === "en" ? sections.subtitle_eng : sections.subtitle}</p>*/}
         </main>
     )
 }
