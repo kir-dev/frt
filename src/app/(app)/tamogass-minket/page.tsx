@@ -32,7 +32,7 @@ export default async function DonatePage(props: { searchParams?: Promise<Record<
                             }
                         </p>
                         <div className="self-center mb-6">
-                            <Image src={"/csapatkep.jpg"} alt={"Team picture"} height={300} width={700}
+                            <Image src={section.imageSrc} alt={"Team picture"} height={300} width={700}
                                    className="rounded-xl mx-auto"/>
                         </div>
                         <div className="flex flex-row justify-center mb-12">
