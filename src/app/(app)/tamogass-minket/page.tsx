@@ -11,7 +11,7 @@ export default async function DonatePage(props: { searchParams?: Promise<Record<
 
     return (
         <main className="min-h-screen bg-black text-white">
-            <div className="container mx-auto px-4 py-12 max-w-5xl">
+            <div className="bg-black container mx-auto px-4 py-12 max-w-5xl">
                 <h1 className="text-3xl font-bold mb-8">{lang === "en" ? pageItems.title_eng : pageItems.title}</h1>
                 <div className="mb-12">
                     <a className="mb-4 max-w-[250px] text-center inline-block bg-red-600 hover:bg-red-700 !text-white font-bold py-2 px-6 rounded-lg transition-colors text-base w-full"
