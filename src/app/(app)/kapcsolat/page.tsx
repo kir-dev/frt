@@ -17,7 +17,7 @@ export default async function ContactPage (props: { searchParams?: Promise<Recor
 
 
     return <main className="min-h-screen bg-black text-white flex flex-col items-center">
-        <div className="bg-blue-300 flex flex-col items-center px-4 py-12 max-w-5xl">
+        <div className="bg-black flex flex-col items-center px-4 py-12 max-w-5xl">
             <h1 className="text-3xl font-bold mb-12">{translations.title}</h1>
             <p className="text-xl">{translations.secondTitle}</p>
             <p className="text-xl">{translations.description}</p>
