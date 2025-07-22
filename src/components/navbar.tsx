@@ -43,7 +43,7 @@ const navItems = [
         href: "",
         dropdown: [
             { name: "Támogatók", nameEn: "Sponsors", href: "/tamogatok" },
-            { name: "Támogass minket", nameEn: "Support Us", href: "/not-found" },
+            { name: "Támogass minket", nameEn: "Support Us", href: "/tamogass-minket" },
         ],
     },
     {
