@@ -27,9 +27,9 @@ export const pageItems : PageItem = {
         },
         {
             subtitle: "Miért támogass minket?",
-            subsection_eng: "Why support us?",
+            subtitle_eng: "Why support us?",
             subsection: "A projektünk nem csupán egy autóról szól – ez egy komplex mérnöki kihívás, valódi csapatmunka, kreativitás és hatalmas elhivatottság. Minden egyes támogatás közelebb visz minket ahhoz, hogy fejlettebb technológiákkal dolgozhassunk, professzionálisabb autót építhessünk, és méltó módon képviselhessük egyetemünket és hazánkat a világversenyeken.",
-            subtitle_eng: "Our project is about more than just building a car – it’s a complex engineering challenge that requires true teamwork, creativity, and deep commitment. Every bit of support brings us closer to working with more advanced technologies, building a more professional vehicle, and proudly representing our university and our country on the global stage.",
+            subsection_eng: "Our project is about more than just building a car – it’s a complex engineering challenge that requires true teamwork, creativity, and deep commitment. Every bit of support brings us closer to working with more advanced technologies, building a more professional vehicle, and proudly representing our university and our country on the global stage.",
             imageSrc: "/FRT_FormulaStudent1.jpg",
         }
 
