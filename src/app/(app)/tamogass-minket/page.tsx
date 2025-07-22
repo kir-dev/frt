@@ -35,14 +35,6 @@ export default async function DonatePage(props: { searchParams?: Promise<Record<
                             <Image src={section.imageSrc} alt={"Team picture"} height={300} width={700}
                                    className="rounded-xl mx-auto"/>
                         </div>
-                        <div className="flex flex-row justify-center mb-12">
-                            <a className="mb-4 max-w-[250px] text-center inline-block bg-red-600 hover:bg-red-700 !text-white font-bold py-2 px-6 rounded-lg transition-colors text-base w-full"
-                               href='mailto:sponsoring@fun-ke.com'
-                            >
-                                {lang === "en" ? "I want to support the team" : "Támogatom a csapatot"}
-                            </a>
-                        </div>
-
                     </div>
                 ))}
             </div>
