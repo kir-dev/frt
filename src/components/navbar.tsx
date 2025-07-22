@@ -54,7 +54,7 @@ const navItems = [
             { name: "Csapat", nameEn: "Team", href: "/rolunk" },
             { name: "Esemény naptár", nameEn: "Event calendar", href: "/not-found" },
             { name: "Tagfelvétel", nameEn: "Joining process", href: "/tagfelvetel" },
-            { name: "Kapcsolat", nameEn: "Contact", href: "/not-found" },
+            { name: "Kapcsolat", nameEn: "Contact", href: "/kapcsolat" },
             { name: "Egyesület", nameEn: "Association", href: "/egyesulet" },
             { name: "Galéria", nameEn: "Gallery", href: "/not-found" },
         ],
