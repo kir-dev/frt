@@ -38,7 +38,7 @@ export default async function DonatePage(props: { searchParams?: Promise<Record<
                     <a className="mb-4 max-w-[250px] text-center inline-block bg-red-600 hover:bg-red-700 !text-white font-bold py-2 px-6 rounded-lg transition-colors text-base w-full"
                        href='mailto:sponsoring@fun-ke.com'
                     >
-                        {lang === "en" ? "I want to support the team" : "Támogaton a csapatot"}
+                        {lang === "en" ? "I want to support the team" : "Támogatom a csapatot"}
                     </a>
                 </div>
             </div>
