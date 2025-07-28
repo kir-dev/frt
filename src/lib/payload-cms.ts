@@ -117,3 +117,18 @@ export async function getGallery(): Promise<Gallery[]> {
 
   return gallery.docs;
 }
+
+export async function getGalleryBySlug(slug: string): Promise<Gallery | null> {
+  const payload = await getPayload({ config });
+  const gallery = await payload.find({
+    collection: "gallery",
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+    limit: 1,
+  });
+
+  return gallery.docs.length > 0 ? gallery.docs[0] : null;
+}
