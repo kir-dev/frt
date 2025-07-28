@@ -100,3 +100,13 @@ export async function getAssociation() {
     return association.docs.length > 0 ? association.docs[0] : null
 }
 
+export async function getGallery() {
+    const payload = await getPayload({ config })
+    const gallery = await payload.find({
+        collection: "gallery",
+        limit: 1000,
+    })
+
+    return gallery.docs
+}
+
