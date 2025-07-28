@@ -1,6 +1,6 @@
 import {getPayload} from "payload";
 import config from "@payload-config";
-import {Group, Member, Car, Recruitment, Sponsor} from "@/payload-types";
+import {Group, Member, Car, Recruitment, Sponsor, Gallery} from "@/payload-types";
 export async function getSponsors(): Promise<Sponsor[]> {
     const payload = await getPayload({ config })
     const sponsors = await payload.find({
@@ -100,7 +100,7 @@ export async function getAssociation() {
     return association.docs.length > 0 ? association.docs[0] : null
 }
 
-export async function getGallery() {
+export async function getGallery(): Promise<Gallery[]>{
     const payload = await getPayload({ config })
     const gallery = await payload.find({
         collection: "gallery",
