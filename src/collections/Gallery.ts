@@ -49,5 +49,56 @@ export const Gallery: CollectionConfig = {
       required: true,
       label: "Képek",
     },
+    {
+      name: "slug",
+      type: "text",
+      required: true,
+      unique: true,
+      label: "Slug",
+      admin: {
+        description:
+          "URL-barát azonosító, automatikusan generált a cím alapján",
+        hidden: true,
+      },
+      hooks: {
+        beforeValidate: [
+          ({ data, value }) => {
+            if (value) return value;
+            if (data?.title) {
+              // Hungarian accented character replacements
+              const accentsMap = {
+                á: "a",
+                é: "e",
+                í: "i",
+                ó: "o",
+                ö: "o",
+                ő: "o",
+                ú: "u",
+                ü: "u",
+                ű: "u",
+                Á: "A",
+                É: "E",
+                Í: "I",
+                Ó: "O",
+                Ö: "O",
+                Ő: "O",
+                Ú: "U",
+                Ü: "U",
+                Ű: "U",
+              };
+              return data.title
+                .toLowerCase()
+                .replace(
+                  /[áéíóöőúüű]/g,
+                  (m: string) => accentsMap[m as keyof typeof accentsMap],
+                )
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/(^-|-$)+/g, "");
+            }
+            return value;
+          },
+        ],
+      },
+    },
   ],
 };

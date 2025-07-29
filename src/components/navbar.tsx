@@ -56,7 +56,7 @@ const navItems = [
             { name: "Tagfelvétel", nameEn: "Joining process", href: "/tagfelvetel" },
             { name: "Kapcsolat", nameEn: "Contact", href: "/kapcsolat" },
             { name: "Egyesület", nameEn: "Association", href: "/egyesulet" },
-            { name: "Galéria", nameEn: "Gallery", href: "/not-found" },
+            { name: "Galéria", nameEn: "Gallery", href: "/galeria" },
         ],
     },
 ]
