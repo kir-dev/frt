@@ -1,7 +1,5 @@
 import { getGalleryBySlug } from "@/lib/payload-cms";
 import { formatDate } from "@/lib/utils";
-import { Media } from "@/payload-types";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ImageGallery } from "@/components/image-gallery";
 
