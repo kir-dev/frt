@@ -111,7 +111,7 @@ export async function getGallery(): Promise<Gallery[]> {
   const payload = await getPayload({ config });
   const gallery = await payload.find({
     collection: "gallery",
-    sort: "date",
+    sort: "-date",
     limit: 1000,
   });
 

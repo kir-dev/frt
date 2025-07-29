@@ -1,6 +1,7 @@
 import { getGallery } from "@/lib/payload-cms";
 import { Gallery } from "@/payload-types";
 import GallerySection from "@/components/gallerySection";
+import GalleryCard from "@/components/galleryCard";
 
 function groupByDate(galleries: Gallery[]) {
   return galleries.reduce((yearMap, item) => {
@@ -58,7 +59,11 @@ export default async function GalleryPage(props: {
 
   return (
     <main className="min-h-screen bg-black text-white">
-      <p>Szia betoltesz?</p>
+      <GallerySection
+        lang={lang}
+        groupedGalleryMap={groupedGalleryMap}
+        translations={translations}
+      />
     </main>
   );
 }

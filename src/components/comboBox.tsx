@@ -6,37 +6,42 @@ interface ComboboxProps {
 }
 
 export default function Combobox({ listValues = [], setYear }: ComboboxProps) {
-  const [value, setValue] = useState<string>(listValues[0]);
+  const [value, setValue] = useState<string>(
+    new Date().getFullYear().toString(),
+  );
   const [isOpen, setIsOpen] = useState(false);
 
   function handleSelect(item: string) {
     setValue(item);
     setYear(item);
-    setIsOpen(true);
+    setIsOpen((prevState) => !prevState);
   }
 
   return (
-    <>
-      <div onClick={() => setIsOpen(true)}>
-        <p>{value}</p>
+    <div>
+      <div
+        onClick={() => setIsOpen((prevState) => !prevState)}
+        className="cursor-pointer bg-frtcardBG w-[100px] py-1 rounded-lg hover:scale-105"
+      >
+        <p className="text-center font-semibold">{value}</p>
       </div>
 
       {isOpen && (
-        <div className="absolute z-10 bg-frtcardBG rounded-lg overflow-hidden">
+        <div className="absolute w-[100px] z-10 bg-frtcardBG rounded-lg overflow-hidden">
           {listValues.map((item, index) => (
-            <>
+            <div key={index} className="cursor-pointer">
               <div onClick={() => handleSelect(item)}>
-                <p key={index} className="py-2 text-white">
+                <p key={index} className="py-1 text-white text-center">
                   {item}
                 </p>
               </div>
               {listValues.indexOf(item) === listValues.length - 1 ? null : (
                 <div className="h-0.2 !bg-white w-full mx-auto"></div>
               )}
-            </>
+            </div>
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }
