@@ -27,7 +27,7 @@ export default function Combobox({ listValues = [], setYear }: ComboboxProps) {
       </div>
 
       {isOpen && (
-        <div className="absolute w-[100px] z-10 bg-frtcardBG rounded-lg overflow-hidden">
+        <div className="absolute w-[100px] z-10 bg-frtcardBG brightness-200 rounded-lg overflow-hidden">
           {listValues.map((item, index) => (
             <div key={index} className="cursor-pointer">
               <div onClick={() => handleSelect(item)}>
@@ -35,9 +35,6 @@ export default function Combobox({ listValues = [], setYear }: ComboboxProps) {
                   {item}
                 </p>
               </div>
-              {listValues.indexOf(item) === listValues.length - 1 ? null : (
-                <div className="h-0.2 !bg-white w-full mx-auto"></div>
-              )}
             </div>
           ))}
         </div>
