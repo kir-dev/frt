@@ -1,5 +1,4 @@
 import React from "react";
-import { cn } from "@/lib/utils";
 
 interface ScrollAreaProps {
   height?: string; // e.g. "h-64", "h-[300px]"
