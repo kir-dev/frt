@@ -1,7 +1,6 @@
 import { getGallery } from "@/lib/payload-cms";
 import { Gallery } from "@/payload-types";
 import GallerySection from "@/components/gallerySection";
-import GalleryCard from "@/components/galleryCard";
 
 function groupByDate(galleries: Gallery[]) {
   return galleries.reduce((yearMap, item) => {

@@ -2,6 +2,8 @@ import { getGalleryBySlug } from "@/lib/payload-cms";
 import { formatDate } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { ImageGallery } from "@/components/image-gallery";
+import { ChevronLeft } from "lucide-react";
+import Link from "next/link";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -39,14 +41,24 @@ export default async function Page({ params, searchParams }: Props) {
 
   return (
     <main className="min-h-screen bg-black text-white">
-      <div className="bg-black min-w-full  px-6 container mx-auto py-12">
-        <h1 className="text-4xl font-bold text-center mb-2">
-          {lang === "en" ? gallery.title_eng : gallery.title}
-        </h1>
-        <h2 className="text-2xl font-semibold text-center mb-12">
-          {formatDate(gallery.date)}
-        </h2>
-
+      <div className="bg-black min-w-full px-6 container mx-auto py-12">
+        <Link
+          href={{ pathname: "/galeria", query: { lang } }}
+          className="inline-flex items-center text-gray-400 hover:text-red-500"
+        >
+          <ChevronLeft size={20} />
+          <span>
+            {lang === "en" ? "Back to Gallery" : "Vissza az albumokhoz"}
+          </span>
+        </Link>
+        <header>
+          <h1 className="text-4xl font-bold text-center mb-2">
+            {lang === "en" ? gallery.title_eng : gallery.title}
+          </h1>
+          <h2 className="text-2xl font-semibold text-center mb-12">
+            {formatDate(gallery.date)}
+          </h2>
+        </header>
         <ImageGallery images={galleryImages} />
       </div>
     </main>
