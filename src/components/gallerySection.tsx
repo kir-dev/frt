@@ -49,7 +49,7 @@ export default function GallerySection({
                 ? monthsEnglish.get(month)
                 : monthsHungarian.get(month)}
             </h2>
-            <div className="grid grid-cols-3 gap-6 mt-8">
+            <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-6 mt-8">
               {galleries.map((gallery, index) => {
                 return <GalleryCard gallery={gallery} key={index} />;
               })}

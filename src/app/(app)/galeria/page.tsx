@@ -57,7 +57,7 @@ export default async function GalleryPage(props: {
   }
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-black text-white px-3 md:px-0">
       <GallerySection
         lang={lang}
         groupedGalleryMap={groupedGalleryMap}
