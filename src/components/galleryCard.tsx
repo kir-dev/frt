@@ -28,7 +28,7 @@ export default function GalleryCard({ gallery, lang = "hu" }: Props) {
     <Link href={{ pathname: `/galeria/${gallery.slug}`, query: { lang } }}>
       <div className="bg-frtcardBG rounded-lg overflow-hidden">
         <div className="relative w-full">
-          <p className="bg-frtcardBG text-white font-semibold absolute z-10 p-2">
+          <p className="bg-frtcardBG text-white font-semibold absolute z-10 p-2 rounded-br-lg">
             {monthAndDay}
           </p>
           <Image
