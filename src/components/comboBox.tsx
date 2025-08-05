@@ -4,16 +4,17 @@ import ScrollArea from "@/components/scrollArea";
 interface ComboboxProps {
   listValues?: string[];
   setYear: (year: string) => void;
+  lang: string;
 }
 
-export default function Combobox({ listValues = [], setYear }: ComboboxProps) {
-  const [value, setValue] = useState<string>(
-    new Date().getFullYear().toString(),
-  );
+export default function Combobox({
+  listValues = [],
+  setYear,
+  lang,
+}: ComboboxProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleSelect(item: string) {
-    setValue(item);
     setYear(item);
     setIsOpen((prevState) => !prevState);
   }
@@ -22,9 +23,11 @@ export default function Combobox({ listValues = [], setYear }: ComboboxProps) {
     <div>
       <div
         onClick={() => setIsOpen((prevState) => !prevState)}
-        className="cursor-pointer bg-frtcardBG brightness-150 w-[100px] py-1 rounded-lg hover:scale-105"
+        className="cursor-pointer bg-transparent text-frtRed brightness-150"
       >
-        <p className="text-center font-semibold">{value}</p>
+        <p className="text-center font-semibold">
+          {lang === "en" ? "more..." : "több..."}
+        </p>
       </div>
 
       {isOpen && (

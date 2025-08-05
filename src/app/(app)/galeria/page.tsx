@@ -66,5 +66,3 @@ export default async function GalleryPage(props: {
     </main>
   );
 }
-
-//<GalleryCard gallery={gallery} key={index}/>;

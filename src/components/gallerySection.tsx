@@ -1,8 +1,8 @@
 "use client";
 import { Gallery } from "@/payload-types";
 import GalleryCard from "@/components/galleryCard";
-import Combobox from "@/components/comboBox";
 import { useState } from "react";
+import YearSelectionTab from "@/components/yearSelectionTab";
 
 interface GalleryProps {
   lang: string;
@@ -24,7 +24,11 @@ export default function GallerySection({
   return (
     <div className="bg-black container mx-auto py-12 max-w-5xl">
       <h1 className="text-4xl font-bold mb-12">{translations.title}</h1>
-      <Combobox setYear={(item) => setSelectedYear(item)} listValues={years} />
+      <YearSelectionTab
+        setYearAction={(item) => setSelectedYear(item)}
+        listValues={years}
+        lang={lang}
+      />
 
       {[...selectedGalleryByYear.keys()].map((month, index) => {
         const galleries: Gallery[] = selectedGalleryByYear.get(month) ?? [];
