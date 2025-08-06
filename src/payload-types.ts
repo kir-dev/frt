@@ -370,6 +370,10 @@ export interface Gallery {
     image: number | Media;
     id?: string | null;
   }[];
+  /**
+   * URL-barát azonosító, automatikusan generált a cím alapján
+   */
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -823,6 +827,7 @@ export interface GallerySelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
