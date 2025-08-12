@@ -7,6 +7,7 @@ import {
   Recruitment,
   Sponsor,
   Gallery,
+  Event,
 } from "@/payload-types";
 export async function getSponsors(): Promise<Sponsor[]> {
   const payload = await getPayload({ config });
@@ -131,4 +132,15 @@ export async function getGalleryBySlug(slug: string): Promise<Gallery | null> {
   });
 
   return gallery.docs.length > 0 ? gallery.docs[0] : null;
+}
+
+export async function getEvents(): Promise<Event[]> {
+  const payload = await getPayload({ config });
+  const events = await payload.find({
+    collection: "events",
+    sort: "-start_date",
+    limit: 1000,
+  });
+
+  return events.docs;
 }
