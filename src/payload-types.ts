@@ -303,7 +303,7 @@ export interface Event {
   location: string;
   image: number | Media;
   /**
-   * URL-barát azonosító, automatikusan generált a cím alapján
+   * URL-barát azonosító, automatikusan generált
    */
   slug: string;
   updatedAt: string;
