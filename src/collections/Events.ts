@@ -1,5 +1,8 @@
 import { CollectionConfig } from "payload";
-import {FixedToolbarFeature, lexicalEditor} from "@payloadcms/richtext-lexical";
+import {
+  FixedToolbarFeature,
+  lexicalEditor,
+} from "@payloadcms/richtext-lexical";
 
 export const Events: CollectionConfig = {
   slug: "events",
@@ -29,8 +32,8 @@ export const Events: CollectionConfig = {
         features: ({ defaultFeatures }) => [
           ...defaultFeatures,
           FixedToolbarFeature(),
-        ]
-      })
+        ],
+      }),
     },
     {
       name: "description_eng",
@@ -41,8 +44,8 @@ export const Events: CollectionConfig = {
         features: ({ defaultFeatures }) => [
           ...defaultFeatures,
           FixedToolbarFeature(),
-        ]
-      })
+        ],
+      }),
     },
     {
       name: "start_date",
@@ -68,6 +71,56 @@ export const Events: CollectionConfig = {
       relationTo: "media",
       required: true,
       label: "Kép",
+    },
+    {
+      name: "slug",
+      type: "text",
+      required: true,
+      unique: true,
+      label: "Slug",
+      admin: {
+        description: "URL-barát azonosító, automatikusan generált",
+        hidden: true,
+      },
+      hooks: {
+        beforeValidate: [
+          ({ data, value }) => {
+            if (value) return value;
+            if (data?.title) {
+              // Hungarian accented character replacements
+              const accentsMap = {
+                á: "a",
+                é: "e",
+                í: "i",
+                ó: "o",
+                ö: "o",
+                ő: "o",
+                ú: "u",
+                ü: "u",
+                ű: "u",
+                Á: "A",
+                É: "E",
+                Í: "I",
+                Ó: "O",
+                Ö: "O",
+                Ő: "O",
+                Ú: "U",
+                Ü: "U",
+                Ű: "U",
+              };
+              return data.title
+                .toLowerCase()
+                .replace(
+                  /[áéíóöőúüű]/g,
+                  (m: string) => accentsMap[m as keyof typeof accentsMap],
+                )
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/(^-|-$)+/g, "");
+            }
+            return value;
+          },
+        ],
+      },
     },
   ],
 };

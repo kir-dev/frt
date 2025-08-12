@@ -302,6 +302,10 @@ export interface Event {
   end_date?: string | null;
   location: string;
   image: number | Media;
+  /**
+   * URL-barát azonosító, automatikusan generált a cím alapján
+   */
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -789,6 +793,7 @@ export interface EventsSelect<T extends boolean = true> {
   end_date?: T;
   location?: T;
   image?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
