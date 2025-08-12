@@ -134,12 +134,37 @@ export async function getGalleryBySlug(slug: string): Promise<Gallery | null> {
   return gallery.docs.length > 0 ? gallery.docs[0] : null;
 }
 
-export async function getEvents(): Promise<Event[]> {
+export async function getFutureEvents(): Promise<Event[]> {
   const payload = await getPayload({ config });
+  const today = new Date().toISOString();
+
   const events = await payload.find({
     collection: "events",
-    sort: "-start_date",
+    sort: "start_date", // ascending so soonest is first
     limit: 1000,
+    where: {
+      start_date: {
+        greater_than: today,
+      },
+    },
+  });
+
+  return events.docs;
+}
+
+export async function getPreviousEvents(): Promise<Event[]> {
+  const payload = await getPayload({ config });
+  const today = new Date().toISOString();
+
+  const events = await payload.find({
+    collection: "events",
+    sort: "start_date",
+    limit: 1000,
+    where: {
+      start_date: {
+        less_than: today,
+      },
+    },
   });
 
   return events.docs;
