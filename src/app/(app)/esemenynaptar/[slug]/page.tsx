@@ -3,6 +3,7 @@ import { getEventBySlug } from "@/lib/payload-cms";
 import { notFound } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { Facebook, Camera } from "lucide-react";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -40,28 +41,36 @@ export default async function EventDescriptionPAge({
             {lang === "en" ? "Back to Event" : "Vissza az eseményekhez"}
           </span>
         </Link>
-        <h1 className="text-4xl font-bold mb-12">
+        <h1 className="text-4xl font-bold mb-2">
           {lang === "en" ? event.title_eng : event.title}
         </h1>
         {event.facebookEventLink && (
-          <>
-            <h2 className="text-2xl font-bold">
-              {lang === "en" ? "Facebook event: " : "Facebook esemény: "}
-            </h2>
-            <Link href={event.facebookEventLink}></Link>
-          </>
+          <Link
+            href={event.facebookEventLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-row justify-start items-center text-frtRed"
+          >
+            <Facebook size={14} />
+            <span className="text-sm font-bold ml-2">
+              {lang === "en" ? "Facebook event" : "Facebook esemény"}
+            </span>
+          </Link>
         )}
         {event.linkToPictureFromEvent && (
-          <>
-            <h2 className="text-2xl font-bold">
+          <Link
+            href={event.linkToPictureFromEvent}
+            className="flex flex-row justify-start items-center text-frtRed"
+          >
+            <Camera size={14} />
+            <span className="text-sm font-bold ml-2">
               {lang === "en"
-                ? "Pictures from the event: "
-                : "Képek az eseményről: "}
-            </h2>
-            <Link href={event.linkToPictureFromEvent}></Link>
-          </>
+                ? "Pictures from the event"
+                : "Képek az eseményről"}
+            </span>
+          </Link>
         )}
-        <div className="prose prose-invert max-w-none text-white">
+        <div className="prose prose-invert max-w-none text-white mt-12">
           <RichText
             data={lang === "en" ? event.description_eng : event.description}
           />
