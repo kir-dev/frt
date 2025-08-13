@@ -14,7 +14,19 @@ export default async function EventPage(props: {
   const futureEvents = await getFutureEvents();
   const previousEvents = await getPreviousEvents();
 
-  // TODO - separate the future and the previous events
+  if (futureEvents.length === 0 && previousEvents.length === 0) {
+    return (
+      <main className="min-h-screen bg-black text-white px-4 md:px-0">
+        <div className="bg-black container mx-auto py-12 max-w-5xl">
+          <h1>
+            {lang === "en"
+              ? "Currently there are not available events."
+              : "Jelenleg nincs nyilvános esemény."}
+          </h1>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-black text-white px-4 md:px-0">
