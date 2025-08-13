@@ -17,7 +17,7 @@ export default async function EventPage(props: {
   // TODO - separate the future and the previous events
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-black text-white px-4 md:px-0">
       <div className="bg-black container mx-auto py-12 max-w-5xl">
         <FutureEventsSection events={futureEvents} lang={lang} />
         <PreviousEventsSection events={previousEvents} lang={lang} />
