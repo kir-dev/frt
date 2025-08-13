@@ -169,3 +169,18 @@ export async function getPreviousEvents(): Promise<Event[]> {
 
   return events.docs;
 }
+
+export async function getEventBySlug(slug: string): Promise<Event | null> {
+  const payload = await getPayload({ config });
+  const event = await payload.find({
+    collection: "events",
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+    limit: 1,
+  });
+
+  return event.docs.length > 0 ? event.docs[0] : null;
+}

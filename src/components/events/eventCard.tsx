@@ -4,6 +4,7 @@ import { Media, Event } from "@/payload-types";
 import { useState } from "react";
 import { MapPin, CalendarDays } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import Link from "next/link";
 
 interface Props {
   event: Event;
@@ -25,54 +26,56 @@ export default function EventCard({ event, lang }: Props) {
   }
 
   return (
-    <article
-      className="relative bg-frtcardBG rounded-lg overflow-hidden cursor-pointer"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {/* Image */}
-      <Image
-        src={featuredImageObj?.url || "/placeholder.svg"}
-        alt={
-          featuredImageObj?.alt ||
-          (lang === "en" ? event.title_eng : event.title)
-        }
-        width={0}
-        height={0}
-        sizes="100vw"
-        className="w-full h-auto"
-      />
-
-      {/* Sliding text container */}
-      <div
-        className={`absolute bottom-0 left-0 right-0 bg-frtcardBG overflow-hidden transition-all duration-500 ${
-          hovered ? "h-40 p-4" : "h-12 p-2"
-        }`}
+    <Link href={{ pathname: `/esemenynaptar/${event.slug}`, query: { lang } }}>
+      <article
+        className="relative bg-frtcardBG rounded-lg overflow-hidden cursor-pointer"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
       >
-        <h3 className="text-white text-center text-xl font-bold py-1">
-          {lang === "en" ? event.title_eng : event.title}
-        </h3>
+        {/* Image */}
+        <Image
+          src={featuredImageObj?.url || "/placeholder.svg"}
+          alt={
+            featuredImageObj?.alt ||
+            (lang === "en" ? event.title_eng : event.title)
+          }
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="w-full h-auto"
+        />
 
+        {/* Sliding text container */}
         <div
-          className={`transition-opacity duration-500 ${
-            hovered ? "opacity-100 mt-2" : "opacity-0"
+          className={`absolute bottom-0 left-0 right-0 bg-frtcardBG overflow-hidden transition-all duration-500 ${
+            hovered ? "h-40 p-4" : "h-12 p-2"
           }`}
         >
-          <div className="flex flex-row justify-start items-center py-2">
-            <MapPin />
-            <p className="ml-2">{event.location}</p>
-          </div>
+          <h3 className="text-white text-center text-xl font-bold py-1">
+            {lang === "en" ? event.title_eng : event.title}
+          </h3>
 
-          <div className="flex flex-row justify-start items-center py-2 pb-0">
-            <CalendarDays />
-            <p className="ml-2">
-              {endDate === ""
-                ? formatDate(event.start_date)
-                : formatDate(event.start_date) + " - " + formatDate(endDate)}
-            </p>
+          <div
+            className={`transition-opacity duration-500 ${
+              hovered ? "opacity-100 mt-2" : "opacity-0"
+            }`}
+          >
+            <div className="flex flex-row justify-start items-center py-2">
+              <MapPin />
+              <p className="ml-2">{event.location}</p>
+            </div>
+
+            <div className="flex flex-row justify-start items-center py-2 pb-0">
+              <CalendarDays />
+              <p className="ml-2">
+                {endDate === ""
+                  ? formatDate(event.start_date)
+                  : formatDate(event.start_date) + " - " + formatDate(endDate)}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 }
