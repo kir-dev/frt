@@ -14,7 +14,7 @@ export default function FutureEventsSection({
     title: lang === "en" ? "Upcomming Events" : "Aktuális Események",
     noEventsMessage:
       lang === "en"
-        ? "There are no upcomming events."
+        ? "There are no upcoming events."
         : "Jelenleg nincs aktuális esemény.",
   };
 
