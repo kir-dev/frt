@@ -1,5 +1,6 @@
 import { getFutureEvents, getPreviousEvents } from "@/lib/payload-cms";
 import FutureEventsSection from "@/components/events/futureEventsSection";
+import PreviousEventsSection from "@/components/events/previousEventsSection";
 
 export default async function EventPage(props: {
   searchParams?: Promise<Record<string, string>>;
@@ -13,16 +14,13 @@ export default async function EventPage(props: {
   const futureEvents = await getFutureEvents();
   const previousEvents = await getPreviousEvents();
 
-  const translations = {
-    pastEventsTitle: lang === "en" ? "Previous Events" : "Korábbi Események",
-  };
-
   // TODO - separate the future and the previous events
 
   return (
     <main className="min-h-screen bg-black text-white">
       <div className="bg-black container mx-auto py-12 max-w-5xl">
         <FutureEventsSection events={futureEvents} lang={lang} />
+        <PreviousEventsSection events={previousEvents} lang={lang} />
       </div>
     </main>
   );
