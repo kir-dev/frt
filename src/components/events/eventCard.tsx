@@ -2,6 +2,8 @@
 import Image from "next/image";
 import { Media, Event } from "@/payload-types";
 import { useState } from "react";
+import { MapPin, CalendarDays } from "lucide-react";
+import { formatDate } from "@/lib/utils";
 
 interface Props {
   event: Event;
@@ -15,6 +17,12 @@ export default function EventCard({ event, lang }: Props) {
     typeof event.image === "object" && event.image !== null
       ? (event.image as Media)
       : undefined;
+
+  let endDate = "";
+  if (event.end_date !== null && event.end_date !== undefined) {
+    // safe to use event.end_date here
+    endDate = event.end_date;
+  }
 
   return (
     <article
@@ -41,19 +49,28 @@ export default function EventCard({ event, lang }: Props) {
           hovered ? "h-40 p-4" : "h-12 p-2"
         }`}
       >
-        {/* Title */}
         <h3 className="text-white text-center text-xl font-bold py-1">
           {lang === "en" ? event.title_eng : event.title}
         </h3>
 
-        {/* Extra text revealed on hover */}
         <div
           className={`transition-opacity duration-500 ${
             hovered ? "opacity-100 mt-2" : "opacity-0"
           }`}
         >
-          <p>szoveg</p>
-          <p>szoveg3</p>
+          <div className="flex flex-row justify-start items-center py-2">
+            <MapPin />
+            <p className="ml-2">{event.location}</p>
+          </div>
+
+          <div className="flex flex-row justify-start items-center py-2 pb-0">
+            <CalendarDays />
+            <p className="ml-2">
+              {endDate === ""
+                ? formatDate(event.start_date)
+                : formatDate(event.start_date) + " - " + formatDate(endDate)}
+            </p>
+          </div>
         </div>
       </div>
     </article>
