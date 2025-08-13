@@ -40,6 +40,17 @@ export default async function EventDescriptionPAge({
             {lang === "en" ? "Back to Event" : "Vissza az eseményekhez"}
           </span>
         </Link>
+        <h1 className="text-4xl font-bold mb-12">
+          {lang === "en" ? event.title_eng : event.title}
+        </h1>
+        {event.facebookEventLink && (
+          <>
+            <h2 className="text-2xl font-bold">
+              {lang === "en" ? "Facebook event: " : "Facebook esemény: "}
+            </h2>
+            <Link href={event.facebookEventLink}></Link>
+          </>
+        )}
         <div className="prose prose-invert max-w-none text-white">
           <RichText
             data={lang === "en" ? event.description_eng : event.description}

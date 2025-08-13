@@ -302,6 +302,7 @@ export interface Event {
   end_date?: string | null;
   location: string;
   image: number | Media;
+  facebookEventLink?: string | null;
   /**
    * URL-barát azonosító, automatikusan generált
    */
@@ -793,6 +794,7 @@ export interface EventsSelect<T extends boolean = true> {
   end_date?: T;
   location?: T;
   image?: T;
+  facebookEventLink?: T;
   slug?: T;
   updatedAt?: T;
   createdAt?: T;

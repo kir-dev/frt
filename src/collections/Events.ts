@@ -73,6 +73,12 @@ export const Events: CollectionConfig = {
       label: "Kép",
     },
     {
+      name: "facebookEventLink",
+      type: "text",
+      required: false,
+      label: "Facebook Link",
+    },
+    {
       name: "slug",
       type: "text",
       required: true,
