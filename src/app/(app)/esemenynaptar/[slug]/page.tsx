@@ -29,9 +29,11 @@ export default async function EventDescriptionPAge({
   return (
     <main className="min-h-screen bg-black text-white">
       <div className="bg-black container mx-auto py-12 max-w-5xl">
-        <RichText
-          data={lang === "en" ? event.description_eng : event.description}
-        />
+        <div className="prose prose-invert max-w-none text-white">
+          <RichText
+            data={lang === "en" ? event.description_eng : event.description}
+          />
+        </div>
       </div>
     </main>
   );
