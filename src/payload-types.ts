@@ -303,6 +303,7 @@ export interface Event {
   location: string;
   image: number | Media;
   facebookEventLink?: string | null;
+  linkToPictureFromEvent?: string | null;
   /**
    * URL-barát azonosító, automatikusan generált
    */
@@ -795,6 +796,7 @@ export interface EventsSelect<T extends boolean = true> {
   location?: T;
   image?: T;
   facebookEventLink?: T;
+  linkToPictureFromEvent?: T;
   slug?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -76,7 +76,13 @@ export const Events: CollectionConfig = {
       name: "facebookEventLink",
       type: "text",
       required: false,
-      label: "Facebook Link",
+      label: "Facebook Event Link",
+    },
+    {
+      name: "linkToPictureFromEvent",
+      type: "text",
+      required: false,
+      label: "Link to the Pictures in gallery",
     },
     {
       name: "slug",

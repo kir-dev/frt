@@ -51,6 +51,16 @@ export default async function EventDescriptionPAge({
             <Link href={event.facebookEventLink}></Link>
           </>
         )}
+        {event.linkToPictureFromEvent && (
+          <>
+            <h2 className="text-2xl font-bold">
+              {lang === "en"
+                ? "Pictures from the event: "
+                : "Képek az eseményről: "}
+            </h2>
+            <Link href={event.linkToPictureFromEvent}></Link>
+          </>
+        )}
         <div className="prose prose-invert max-w-none text-white">
           <RichText
             data={lang === "en" ? event.description_eng : event.description}
