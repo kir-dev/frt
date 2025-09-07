@@ -93,7 +93,7 @@ export default function RecruitmentPageClient({ recruitmentData, lang }: Recruit
                                 <section id={`group-${group.id}`} className="mb-16">
                                     <div className="bg-frtcardBG rounded-lg p-6 hover:bg-red-950 transition-colors mb-8">
                                         <h2 className="text-3xl font-bold mb-4">{lang === "en" ? group.groupNameEng : group.groupName}</h2>
-                                        <div className="rich-text-content text-gray-300">
+                                        <div className="rich-text-content">
                                             <RichText data={lang === "en" ? group.descriptionEng : group.description} />
                                         </div>
                                     </div>
@@ -107,7 +107,7 @@ export default function RecruitmentPageClient({ recruitmentData, lang }: Recruit
                                                 <h3 className="text-xl font-bold mb-3 text-frtRed">
                                                     {lang === "en" ? position.positionNameEng : position.positionName}
                                                 </h3>
-                                                <div className="rich-text-content text-gray-300">
+                                                <div className="rich-text-content">
                                                     <RichText
                                                         data={lang === "en" ? position.positionDescriptionEng : position.positionDescription}
                                                     />

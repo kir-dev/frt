@@ -75,7 +75,7 @@ export default async function ArticlePage({ params, searchParams }: ArticlePageP
                             priority
                         />
                     </div>
-                    <div className="prose prose-invert max-w-none text-white">
+                    <div className="rich-text-content max-w-none">
                         <RichText data={lang === 'en' ? article.content_eng : article.content} />
                     </div>
                     {galleryImages.length > 0 && (

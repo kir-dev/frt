@@ -6,6 +6,8 @@ import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 import sharp from "sharp";
+import { en } from "@payloadcms/translations/languages/en";
+import { hu } from "@payloadcms/translations/languages/hu";
 
 import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
@@ -20,6 +22,8 @@ import { Sponsors } from "@/collections/Sponsors";
 import Groups from "@/collections/Groups";
 import {s3Storage} from "@payloadcms/storage-s3";
 import Association from "@/collections/Association";
+import SupportUs from "@/collections/SupportUs";
+import Contact from "@/collections/Contact";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -37,10 +41,16 @@ const collections = [
       Recruitment,
       Groups,
       Association,
+      SupportUs,
+      Contact,
     ]
 
 
 export default buildConfig({
+    i18n: {
+        supportedLanguages: { en, hu },
+        fallbackLanguage: "hu",
+    },
   admin: {
     user: Users.slug,
     importMap: {

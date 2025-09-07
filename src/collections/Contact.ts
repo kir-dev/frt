@@ -1,21 +1,21 @@
-import {CollectionConfig, getPayload} from 'payload';
+import { CollectionConfig, getPayload } from 'payload';
 import config from "@payload-config";
-import {FixedToolbarFeature, lexicalEditor} from "@payloadcms/richtext-lexical";
+import { FixedToolbarFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 
-const Association: CollectionConfig = {
-  slug: 'association',
-    labels: {
-        singular: 'Egyesület',
-        plural: 'Egyesület',
-    },
+const Contact: CollectionConfig = {
+  slug: 'contact',
   admin: {
     useAsTitle: 'title',
-    description: 'Az egyesület szerkeszthető tartalmai',
+    description: 'A kapcsolat oldal szerkeszthető tartalma',
+  },
+  labels: {
+    singular: 'Kapcsolat',
+    plural: 'Kapcsolat',
   },
   access: {
     create: async ({}) => {
       const payload = await getPayload({ config })
-      const docs = await payload.find({ collection: 'association', limit: 1 });
+      const docs = await payload.find({ collection: 'contact', limit: 1 });
       return docs.totalDocs === 0;
     },
     update: () => true,
@@ -30,10 +30,10 @@ const Association: CollectionConfig = {
       required: true,
     },
     {
-        name: 'title_en',
-        type: 'text',
-        label: 'Cím (angol)',
-        required: true,
+      name: 'title_en',
+      type: 'text',
+      label: 'Cím (angol)',
+      required: true,
     },
     {
       name: 'content',
@@ -48,10 +48,10 @@ const Association: CollectionConfig = {
       })
     },
     {
-        name: 'content_en',
-        type: 'richText',
-        label: 'Tartalom (angol)',
-        required: true,
+      name: 'content_en',
+      type: 'richText',
+      label: 'Tartalom (angol)',
+      required: true,
       editor: lexicalEditor({
         features: ({ defaultFeatures }) => [
           ...defaultFeatures,
@@ -62,5 +62,5 @@ const Association: CollectionConfig = {
   ],
 };
 
-export default Association;
+export default Contact;
 
