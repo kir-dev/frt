@@ -7,7 +7,6 @@ import {
   Recruitment,
   Sponsor,
   Gallery,
-  Association,
   SupportUs, Contact,
 } from "@/payload-types";
 
