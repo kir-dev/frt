@@ -4,6 +4,10 @@ import {FixedToolbarFeature, lexicalEditor} from "@payloadcms/richtext-lexical";
 
 const Association: CollectionConfig = {
   slug: 'association',
+    labels: {
+        singular: 'Egyesület',
+        plural: 'Egyesület',
+    },
   admin: {
     useAsTitle: 'title',
     description: 'Az egyesület szerkeszthető tartalmai',

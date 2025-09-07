@@ -4,8 +4,8 @@ import {FixedToolbarFeature, lexicalEditor} from "@payloadcms/richtext-lexical";
 const Group: CollectionConfig = {
   slug: "groups",
   labels: {
-    singular: "Group",
-    plural: "Groups",
+    singular: "Csoport",
+    plural: "Csoportok",
   },
     admin: {
         description: "Csoportok, amelyek a csapattagokat tartalmazzák.",

@@ -6,6 +6,8 @@ import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 import sharp from "sharp";
+import { en } from "@payloadcms/translations/languages/en";
+import { hu } from "@payloadcms/translations/languages/hu";
 
 import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
@@ -45,6 +47,10 @@ const collections = [
 
 
 export default buildConfig({
+    i18n: {
+        supportedLanguages: { en, hu },
+        fallbackLanguage: "hu",
+    },
   admin: {
     user: Users.slug,
     importMap: {
