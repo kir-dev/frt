@@ -8,7 +8,7 @@ import {
   Sponsor,
   Gallery,
   Association,
-  SupportUs,
+  SupportUs, Contact,
 } from "@/payload-types";
 
 export async function getSponsors(): Promise<Sponsor[]> {
@@ -117,6 +117,15 @@ export async function getSupportUs(): Promise<SupportUs | null> {
     limit: 1,
   });
   return support.docs.length > 0 ? (support.docs[0] as SupportUs) : null;
+}
+
+export async function getContact(): Promise<Contact | null> {
+  const payload = await getPayload({ config });
+  const contact = await payload.find({
+    collection: "contact",
+    limit: 1,
+  });
+  return contact.docs.length > 0 ? (contact.docs[0] as Contact) : null;
 }
 
 export async function getGallery(): Promise<Gallery[]> {

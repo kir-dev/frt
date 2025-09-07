@@ -21,6 +21,7 @@ import Groups from "@/collections/Groups";
 import {s3Storage} from "@payloadcms/storage-s3";
 import Association from "@/collections/Association";
 import SupportUs from "@/collections/SupportUs";
+import Contact from "@/collections/Contact";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -39,6 +40,7 @@ const collections = [
       Groups,
       Association,
       SupportUs,
+      Contact,
     ]
 
 
