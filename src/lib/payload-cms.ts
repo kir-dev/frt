@@ -7,7 +7,10 @@ import {
   Recruitment,
   Sponsor,
   Gallery,
+  Association,
+  SupportUs,
 } from "@/payload-types";
+
 export async function getSponsors(): Promise<Sponsor[]> {
   const payload = await getPayload({ config });
   const sponsors = await payload.find({
@@ -105,6 +108,15 @@ export async function getAssociation() {
   });
 
   return association.docs.length > 0 ? association.docs[0] : null;
+}
+
+export async function getSupportUs(): Promise<SupportUs | null> {
+  const payload = await getPayload({ config });
+  const support = await payload.find({
+    collection: "support-us",
+    limit: 1,
+  });
+  return support.docs.length > 0 ? (support.docs[0] as SupportUs) : null;
 }
 
 export async function getGallery(): Promise<Gallery[]> {
