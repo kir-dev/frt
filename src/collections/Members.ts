@@ -2,6 +2,10 @@ import { CollectionConfig } from "payload";
 
 export const Members: CollectionConfig = {
   slug: "members",
+    labels: {
+        singular: "Csapattag",
+        plural: "Csapattagok",
+    },
   admin: {
     description: "Csapattagok profiljai, a hozzájuk tartozó csoport és kép.",
     useAsTitle: "name",

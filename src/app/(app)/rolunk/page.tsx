@@ -51,7 +51,7 @@ export default async function AboutUsPage(props: AboutUsPageProps) {
                             <h2 className="text-4xl font-bold mb-8 text-left">{lang === 'en' ? group.nameEn : group.name}</h2>
 
                             {/* Group description - left aligned */}
-                            <div className="text-gray-300 text-left max-w-5xl">
+                            <div className="rich-text-content text-left max-w-5xl">
                                 <RichText data={lang === 'en' ? group.descriptionEng : group.description} />
                             </div>
 

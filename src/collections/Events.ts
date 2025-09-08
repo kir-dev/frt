@@ -6,6 +6,10 @@ import {
 
 export const Events: CollectionConfig = {
   slug: "events",
+    labels: {
+        singular: "Esemény",
+        plural: "Események",
+    },
   admin: {
     description: "Események és programok",
     useAsTitle: "title",

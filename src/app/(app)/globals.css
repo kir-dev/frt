@@ -174,11 +174,52 @@
   margin-bottom: 1em;
 }
 
+/* Quote styling: ensure visibility across themes */
+.rich-text-content blockquote,
+.rich-text-content .quote {
+  border-left: 4px solid #D51028; /* FRT red */
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  color: hsl(var(--foreground));
+  background-color: transparent;
+  border-radius: 0.25rem;
+}
+
+/* Remove extra spacing inside quotes and ensure paragraphs inherit color */
+.rich-text-content blockquote p,
+.rich-text-content .quote p {
+  margin: 0.25rem 0;
+  color: inherit !important;
+}
+
+/* Dark theme quote background */
+html.dark .rich-text-content blockquote,
+html.dark .rich-text-content .quote {
+  background-color: #230505; /* frtcardBG */
+  color: #ffffff; /* ensure strong contrast */
+}
+
+html.dark .rich-text-content blockquote p,
+html.dark .rich-text-content .quote p {
+  color: #ffffff !important;
+}
+
+/* Light theme quote background and text color for strong contrast */
+html.light .rich-text-content blockquote,
+html.light .rich-text-content .quote {
+  background-color: #fee2e2; /* tailwind red-200 */
+  color: #111827; /* gray-900 */
+}
+
+html.light .rich-text-content blockquote p,
+html.light .rich-text-content .quote p {
+  color: #111827 !important; /* force contrast in light theme */
+}
+
 /* Erős specificitás a félkövér szövegnek */
 div.rich-text-content strong,
 div.rich-text-content b {
   font-weight: bold !important;
-  color: #D51028 !important; /* FRT piros szín */
 }
 
 @layer base {
