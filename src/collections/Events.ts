@@ -104,11 +104,9 @@ export const Events: CollectionConfig = {
       },
       hooks: {
         beforeValidate: [
-          ({ data, value }) => {
-            if (value) return value;
-            if (data?.title) {
-              // Hungarian accented character replacements
-              const accentsMap = {
+          async ({ data, value, req }) => {
+            const formatSlug = (val: string) => {
+              const accentsMap: { [key: string]: string } = {
                 á: "a",
                 é: "e",
                 í: "i",
@@ -128,16 +126,51 @@ export const Events: CollectionConfig = {
                 Ü: "U",
                 Ű: "U",
               };
-              return data.title
+              return val
                 .toLowerCase()
                 .replace(
-                  /[áéíóöőúüű]/g,
-                  (m: string) => accentsMap[m as keyof typeof accentsMap],
+                  /[áéíóöőúüűÁÉÍÓÖŐÚÜŰ]/g,
+                  (m: string) => accentsMap[m] || m,
                 )
-                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/[^a-z0-9-]+/g, "-")
                 .replace(/(^-|-$)+/g, "");
+            };
+
+            let slug = value;
+
+            if (slug) {
+              slug = formatSlug(slug);
+            } else if (data?.title) {
+              slug = formatSlug(data.title);
             }
-            return value;
+
+            if (slug) {
+              try {
+                const existingEvent = await req.payload.find({
+                  collection: "events",
+                  where: {
+                    slug: {
+                      equals: slug,
+                    },
+                  },
+                  limit: 1,
+                });
+
+                if (existingEvent.docs.length > 0) {
+                  const date = new Date();
+                  const dateString = `-${date.getFullYear()}-${
+                    date.getMonth() + 1
+                  }-${date.getDate()}`;
+                  return `${slug}${dateString}`;
+                }
+              } catch (e) {
+                req.payload.logger.error(
+                  `Error checking for existing slug in Events collection: ${e}`,
+                );
+              }
+            }
+
+            return slug;
           },
         ],
       },
