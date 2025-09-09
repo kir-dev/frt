@@ -8,7 +8,8 @@ import {
   Sponsor,
   Gallery,
   Event,
-  SupportUs, Contact,
+  SupportUs,
+  Contact,
 } from "@/payload-types";
 
 export async function getSponsors(): Promise<Sponsor[]> {
@@ -178,7 +179,7 @@ export async function getPreviousEvents(): Promise<Event[]> {
 
   const events = await payload.find({
     collection: "events",
-    sort: "start_date",
+    sort: "-start_date",
     limit: 1000,
     where: {
       start_date: {
