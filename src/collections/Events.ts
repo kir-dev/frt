@@ -84,9 +84,13 @@ export const Events: CollectionConfig = {
     },
     {
       name: "linkToPictureFromEvent",
-      type: "text",
+      type: "relationship",
+      relationTo: "gallery",
       required: false,
-      label: "Link to the Pictures in gallery",
+      label: "Link a galériához",
+      admin: {
+        description: "Ha van galéria az eseményről, ide linkelheted be",
+      },
     },
     {
       name: "slug",
