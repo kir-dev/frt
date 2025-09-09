@@ -7,7 +7,9 @@ import {
   Recruitment,
   Sponsor,
   Gallery,
-  SupportUs, Contact,
+  Event,
+  SupportUs,
+  Contact,
 } from "@/payload-types";
 
 export async function getSponsors(): Promise<Sponsor[]> {
@@ -151,4 +153,55 @@ export async function getGalleryBySlug(slug: string): Promise<Gallery | null> {
   });
 
   return gallery.docs.length > 0 ? gallery.docs[0] : null;
+}
+
+export async function getFutureEvents(): Promise<Event[]> {
+  const payload = await getPayload({ config });
+  const today = new Date().toISOString();
+
+  const events = await payload.find({
+    collection: "events",
+    sort: "start_date", // ascending so soonest is first
+    limit: 1000,
+    where: {
+      start_date: {
+        greater_than: today,
+      },
+    },
+  });
+
+  return events.docs;
+}
+
+export async function getPreviousEvents(): Promise<Event[]> {
+  const payload = await getPayload({ config });
+  const today = new Date().toISOString();
+
+  const events = await payload.find({
+    collection: "events",
+    sort: "-start_date",
+    limit: 1000,
+    where: {
+      start_date: {
+        less_than: today,
+      },
+    },
+  });
+
+  return events.docs;
+}
+
+export async function getEventBySlug(slug: string): Promise<Event | null> {
+  const payload = await getPayload({ config });
+  const event = await payload.find({
+    collection: "events",
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+    limit: 1,
+  });
+
+  return event.docs.length > 0 ? event.docs[0] : null;
 }

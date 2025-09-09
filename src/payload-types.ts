@@ -306,6 +306,38 @@ export interface Event {
   end_date?: string | null;
   location: string;
   image: number | Media;
+  facebookEventLink?: string | null;
+  /**
+   * Ha van galéria az eseményről, ide linkelheted be
+   */
+  linkToPictureFromEvent?: (number | null) | Gallery;
+  /**
+   * URL-barát azonosító, automatikusan generált
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Képek kategorizálása albumokba
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery".
+ */
+export interface Gallery {
+  id: number;
+  title: string;
+  title_eng?: string | null;
+  date: string;
+  category?: string | null;
+  images: {
+    image: number | Media;
+    id?: string | null;
+  }[];
+  /**
+   * URL-barát azonosító, automatikusan generált a cím alapján
+   */
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -355,29 +387,6 @@ export interface Car {
     id?: string | null;
   }[];
   interactive_model?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Képek kategorizálása albumokba
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "gallery".
- */
-export interface Gallery {
-  id: number;
-  title: string;
-  title_eng?: string | null;
-  date: string;
-  category?: string | null;
-  images: {
-    image: number | Media;
-    id?: string | null;
-  }[];
-  /**
-   * URL-barát azonosító, automatikusan generált a cím alapján
-   */
-  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -887,6 +896,9 @@ export interface EventsSelect<T extends boolean = true> {
   end_date?: T;
   location?: T;
   image?: T;
+  facebookEventLink?: T;
+  linkToPictureFromEvent?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -1,0 +1,39 @@
+import { getFutureEvents, getPreviousEvents } from "@/lib/payload-cms";
+import FutureEventsSection from "@/components/events/futureEventsSection";
+import PreviousEventsSection from "@/components/events/previousEventsSection";
+
+export default async function EventPage(props: {
+  searchParams?: Promise<Record<string, string>>;
+}) {
+  let lang = "hu";
+  if (props?.searchParams) {
+    const sp = await props.searchParams;
+    lang = sp && "lang" in sp && sp.lang === "en" ? "en" : "hu";
+  }
+
+  const futureEvents = await getFutureEvents();
+  const previousEvents = await getPreviousEvents();
+
+  if (futureEvents.length === 0 && previousEvents.length === 0) {
+    return (
+      <main className="min-h-screen bg-black text-white px-4 md:px-0">
+        <div className="bg-black container mx-auto py-12 max-w-5xl">
+          <h1>
+            {lang === "en"
+              ? "Currently there are not available events."
+              : "Jelenleg nincs nyilvános esemény."}
+          </h1>
+        </div>
+      </main>
+    );
+  }
+
+  return (
+    <main className="min-h-screen bg-black text-white px-4 md:px-0">
+      <div className="bg-black container mx-auto py-12 max-w-5xl">
+        <FutureEventsSection events={futureEvents} lang={lang} />
+        <PreviousEventsSection events={previousEvents} lang={lang} />
+      </div>
+    </main>
+  );
+}
