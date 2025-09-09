@@ -41,7 +41,7 @@ export default function NewsCard({ article, lang = 'hu', readMoreText = 'Tovább
           <Link href={{ pathname: `/hirek/${article.slug}`, query: { lang } }} className="hover:text-frtRed transition-colors">
             <h2 className="text-2xl font-bold mb-3">{lang === 'en' ? article.title_eng : article.title}</h2>
           </Link>
-          <div className="text-gray-300 mb-4">
+          <div className="rich-text-content mb-4">
             <RichText data={lang === 'en' ? article.short_description_eng : article.short_description} />
           </div>
           <Link

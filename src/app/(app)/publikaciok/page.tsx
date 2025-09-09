@@ -78,7 +78,7 @@ export default async function PublicationsPage(props: PublicationsPageProps) {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="text-gray-300 prose prose-invert max-w-none w-full">
+                                <div className="rich-text-content w-full">
                                     <RichText data={lang === 'en' ? publication.description_eng : publication.description} />
                                 </div>
                             </div>

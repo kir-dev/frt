@@ -6,7 +6,7 @@ export default function Footer() {
             <div className="container mx-auto py-6 flex flex-col items-center justify-center font-frtszoveg">
                 <p className="text-sm mb-4">Copyright © 2025 BME Formula Racing Team</p>
                 <SocialsSection/>
-                <p className="text-xs text-gray-400">Made with ❤️ by Kir-Dev</p>
+                <p className="text-xs text-gray-400">Made with ❤️ by <a href="https://kir-dev.hu" className="underline">Kir-Dev</a></p>
             </div>
         </footer>
     )

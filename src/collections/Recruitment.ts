@@ -3,6 +3,10 @@ import { FixedToolbarFeature, lexicalEditor} from '@payloadcms/richtext-lexical'
 
 export const Recruitment: CollectionConfig = {
   slug: "recruitment",
+    labels: {
+        singular: "Toborzás",
+        plural: "Toborzás",
+    },
   admin: {
     description:
         "Nyitott pozíciók a csoportokon belül, funkcionális területek szerint csoportosítva.",

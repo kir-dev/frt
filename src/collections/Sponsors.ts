@@ -2,6 +2,10 @@ import {CollectionConfig} from "payload";
 
 export const Sponsors: CollectionConfig = {
     slug: "sponsors",
+    labels: {
+        singular: "Támogató",
+        plural: "Támogatók",
+    },
     admin: {
         description: "Támogató adatai",
         useAsTitle: "name",
