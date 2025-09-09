@@ -59,7 +59,11 @@ export default async function EventDescriptionPAge({
         )}
         {event.linkToPictureFromEvent && (
           <Link
-            href={event.linkToPictureFromEvent}
+            href={
+              typeof event.linkToPictureFromEvent === "object"
+                ? `/galeria/${event.linkToPictureFromEvent.slug}`
+                : "#"
+            }
             className="flex flex-row justify-start items-center text-frtRed"
           >
             <Camera size={14} />
