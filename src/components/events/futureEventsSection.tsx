@@ -11,7 +11,7 @@ export default function FutureEventsSection({
   lang,
 }: futureEventSectionProps) {
   const translations = {
-    title: lang === "en" ? "Upcomming Events" : "Aktuális Események",
+    title: lang === "en" ? "Upcomming Events" : "Közelgő Események",
     noEventsMessage:
       lang === "en"
         ? "There are no upcoming events."
