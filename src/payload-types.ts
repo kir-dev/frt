@@ -304,7 +304,7 @@ export interface Event {
   };
   start_date: string;
   end_date?: string | null;
-  location: string;
+  location?: string | null;
   image: number | Media;
   facebookEventLink?: string | null;
   /**
