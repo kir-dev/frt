@@ -15,7 +15,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
     return (
-        <html><body>
+        <html lang="hu">
+        <head>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.19/index.global.min.css" />
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.19/index.global.min.css" />
+        </head>
+        <body>
         <ThemeProvider defaultTheme="dark" storageKey="bme-frt-theme">
             <div className="min-h-screen font-frtszoveg bg-black dark:bg-black light:bg-white text-white dark:text-white light:text-gray-900">
                 <Navbar />

@@ -201,7 +201,18 @@ export async function getEventBySlug(slug: string): Promise<Event | null> {
       },
     },
     limit: 1,
+    depth: 1, // biztosítjuk hogy az upload (image) objektum betöltődjön
   });
 
   return event.docs.length > 0 ? event.docs[0] : null;
+}
+
+export async function getAllEvents(): Promise<Event[]> {
+  const payload = await getPayload({ config });
+  const events = await payload.find({
+    collection: "events",
+    sort: "start_date",
+    limit: 1000,
+  });
+  return events.docs as Event[];
 }

@@ -5,6 +5,7 @@
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant light (&:is(.light *)); /* HOZZÁADVA: light variáns a Tailwind utility-khez */
 
     @theme inline {
       --color-background: var(--background);
@@ -366,3 +367,6 @@ html.dark body {
 html.dark main {
   @apply bg-black text-white;
 }
+
+/* FullCalendar kiegészítő világos háttér biztosítása light módban */
+html.light .fc, html.light .fc .fc-scrollgrid, html.light .fc-theme-standard td, html.light .fc-theme-standard th { background:#ffffff; }
