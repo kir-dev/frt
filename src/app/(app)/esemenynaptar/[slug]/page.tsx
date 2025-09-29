@@ -69,43 +69,52 @@ export default async function EventDescriptionPAge({
   const isMultiDay = !!(event.end_date && new Date(event.start_date).toDateString() !== new Date(event.end_date).toDateString());
 
   return (
-    <main className="min-h-screen bg-black text-white light:bg-white light:text-gray-900 px-4 md:px-0">
-      <div className="bg-black dark:bg-black light:bg-white container mx-auto py-12 max-w-5xl">
-        <Link
-          href={{ pathname: "/esemenynaptar", query: { lang } }}
-          className="inline-flex items-center text-gray-400 light:text-gray-600 hover:text-frtRed mb-8 transition-colors"
-        >
-          <ChevronLeft size={20} />
-          <span className="ml-1">
-            {lang === "en" ? "Back to events" : "Vissza az eseményekhez"}
-          </span>
-        </Link>
-        <article className="space-y-6">
-          <header>
-            <h1 className="text-4xl font-bold leading-tight tracking-tight mb-3">
+    <main className="min-h-screen bg-black text-white light:bg-white light:text-gray-900">
+      <div className="bg-black dark:bg-black light:bg-white">
+        <div className="container mx-auto pt-8 px-4 md:px-8 max-w-6xl">
+          <Link
+            href={{ pathname: "/esemenynaptar", query: { lang } }}
+            className="inline-flex items-center text-gray-400 light:text-gray-600 hover:text-frtRed transition-colors mb-6 text-sm"
+          >
+            <ChevronLeft size={18} />
+            <span className="ml-1 font-medium tracking-wide">
+              {lang === "en" ? "Back to events" : "Vissza az eseményekhez"}
+            </span>
+          </Link>
+        </div>
+        {/* HERO */}
+        <section className="relative max-w-6xl mx-auto rounded-xl overflow-hidden border border-neutral-800 light:border-neutral-200 shadow-md bg-neutral-900/70 light:bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-neutral-900/50 light:supports-[backdrop-filter]:bg-white/60 min-h-[320px] flex items-stretch">
+          {/* Háttérkép vagy fallback gradient */}
+          {imageObj?.url ? (
+            <div className="absolute inset-0">
+              <Image
+                src={imageObj.url}
+                alt={imageObj.alt || (lang === "en" ? "Event image" : "Esemény képe")}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 1200px"
+                className="object-cover opacity-70 light:opacity-80"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80 light:from-white/70 light:via-white/60 light:to-white/80" />
+            </div>
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-800 to-black light:from-white light:via-neutral-100 light:to-white" />
+          )}
+          <div className="relative z-10 w-full px-6 md:px-10 py-12 md:py-16 flex flex-col justify-end">
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight drop-shadow-sm bg-gradient-to-r from-white to-white/70 light:from-black light:to-black/60 bg-clip-text text-transparent">
               {lang === "en" ? event.title_eng : event.title}
             </h1>
-            {imageObj?.url && (
-              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg border border-neutral-800 light:border-neutral-200 bg-neutral-900 light:bg-neutral-100 shadow-sm mb-5">
-                <Image
-                  src={imageObj.url}
-                  alt={imageObj.alt || (lang === "en" ? "Event image" : "Esemény képe")}
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, 960px"
-                  className="object-cover"
-                />
-              </div>
-            )}
-            <div className="flex flex-wrap gap-4 text-sm items-start mt-2">
-              <div className="inline-flex items-center gap-2 py-1 px-3 rounded-md bg-neutral-900/60 light:bg-neutral-100 border border-neutral-800 light:border-neutral-200">
+            <div className="flex flex-wrap gap-3 mt-8">
+              <div className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium tracking-wide bg-neutral-900/60 light:bg-white/70 backdrop-blur border-neutral-700/60 light:border-neutral-300 shadow-sm hover:shadow transition">
                 <CalendarDays size={16} className="text-frtRed" />
-                <span className="font-medium">{dateLabel}</span>
+                <span className="uppercase tracking-wide">
+                  {dateLabel}
+                </span>
               </div>
               {event.location && (
-                <div className="inline-flex items-center gap-2 py-1 px-3 rounded-md bg-neutral-900/60 light:bg-neutral-100 border border-neutral-800 light:border-neutral-200">
+                <div className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium tracking-wide bg-neutral-900/60 light:bg-white/70 backdrop-blur border-neutral-700/60 light:border-neutral-300 shadow-sm hover:shadow transition">
                   <MapPin size={16} className="text-frtRed" />
-                  <span className="font-medium">{event.location}</span>
+                  <span className="uppercase tracking-wide">{event.location}</span>
                 </div>
               )}
               {event.facebookEventLink && (
@@ -113,12 +122,10 @@ export default async function EventDescriptionPAge({
                   href={event.facebookEventLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 py-1 px-3 rounded-md bg-neutral-900/60 light:bg-neutral-100 border border-neutral-800 light:border-neutral-200 hover:border-frtRed hover:text-frtRed transition-colors"
+                  className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium tracking-wide bg-neutral-900/60 light:bg-white/70 backdrop-blur border-neutral-700/60 light:border-neutral-300 shadow-sm hover:border-frtRed hover:text-frtRed transition"
                 >
                   <Facebook size={16} className="text-frtRed" />
-                  <span className="font-medium">
-                    {lang === "en" ? "Facebook" : "Facebook"}
-                  </span>
+                  <span className="uppercase tracking-wide">Facebook</span>
                 </Link>
               )}
               {event.linkToPictureFromEvent && (
@@ -128,22 +135,26 @@ export default async function EventDescriptionPAge({
                       ? `/galeria/${event.linkToPictureFromEvent.slug}`
                       : "#"
                   }
-                  className="inline-flex items-center gap-2 py-1 px-3 rounded-md bg-neutral-900/60 light:bg-neutral-100 border border-neutral-800 light:border-neutral-200 hover:border-frtRed hover:text-frtRed transition-colors"
+                  className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium tracking-wide bg-neutral-900/60 light:bg-white/70 backdrop-blur border-neutral-700/60 light:border-neutral-300 shadow-sm hover:border-frtRed hover:text-frtRed transition"
                 >
                   <Camera size={16} className="text-frtRed" />
-                  <span className="font-medium">
-                    {lang === "en" ? "Gallery" : "Galéria"}
-                  </span>
+                  <span className="uppercase tracking-wide">{lang === "en" ? "Gallery" : "Galéria"}</span>
                 </Link>
               )}
             </div>
-          </header>
-          <div className="prose prose-invert light:prose-neutral max-w-none text-white light:text-gray-900 rich-text-content">
-            <RichText
-              data={lang === "en" ? event.description_eng : event.description}
-            />
           </div>
-        </article>
+        </section>
+
+        {/* Tartalom kártya */}
+        <section className="relative max-w-4xl mx-auto px-4 md:px-0 -mt-10 md:-mt-14 pb-20">
+          <div className="rounded-2xl border border-neutral-800 light:border-neutral-200 bg-neutral-950/70 light:bg-white/80 backdrop-blur-md shadow-xl p-6 md:p-10 space-y-8">
+            <div className="prose prose-invert light:prose-neutral max-w-none text-white light:text-gray-900 rich-text-content leading-relaxed">
+              <RichText
+                data={lang === "en" ? event.description_eng : event.description}
+              />
+            </div>
+          </div>
+        </section>
       </div>
     </main>
   );

@@ -55,20 +55,6 @@ export default async function EventCalendarPage({ searchParams }: Props) {
                 : "Böngéssz a múltbeli és közelgő események között a naptárban. Kattints a részletekért."}
             </p>
           </div>
-          <div className="flex gap-2 text-sm">
-            <Link
-              href={{ pathname: "/esemenynaptar", query: { lang: "hu" } }}
-              className={`px-3 py-1 rounded border transition-colors ${lang === "hu" ? "bg-frtRed border-frtRed text-white" : "border-neutral-600 light:border-neutral-300 hover:border-neutral-400"}`}
-            >
-              HU
-            </Link>
-            <Link
-              href={{ pathname: "/esemenynaptar", query: { lang: "en" } }}
-              className={`px-3 py-1 rounded border transition-colors ${lang === "en" ? "bg-frtRed border-frtRed text-white" : "border-neutral-600 light:border-neutral-300 hover:border-neutral-400"}`}
-            >
-              EN
-            </Link>
-          </div>
         </div>
         <Calendar events={calendarEvents} lang={lang} />
       </div>
