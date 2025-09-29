@@ -1,6 +1,5 @@
 import { getAllEvents } from "@/lib/payload-cms";
 import Calendar, { CalendarEventInput } from "@/components/events/calendar";
-import Link from "next/link";
 import type { Event as EventType } from "@/payload-types";
 
 interface Props {

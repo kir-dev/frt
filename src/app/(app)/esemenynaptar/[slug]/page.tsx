@@ -66,7 +66,6 @@ export default async function EventDescriptionPAge({
 
   const dateLabel = formatDateRange(event.start_date, event.end_date || undefined);
   const imageObj = typeof event.image === "object" ? event.image : null;
-  const isMultiDay = !!(event.end_date && new Date(event.start_date).toDateString() !== new Date(event.end_date).toDateString());
 
   return (
     <main className="min-h-screen bg-black text-white light:bg-white light:text-gray-900">
@@ -93,7 +92,7 @@ export default async function EventDescriptionPAge({
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 1200px"
-                className="object-cover opacity-70 light:opacity-80"
+                className="object-cover opacity-70 light:opacity-90"
               />
               <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80 light:from-white/70 light:via-white/60 light:to-white/80" />
             </div>
