@@ -66,7 +66,7 @@ export const Events: CollectionConfig = {
     {
       name: "location",
       type: "text",
-      required: true,
+      required: false, // módosítva: opcionális
       label: "Helyszín",
     },
     {
