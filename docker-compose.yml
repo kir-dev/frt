@@ -1,12 +1,41 @@
 services:
   postgres:
-    image: postgres:13-alpine
-    ports:
-      - '8081:5432'
+    restart: always
+    image: docker.io/postgres:17-alpine
     volumes:
       - postgres:/var/lib/postgresql/data
     env_file:
       - .env
+    networks:
+      - postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB" ]
+      interval: 1s
+      timeout: 10s
+      start_period: 10s
+      retries: 10
+
+  app:
+    restart: always
+    ports:
+      - "3000:3000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - frt:/app/media/
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    networks:
+      - postgres
 
 volumes:
   postgres:
+  frt:
+
+networks:
+  postgres:
+    driver: bridge
