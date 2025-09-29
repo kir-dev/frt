@@ -10,6 +10,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.19",
+    "@fullcalendar/daygrid": "^6.1.19",
+    "@fullcalendar/interaction": "^6.1.19",
+    "@fullcalendar/react": "^6.1.19",
     "@payloadcms/db-postgres": "3.40.0",
     "@payloadcms/drizzle": "3.40.0",
     "@payloadcms/email-nodemailer": "3.40.0",
