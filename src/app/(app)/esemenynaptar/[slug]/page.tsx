@@ -94,7 +94,7 @@ export default async function EventDescriptionPAge({
                 sizes="(max-width: 768px) 100vw, 1200px"
                 className="object-cover opacity-70 light:opacity-90"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80 light:from-white/70 light:via-white/60 light:to-white/80" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80 light:from-white/30 light:via-white/20 light:to-white/50" />
             </div>
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-800 to-black light:from-white light:via-neutral-100 light:to-white" />
