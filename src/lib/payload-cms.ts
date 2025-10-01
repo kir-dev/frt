@@ -216,3 +216,20 @@ export async function getAllEvents(): Promise<Event[]> {
   });
   return events.docs as Event[];
 }
+
+export async function getUpcomingEvents(limit: number = 3): Promise<Event[]> {
+  const payload = await getPayload({ config });
+  const today = new Date().toISOString();
+  const events = await payload.find({
+    collection: "events",
+    sort: "start_date",
+    limit,
+    where: {
+      start_date: {
+        greater_than: today,
+      },
+    },
+    depth: 1,
+  });
+  return events.docs as Event[];
+}

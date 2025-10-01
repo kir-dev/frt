@@ -2,6 +2,8 @@ import Link from "next/link"
 import { getArticles } from "@/lib/payload-cms"
 import SocialFeed from "@/components/social-feed"
 import NewsCard from "@/components/NewsCard";
+import UpcomingEventCard from "@/components/events/upcomingEventCard";
+import { getUpcomingEvents } from "@/lib/payload-cms";
 
 export const metadata = {
     title: "BME Formula Racing Team",
@@ -21,6 +23,9 @@ export default async function HomePage(props: HomePageProps) {
     // Get the most recent article
     const articles = await getArticles()
     const latestArticle = articles.length > 0 ? articles[0] : null
+    const upcomingEvents = await getUpcomingEvents(3);
+    // Only future events required now
+    const eventsToShow = upcomingEvents; // already limited to 3
 
     // Kétnyelvű szövegek
     const texts = {
@@ -47,6 +52,14 @@ export default async function HomePage(props: HomePageProps) {
         latestNews: {
             hu: "Legfrissebb hír",
             en: "Latest News"
+        },
+        upcomingEvents: {
+            hu: "Találkozz velünk!",
+            en: "Meet us!"
+        },
+        noUpcoming: {
+            hu: "Nincs közelgő esemény",
+            en: "No upcoming events"
         },
         allNews: {
             hu: "Összes hír megtekintése",
@@ -141,6 +154,29 @@ export default async function HomePage(props: HomePageProps) {
                     </div>
                 </section>
             )}
+
+            {/* Upcoming Events under latest news */}
+            <section className="pb-20 -mt-8">
+                <div className="container mx-auto px-4 max-w-6xl">
+                    <div className="flex items-center justify-between mb-8">
+                        <h2 className="text-3xl font-bold tracking-tight flex items-center gap-3">
+                            <span className="bg-gradient-to-r from-frtRed via-red-500 to-frtRed bg-clip-text text-transparent">{texts.upcomingEvents[langKey]}</span>
+                        </h2>
+                        <Link href={{ pathname: '/esemenynaptar', query: { lang } }} className="text-sm text-neutral-400 hover:text-white transition-colors underline-offset-4 hover:underline">
+                            {lang === 'en' ? 'Full calendar →' : 'Teljes naptár →'}
+                        </Link>
+                    </div>
+                    {eventsToShow.length === 0 ? (
+                        <p className="text-neutral-400 italic">{texts.noUpcoming[langKey]}</p>
+                    ) : (
+                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                            {eventsToShow.map(ev => (
+                                <UpcomingEventCard key={ev.id} event={ev} lang={lang} />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </section>
         </main>
     )
 }
