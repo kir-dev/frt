@@ -36,7 +36,8 @@ export const CarSection = ({ car, lang }: Props) => {
 
   return (
     <>
-      <section className="my-10 px-4 md:px-8 max-w-5xl mx-auto">
+      {/* Added stable section id for in-page navigation */}
+      <section id={`car-${car.id}`} className="my-10 px-4 md:px-8 max-w-5xl mx-auto">
         <h1 className="text-4xl font-bold mb-4">
           {car.year} - {car.name}
         </h1>
