@@ -1,5 +1,5 @@
 import { getCars } from "@/lib/payload-cms";
-import { CarSection } from "@/components/car/car-section";
+import CarsPageClient from "./cars-page-client";
 
 export const metadata = {
   title: "Autók",
@@ -18,17 +18,5 @@ export default async function CarsPage(props: CarsPageProps) {
   }
   const cars = await getCars();
 
-  return (
-    <main className="bg-black text-white">
-      <div className="container mx-auto px-4 py-12 max-w-7xl">
-        {cars.length == 0 ? (
-          <h1 className="text-center text-2xl my-10">
-            {lang == "en" ? "No cars found" : "Nem található autó"}
-          </h1>
-        ) : (
-          cars.map((car) => <CarSection car={car} key={car.id} lang={lang} />)
-        )}
-      </div>
-    </main>
-  );
+  return <CarsPageClient cars={cars} lang={lang} />;
 }
