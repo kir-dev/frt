@@ -36,6 +36,20 @@ const SupportUs: CollectionConfig = {
             required: true,
         },
         {
+            name: 'buttonText',
+            type: 'text',
+            label: 'Gomb szöveg',
+            defaultValue: 'Támogatom a csapatot',
+            required: true,
+        },
+        {
+            name: 'buttonText_en',
+            type: 'text',
+            label: 'Gomb szöveg (angol)',
+            defaultValue: 'Support the team',
+            required: true,
+        },
+        {
             name: 'content',
             type: 'richText',
             label: 'Tartalom',
