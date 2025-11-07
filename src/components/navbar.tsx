@@ -20,7 +20,7 @@ const navItems = [
     dropdown: null,
   },
   {
-    name: "Olvasni valók",
+    name: "Olvasnivalók",
     nameEn: "Reading Materials",
     href: "",
     dropdown: [
