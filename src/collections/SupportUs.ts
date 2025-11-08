@@ -1,6 +1,6 @@
-import {CollectionConfig, getPayload} from 'payload';
 import config from "@payload-config";
-import {FixedToolbarFeature, lexicalEditor} from "@payloadcms/richtext-lexical";
+import { FixedToolbarFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
+import { CollectionConfig, getPayload } from 'payload';
 
 const SupportUs: CollectionConfig = {
     slug: 'support-us',
@@ -36,14 +36,14 @@ const SupportUs: CollectionConfig = {
             required: true,
         },
         {
-            name: 'buttonText',
+            name: 'button_text',
             type: 'text',
             label: 'Gomb szöveg',
             defaultValue: 'Támogatom a csapatot',
             required: true,
         },
         {
-            name: 'buttonText_en',
+            name: 'button_text_en',
             type: 'text',
             label: 'Gomb szöveg (angol)',
             defaultValue: 'Support the team',

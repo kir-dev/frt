@@ -644,8 +644,8 @@ export interface SupportUs {
   id: number;
   title: string;
   title_en: string;
-  buttonText: string;
-  buttonText_en: string;
+  button_text: string;
+  button_text_en: string;
   content: {
     root: {
       type: string;
@@ -1038,8 +1038,8 @@ export interface AssociationSelect<T extends boolean = true> {
 export interface SupportUsSelect<T extends boolean = true> {
   title?: T;
   title_en?: T;
-  buttonText?: T;
-  buttonText_en?: T;
+  button_text?: T;
+  button_text_en?: T;
   content?: T;
   content_en?: T;
   updatedAt?: T;

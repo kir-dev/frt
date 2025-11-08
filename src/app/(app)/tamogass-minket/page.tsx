@@ -1,5 +1,5 @@
 import { getSupportUs } from "@/lib/payload-cms";
-import {RichText} from "@payloadcms/richtext-lexical/react";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 
 export default async function DonatePage(props: { searchParams?: Promise<Record<string, string>> }) {
     let lang = 'hu';
@@ -32,7 +32,7 @@ export default async function DonatePage(props: { searchParams?: Promise<Record<
                         className="mb-4 max-w-[300px] text-center inline-block bg-red-600 hover:bg-red-700 !text-white font-bold py-2 px-6 rounded-lg transition-colors text-base w-full"
                         href='mailto:sponsoring@fun-ke.com'
                     >
-                        {lang === "en" ? support.buttonText_en : support.buttonText}
+                        {lang === "en" ? support.button_text_en : support.button_text}
                     </a>
                 </div>
                 <div className="rich-text-content">
