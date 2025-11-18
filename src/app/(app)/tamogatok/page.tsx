@@ -1,7 +1,7 @@
-import Image from "next/image"
-import Link from "next/link"
-import { getSponsors } from "@/lib/payload-cms"
-import {Sponsor} from "@/payload-types";
+import { getSponsors } from "@/lib/payload-cms";
+import { Sponsor } from "@/payload-types";
+import Image from "next/image";
+import Link from "next/link";
 
 export const metadata = {
     title: "Támogatók",
@@ -50,7 +50,7 @@ export default async function SponsorsPage(props: SponsorsPageProps) {
     const getGridClassNames = (tier: string) => {
         return (
             `grid ` +
-            `${["diamond", "gold"].includes(tier) ? "grid-cols-2" : "grid-cols-3"} ` +
+            `${["diamond", "gold"].includes(tier) ? "grid-cols-3" : "grid-cols-3"} ` +
             `gap-2 sm:gap-4 lg:gap-6 ` +
             `${["copper", "other", "bme"].includes(tier) ? "md:grid-cols-3 lg:grid-cols-6 " : ""}` +
             `${tier === "silver" ? "md:grid-cols-3 lg:grid-cols-4 " : ""}`

@@ -14,12 +14,6 @@ import { Suspense, useEffect, useState } from "react";
 // Define the dropdown menu structure based on the requirements
 const navItems = [
   {
-    name: "Admin",
-    nameEn: "Admin",
-    href: "/admin",
-    dropdown: null,
-  },
-  {
     name: "Olvasnivalók",
     nameEn: "Reading Materials",
     href: "",
@@ -54,6 +48,7 @@ const navItems = [
       },
     ],
   },
+  {name: "Tagfelvétel", nameEn: "Joining Process", href: "/tagfelvetel", dropdown: null},
   {
     name: "Rólunk",
     nameEn: "About us",
@@ -65,7 +60,6 @@ const navItems = [
         nameEn: "Event calendar",
         href: "/esemenynaptar",
       },
-      { name: "Tagfelvétel", nameEn: "Joining process", href: "/tagfelvetel" },
       { name: "Kapcsolat", nameEn: "Contact", href: "/kapcsolat" },
       { name: "Egyesület", nameEn: "Association", href: "/egyesulet" },
       { name: "Galéria", nameEn: "Gallery", href: "/galeria" },
