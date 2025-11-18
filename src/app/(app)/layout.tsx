@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
-import "./globals.css";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-import {ThemeProvider} from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/theme-provider";
+import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "BME Formula Racing Team",
@@ -19,6 +19,7 @@ export default function RootLayout({
         <head>
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.19/index.global.min.css" />
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.19/index.global.min.css" />
+            <script defer data-domain="new.frtbme.hu" src="https://visit.kir-dev.hu/js/script.js"></script>
         </head>
         <body>
         <ThemeProvider defaultTheme="dark" storageKey="bme-frt-theme">
