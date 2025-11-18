@@ -14,6 +14,7 @@ import Association from "./collections/Association";
 import { Cars } from "./collections/Cars";
 import Contact from "./collections/Contact";
 import { Events } from "./collections/Events";
+import FormulaStudent from "./collections/FormulaStudent";
 import { Gallery } from "./collections/Gallery";
 import Groups from "./collections/Groups";
 import { Media } from "./collections/Media";
@@ -42,6 +43,7 @@ const collections = [
       Association,
       SupportUs,
       Contact,
+      FormulaStudent,
     ]
 
 

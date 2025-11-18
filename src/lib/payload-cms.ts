@@ -1,16 +1,17 @@
-import { getPayload } from "payload";
-import config from "@payload-config";
 import {
+  Car,
+  Contact,
+  Event,
+  FormulaStudent,
+  Gallery,
   Group,
   Member,
-  Car,
   Recruitment,
   Sponsor,
-  Gallery,
-  Event,
   SupportUs,
-  Contact,
 } from "@/payload-types";
+import config from "@payload-config";
+import { getPayload } from "payload";
 
 export async function getSponsors(): Promise<Sponsor[]> {
   const payload = await getPayload({ config });
@@ -118,6 +119,15 @@ export async function getSupportUs(): Promise<SupportUs | null> {
     limit: 1,
   });
   return support.docs.length > 0 ? (support.docs[0] as SupportUs) : null;
+}
+
+export async function getFormulaStudent(): Promise<FormulaStudent | null> {
+  const payload = await getPayload({ config });
+  const formulaStudent = await payload.find({
+    collection: "formula-student",
+    limit: 1,
+  });
+  return formulaStudent.docs.length > 0 ? (formulaStudent.docs[0] as FormulaStudent) : null;
 }
 
 export async function getContact(): Promise<Contact | null> {
