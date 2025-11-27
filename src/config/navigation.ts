@@ -25,7 +25,7 @@ export const NAV_ITEMS: NavItem[] = [
         nameEn: "Formula Student",
         href: "/formula-student",
       },
-      { name: "Autók", nameEn: "Cars", href: "/autok" },
+      { name: "Versenyautóink", nameEn: "Cars", href: "/autok" },
     ],
   },
   {
