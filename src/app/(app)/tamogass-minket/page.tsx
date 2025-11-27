@@ -26,8 +26,8 @@ export default async function DonatePage(props: { searchParams?: Promise<Record<
     return (
         <main className="min-h-screen bg-black text-white">
             <div className="bg-black container mx-auto px-4 py-12 max-w-5xl font-frtszoveg">
-                <h1 className="text-3xl font-bold mb-8">{lang === "en" ? support.title_en : support.title}</h1>
-                <div className="mb-8">
+                <h1 className="text-3xl font-bold mb-8 text-center">{lang === "en" ? support.title_en : support.title}</h1>
+                <div className="mb-8 flex justify-center">
                     <a
                         className="mb-4 max-w-[300px] text-center inline-block bg-red-600 hover:bg-red-700 !text-white font-bold py-2 px-6 rounded-lg transition-colors text-base w-full"
                         href='mailto:sponsoring@fun-ke.com'
