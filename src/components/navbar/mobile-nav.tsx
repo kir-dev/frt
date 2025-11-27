@@ -31,7 +31,7 @@ export function MobileNav({
   return (
     <div
       className={cn(
-        "lg:hidden bg-black overflow-hidden transition-all duration-300",
+        "min-[1295px]:hidden bg-black overflow-hidden transition-all duration-300",
         isOpen ? "max-h-screen" : "max-h-0"
       )}
       onClick={(e) => e.stopPropagation()}

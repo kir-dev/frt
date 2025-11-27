@@ -27,7 +27,7 @@ export function DesktopNav({
   toggleLanguage,
 }: DesktopNavProps) {
   return (
-    <div className="hidden lg:flex items-center space-x-8">
+    <div className="hidden min-[1295px]:flex items-center space-x-8">
       {navItems.map((item) => (
         <div key={item.name} className="relative group">
           <Link

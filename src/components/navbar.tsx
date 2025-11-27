@@ -63,7 +63,7 @@ function NavbarContent() {
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
-            className="lg:hidden !text-white focus:outline-none"
+            className="min-[1295px]:hidden !text-white focus:outline-none"
           >
             <svg
               className="h-6 w-6"
