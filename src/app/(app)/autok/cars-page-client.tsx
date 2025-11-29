@@ -1,8 +1,9 @@
 "use client";
 
-import { Car } from "@/payload-types";
 import { CarSection } from "@/components/car/car-section";
-import { useCallback } from "react";
+import { cn } from "@/lib/utils";
+import { Car } from "@/payload-types";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface CarsPageClientProps {
   cars: Car[];
@@ -11,14 +12,23 @@ interface CarsPageClientProps {
 
 interface TOCItem {
   id: string;
-  title: string;
+  year: number;
+  names: string[];
 }
 
 export default function CarsPageClient({ cars, lang }: CarsPageClientProps) {
-  const tocItems: TOCItem[] = cars.map((car) => ({
-    id: `car-${car.id}`,
-    title: `${car.year} - ${car.name}`,
-  }));
+  const [activeId, setActiveId] = useState<string>("");
+  const navRef = useRef<HTMLDivElement>(null);
+
+  const tocItems: TOCItem[] = cars.map((car) => {
+    // Split names by " és " or " and " to handle multiple cars in one year
+    const names = car.name.split(/ és | and /).map((n) => n.trim());
+    return {
+      id: `car-${car.id}`,
+      year: car.year,
+      names: names,
+    };
+  });
 
   const scrollToSection = useCallback((id: string) => {
     const element = document.getElementById(id);
@@ -30,6 +40,49 @@ export default function CarsPageClient({ cars, lang }: CarsPageClientProps) {
       window.scrollTo({ top: offsetPosition, behavior: "smooth" });
     }
   }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: "-100px 0px -50% 0px",
+        threshold: 0.1,
+      }
+    );
+
+    cars.forEach((car) => {
+      const element = document.getElementById(`car-${car.id}`);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [cars]);
+
+  useEffect(() => {
+    if (activeId && navRef.current) {
+      const activeElement = document.getElementById(`toc-${activeId}`);
+      if (activeElement) {
+        const container = navRef.current;
+        const elementTop = activeElement.offsetTop;
+        const elementHeight = activeElement.offsetHeight;
+        const containerHeight = container.offsetHeight;
+        
+        // Calculate the scroll position to center the element
+        const scrollPosition = elementTop - (containerHeight / 2) + (elementHeight / 2);
+        
+        container.scrollTo({
+          top: scrollPosition,
+          behavior: "smooth"
+        });
+      }
+    }
+  }, [activeId]);
 
   if (!cars || cars.length === 0) {
     return (
@@ -61,7 +114,10 @@ export default function CarsPageClient({ cars, lang }: CarsPageClientProps) {
 
         {/* Sticky TOC */}
         <div className="hidden lg:block sticky top-[200px] self-start">
-          <div className="bg-frtcardBG backdrop-blur-sm rounded-lg pb-5 px-5 w-64 mb-4 max-h-[calc(100vh-240px)] overflow-y-auto no-scrollbar">
+          <div 
+            ref={navRef}
+            className="bg-frtcardBG backdrop-blur-sm rounded-lg pb-5 px-5 w-64 mb-4 max-h-[calc(100vh-240px)] overflow-y-auto no-scrollbar"
+          >
             <h3 className="sticky top-0 z-20 text-base font-bold mb-3 text-red-400 bg-frtcardBG py-3 -mx-5 px-5 shadow-sm">
               {lang === "en" ? "On this page" : "Oldal tartalma"}
             </h3>
@@ -70,10 +126,30 @@ export default function CarsPageClient({ cars, lang }: CarsPageClientProps) {
                 {tocItems.map((item) => (
                   <button
                     key={item.id}
+                    id={`toc-${item.id}`}
                     onClick={() => scrollToSection(item.id)}
-                    className="block text-left transition-colors hover:text-red-400 w-full"
+                    className={cn(
+                      "block text-left transition-colors w-full group",
+                      activeId === item.id
+                        ? "text-red-400"
+                        : "hover:text-red-400"
+                    )}
                   >
-                    {item.title}
+                    <span className="font-bold block mb-1">{item.year}</span>
+                    <div
+                      className={cn(
+                        "pl-2 border-l-2 transition-colors",
+                        activeId === item.id
+                          ? "border-red-400"
+                          : "border-gray-700 group-hover:border-red-400"
+                      )}
+                    >
+                      {item.names.map((name, index) => (
+                        <span key={index} className="block text-sm py-0.5">
+                          {name}
+                        </span>
+                      ))}
+                    </div>
                   </button>
                 ))}
               </div>
