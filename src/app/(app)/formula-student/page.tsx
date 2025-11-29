@@ -48,6 +48,19 @@ export default async function FormulaStudentPage(props: FormulaStudentPageProps)
                 <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center">
                     {lang === 'en' ? formulaStudent.title_en : formulaStudent.title}
                 </h1>
+
+                <div className="w-full mb-8 rounded-lg overflow-hidden shadow-lg">
+                    <video 
+                        className="w-full h-auto"
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline
+                    >
+                        <source src="/videos/Formula_student_oldal.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
                 
                 <div className="prose prose-invert prose-lg max-w-none">
                     <RichText data={lang === 'en' ? formulaStudent.content_en : formulaStudent.content} />

@@ -24,6 +24,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - frt:/app/media
+      - ./public/videos:/app/public/videos
     depends_on:
       postgres:
         condition: service_healthy
