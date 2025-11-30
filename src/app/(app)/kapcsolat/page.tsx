@@ -44,10 +44,17 @@ export default async function ContactPage (props: { searchParams?: Promise<Recor
                 <div className="rich-text-content font-frtszoveg max-w-3xl">
                     <RichText data={lang === 'en' ? contact.content_en : contact.content} />
                 </div>
-                <div className="mt-8">
-                    <a className="mb-4 inline-block bg-red-600 hover:bg-red-700 !text-white font-bold py-2 px-6 rounded-lg transition-colors text-base"
+                <div className="mt-8 flex flex-col items-center gap-4">
+                    <a className="inline-block bg-red-600 hover:bg-red-700 !text-white font-bold py-2 px-6 rounded-lg transition-colors text-base"
                        href='mailto:info.bme.frt@gmail.com'>
                         {lang === 'en' ? 'Open Email' : 'Email megnyitása'}
+                    </a>
+                    
+                    <a className="inline-block bg-gray-800 hover:bg-gray-700 !text-white font-bold py-2 px-6 rounded-lg transition-colors text-base border border-gray-700"
+                       href='https://forms.gle/79q1yJQ2D86TvZ8E6'
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        {lang === 'en' ? 'Event Exhibition Request' : 'Rendezvényen való kiállítási igény'}
                     </a>
                 </div>
             </div>
