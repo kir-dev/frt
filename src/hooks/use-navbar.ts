@@ -1,7 +1,13 @@
 "use client";
 
+import { NAV_ITEMS, NavItem } from "@/config/navigation";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+
+interface SiteSettings {
+  showAssociationPage?: boolean;
+  showRecruitmentPage?: boolean;
+}
 
 export function useNavbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,10 +15,22 @@ export function useNavbar() {
   const [language, setLanguage] = useState("hu");
   const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
   const [openDesktopDropdown, setOpenDesktopDropdown] = useState<string | null>(null);
+  const [siteSettings, setSiteSettings] = useState<SiteSettings>({
+    showAssociationPage: true,
+    showRecruitmentPage: true,
+  });
   
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  // Fetch site settings on mount
+  useEffect(() => {
+    fetch('/api/site-settings')
+      .then(res => res.json())
+      .then(data => setSiteSettings(data))
+      .catch(err => console.error('Failed to fetch site settings:', err));
+  }, []);
 
   // Initialize language from URL on component mount
   useEffect(() => {
@@ -74,6 +92,38 @@ export function useNavbar() {
       : `${href}?${params.toString()}`;
   }, [language, searchParams]);
 
+  // Filter navigation items based on settings
+  const filteredNavItems = NAV_ITEMS.map(item => {
+    if (!item.dropdown) {
+      // Handle top-level items (like Tagfelvétel)
+      if (item.href === '/tagfelvetel' && !siteSettings.showRecruitmentPage) {
+        return null;
+      }
+      return item;
+    }
+
+    // Handle dropdown items
+    const filteredDropdown = item.dropdown.filter(dropdownItem => {
+      if (dropdownItem.href === '/egyesulet' && !siteSettings.showAssociationPage) {
+        return false;
+      }
+      if (dropdownItem.href === '/tagfelvetel' && !siteSettings.showRecruitmentPage) {
+        return false;
+      }
+      return true;
+    });
+
+    // If dropdown becomes empty, hide the entire parent
+    if (filteredDropdown.length === 0) {
+      return null;
+    }
+
+    return {
+      ...item,
+      dropdown: filteredDropdown,
+    };
+  }).filter((item): item is NavItem => item !== null);
+
   return {
     isOpen,
     isScrolled,
@@ -86,5 +136,6 @@ export function useNavbar() {
     handleDesktopDropdownClick,
     toggleLanguage,
     addLangToHref,
+    filteredNavItems,
   };
 }

@@ -7,7 +7,6 @@ import { Suspense } from "react";
 
 import { DesktopNav } from "@/components/navbar/desktop-nav";
 import { MobileNav } from "@/components/navbar/mobile-nav";
-import { NAV_ITEMS } from "@/config/navigation";
 import { useNavbar } from "@/hooks/use-navbar";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +24,7 @@ function NavbarContent() {
     handleDesktopDropdownClick,
     toggleLanguage,
     addLangToHref,
+    filteredNavItems,
   } = useNavbar();
 
   const pathname = usePathname();
@@ -51,7 +51,7 @@ function NavbarContent() {
 
           {/* Desktop Navigation */}
           <DesktopNav
-            navItems={NAV_ITEMS}
+            navItems={filteredNavItems}
             language={language}
             addLangToHref={addLangToHref}
             openDesktopDropdown={openDesktopDropdown}
@@ -94,7 +94,7 @@ function NavbarContent() {
       {/* Mobile Navigation */}
       <MobileNav
         isOpen={isOpen}
-        navItems={NAV_ITEMS}
+        navItems={filteredNavItems}
         language={language}
         pathname={pathname || ""}
         addLangToHref={addLangToHref}

@@ -59,7 +59,7 @@ export const NAV_ITEMS: NavItem[] = [
         href: "/esemenynaptar",
       },
       { name: "Kapcsolat", nameEn: "Contact", href: "/kapcsolat" },
-      // { name: "Egyesület", nameEn: "Association", href: "/egyesulet" },
+      { name: "Egyesület", nameEn: "Association", href: "/egyesulet" },
       { name: "Galéria", nameEn: "Gallery", href: "/galeria" },
     ],
   },

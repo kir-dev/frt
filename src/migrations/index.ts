@@ -3,6 +3,7 @@ import * as migration_20251108_000000_add_support_us_button_text from './2025110
 import * as migration_20251108_172023_add_events_facebook_event_link from './20251108_172023_add_events_facebook_event_link';
 import * as migration_20251118_160316_add_formula_student from './20251118_160316_add_formula_student';
 import * as migration_20251124_120000_fix_locked_documents_relation from './20251124_120000_fix_locked_documents_relation';
+import * as migration_20251130_000000_init_site_settings from './20251130_000000_init_site_settings';
 
 export const migrations = [
   {
@@ -30,4 +31,10 @@ export const migrations = [
     down: migration_20251124_120000_fix_locked_documents_relation.down,
     name: '20251124_120000_fix_locked_documents_relation'
   },
+  {
+    up: migration_20251130_000000_init_site_settings.up,
+    down: migration_20251130_000000_init_site_settings.down,
+    name: '20251130_000000_init_site_settings'
+  },
 ];
+
