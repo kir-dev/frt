@@ -1,3 +1,4 @@
+import { BulkUpload } from "@/components/payload/BulkUpload";
 import { CollectionConfig } from "payload";
 
 export const Gallery: CollectionConfig = {
@@ -34,6 +35,16 @@ export const Gallery: CollectionConfig = {
       type: "text",
       required: false,
       label: "Kategória neve (pl. „Versenyek”, „Csapatélet”)",
+    },
+    {
+      name: 'bulkUpload',
+      type: 'ui',
+      admin: {
+        components: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          Field: BulkUpload as any,
+        },
+      },
     },
     {
       name: "images", // This field is an array of images
