@@ -56,23 +56,21 @@ export async function getFacebookPosts(): Promise<SocialPost[]> {
   const pageId = process.env.FACEBOOK_PAGE_ID;
   const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
 
-  console.log("Facebook Config:", { 
-    hasPageId: !!pageId, 
-    hasAccessToken: !!accessToken,
-    pageId: pageId 
-  });
+
 
   if (!pageId || !accessToken) {
-    console.log("Missing Facebook credentials");
+
     return [];
   }
 
-  const url = `https://graph.facebook.com/v19.0/${pageId}/posts?fields=id,permalink_url,full_picture,message,created_time&limit=3&access_token=${accessToken}`;
+  const url = `https://graph.facebook.com/v19.0/${pageId}/posts?fields=id,permalink_url,full_picture,message,created_time&limit=3`;
 
   try {
-    console.log("Fetching Facebook posts...");
-    const res = await fetch(url);
-    console.log("Facebook API Response Status:", res.status);
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     
     if (!res.ok) {
       const errorText = await res.text();
@@ -81,10 +79,9 @@ export async function getFacebookPosts(): Promise<SocialPost[]> {
     }
     
     const data = (await res.json()) as FacebookApiResponse;
-    console.log("Facebook API Data:", JSON.stringify(data, null, 2));
 
     if (!data.data) {
-        console.log("No data field in response");
+
         return [];
     }
 
@@ -99,7 +96,7 @@ export async function getFacebookPosts(): Promise<SocialPost[]> {
         date: item.created_time,
       }));
       
-    console.log(`Found ${posts.length} Facebook posts`);
+
     return posts;
   } catch (error) {
     console.error("Error fetching Facebook posts:", error);

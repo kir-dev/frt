@@ -18,7 +18,7 @@ export const Media: CollectionConfig = {
         // If alt is missing but we have a filename, generate alt from filename
         if (!data.alt && req.file?.name) {
           // Remove file extension and use filename as alt text
-          data.alt = req.file.name.split('.').slice(0, -1).join('.')
+          data.alt = req.file.name.split('.').slice(0, -1).join('.') || 'image'
         }
         return data
       },

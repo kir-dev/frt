@@ -26,8 +26,8 @@ import { Sponsors } from "./collections/Sponsors";
 import SupportUs from "./collections/SupportUs";
 import { Users } from "./collections/Users";
 
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 const collections = [
       Users,
@@ -78,5 +78,5 @@ export default buildConfig({
     payloadCloudPlugin(),
     // storage-adapter-placeholder
   ],
-})
+});
 
