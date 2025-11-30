@@ -1,9 +1,8 @@
-import Link from "next/link"
-import { getArticles } from "@/lib/payload-cms"
-import SocialFeed from "@/components/social-feed"
 import NewsCard from "@/components/NewsCard";
 import UpcomingEventCard from "@/components/events/upcomingEventCard";
-import { getUpcomingEvents } from "@/lib/payload-cms";
+import SocialFeed from "@/components/social-feed";
+import { getArticles, getUpcomingEvents } from "@/lib/payload-cms";
+import Link from "next/link";
 
 export const metadata = {
     title: "BME Formula Racing Team",
@@ -75,49 +74,31 @@ export default async function HomePage(props: HomePageProps) {
             <div className="w-full">
                 {/* Mobile video container - 16:9 aspect ratio */}
                 <div className="block sm:hidden relative w-full" style={{ paddingTop: '56.25%' }}>
-                    <iframe
-                        src="https://www.youtube.com/embed/5PokC77YMwA?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&loop=1&playlist=5PokC77YMwA"
-                        title={lang === 'en' ? "BME Formula Racing Team Video" : "BME Formula Racing Team Videó"}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
-                        tabIndex={-1}
-                    ></iframe>
+                    <video
+                        className="absolute top-0 left-0 w-full h-full object-cover"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                    >
+                        <source src="/videos/kezdo_oldal.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
 
                 {/* Desktop video container - custom aspect ratio */}
                 <div className="hidden sm:block relative w-full" style={{ paddingTop: '56.25%' }}>
-                    <iframe
-                        src="https://www.youtube.com/embed/5PokC77YMwA?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&loop=1&playlist=5PokC77YMwA"
-                        title={lang === 'en' ? "BME Formula Racing Team Video" : "BME Formula Racing Team Videó"}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
-                        tabIndex={-1}
-                    ></iframe>
+                    <video
+                        className="absolute top-0 left-0 w-full h-full object-cover"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                    >
+                        <source src="/videos/kezdo_oldal.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
-
-                {/* Fallback for browsers that can't load embeds */}
-                <noscript>
-                    <div className="bg-gray-900 text-white p-8 text-center">
-                        <h2 className="text-2xl font-bold mb-4">
-                            {lang === 'en' ? 'Video unavailable' : 'Videó nem elérhető'}
-                        </h2>
-                        <p className="mb-4">
-                            {lang === 'en'
-                                ? 'JavaScript is required to play the video. Alternatively, you can watch it directly on YouTube.'
-                                : 'JavaScript szükséges a videó lejátszásához. Alternatívaként megtekinthető közvetlenül a YouTube-on.'}
-                        </p>
-                        <a
-                            href="https://youtu.be/5PokC77YMwA"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-block px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-                        >
-                            {lang === 'en' ? 'Watch on YouTube' : 'Megtekintés YouTube-on'}
-                        </a>
-                    </div>
-                </noscript>
             </div>
             {/* "Kik vagyunk mi?" section */}
             <section className="relative">

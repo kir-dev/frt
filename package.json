@@ -7,7 +7,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "payload:migrate": "node --import ./css-loader-register.mjs ./node_modules/.bin/payload migrate",
+    "payload:migrate-status": "node --import ./css-loader-register.mjs ./node_modules/.bin/payload migrate:status",
+    "payload:generate-types": "node --import ./css-loader-register.mjs ./node_modules/.bin/payload generate:types"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.19",

@@ -40,10 +40,75 @@ export async function getYoutubePosts(): Promise<SocialPost[]> {
       }));
 }
 
+interface FacebookPostData {
+  id: string;
+  permalink_url: string;
+  full_picture?: string;
+  message?: string;
+  created_time: string;
+}
+
+interface FacebookApiResponse {
+  data: FacebookPostData[];
+}
+
+export async function getFacebookPosts(): Promise<SocialPost[]> {
+  const pageId = process.env.FACEBOOK_PAGE_ID;
+  const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
+
+
+
+  if (!pageId || !accessToken) {
+
+    return [];
+  }
+
+  const url = `https://graph.facebook.com/v19.0/${pageId}/posts?fields=id,permalink_url,full_picture,message,created_time&limit=3`;
+
+  try {
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Facebook API Error Body:", errorText);
+      return [];
+    }
+    
+    const data = (await res.json()) as FacebookApiResponse;
+
+    if (!data.data) {
+
+        return [];
+    }
+
+    const posts = data.data
+      .filter((item) => item.full_picture) // Only show posts with images
+      .map((item) => ({
+        id: item.id,
+        platform: "facebook" as const,
+        link: item.permalink_url,
+        imageUrl: item.full_picture || "",
+        caption: item.message || "",
+        date: item.created_time,
+      }));
+      
+
+    return posts;
+  } catch (error) {
+    console.error("Error fetching Facebook posts:", error);
+    return [];
+  }
+}
+
 export async function getAllSocialPosts(): Promise<SocialPost[]> {
-  const [yt] = await Promise.all([
+  const [yt, fb] = await Promise.all([
     getYoutubePosts(),
+    getFacebookPosts(),
   ]);
 
-  return [ ...yt].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  return [...yt, ...fb].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }

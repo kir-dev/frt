@@ -1,8 +1,8 @@
 import { getAllSocialPosts } from "@/lib/social-api"
+import { formatDate } from "@/lib/utils"
+import { Facebook, Instagram, Twitter, Youtube } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { Instagram, Facebook, Twitter, Youtube } from "lucide-react"
-import { formatDate } from "@/lib/utils"
 
 export default async function SocialFeed() {
     let posts: Awaited<ReturnType<typeof getAllSocialPosts>> = [];
@@ -42,12 +42,13 @@ export default async function SocialFeed() {
             {posts.map((post) => (
                 <div
                     key={post.id}
-                    className="bg-frtcardBG rounded-lg overflow-hidden shadow-md flex flex-col transition-transform duration-200 hover:scale-105 hover:shadow-lg"
+                    className="bg-frtcardBG rounded-lg overflow-hidden shadow-md transition-transform duration-200 hover:scale-105 hover:shadow-lg"
                 >
                     <Link
                         href={post.link}
                         target="_blank"
                         rel="noopener noreferrer"
+                        className="flex flex-col h-full"
                     >
                         <div className="relative w-full aspect-square">
                             <Image
@@ -59,29 +60,29 @@ export default async function SocialFeed() {
                                 unoptimized={post.platform === "youtube"}
                             />
                         </div>
-                    </Link>
-                    <div className="p-4 flex-1 flex flex-col">
-                        <div className="flex items-center mb-2 gap-2">
-                            {post.platform === "instagram" && (
-                                <Instagram className="w-5 h-5 text-pink-500" />
-                            )}
-                            {post.platform === "facebook" && (
-                                <Facebook className="w-5 h-5 text-blue-600" />
-                            )}
-                            {post.platform === "twitter" && (
-                                <Twitter className="w-5 h-5 text-sky-400" />
-                            )}
-                            {post.platform === "youtube" && (
-                                <Youtube className="w-5 h-5 text-frtRed" />
-                            )}
-                            <span className="text-xs text-gray-400">
-                                {formatDate(post.date)}
-                            </span>
+                        <div className="p-4 flex-1 flex flex-col">
+                            <div className="flex items-center mb-2 gap-2">
+                                {post.platform === "instagram" && (
+                                    <Instagram className="w-5 h-5 text-pink-500" />
+                                )}
+                                {post.platform === "facebook" && (
+                                    <Facebook className="w-5 h-5 text-blue-600" />
+                                )}
+                                {post.platform === "twitter" && (
+                                    <Twitter className="w-5 h-5 text-sky-400" />
+                                )}
+                                {post.platform === "youtube" && (
+                                    <Youtube className="w-5 h-5 text-frtRed" />
+                                )}
+                                <span className="text-xs text-gray-400">
+                                    {formatDate(post.date)}
+                                </span>
+                            </div>
+                            <p className="text-gray-200 text-sm flex-1">
+                                {post.caption}
+                            </p>
                         </div>
-                        <p className="text-gray-200 text-sm flex-1">
-                            {post.caption}
-                        </p>
-                    </div>
+                    </Link>
                 </div>
             ))}
         </div>

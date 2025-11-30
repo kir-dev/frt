@@ -23,13 +23,13 @@ export default function RootLayout({
         </head>
         <body>
         <ThemeProvider defaultTheme="dark" storageKey="bme-frt-theme">
-            <div className="min-h-screen font-frtszoveg bg-black dark:bg-black light:bg-white text-white dark:text-white light:text-gray-900">
+            <div className="min-h-screen flex flex-col font-frtszoveg bg-black dark:bg-black light:bg-white text-white dark:text-white light:text-gray-900">
                 <Navbar />
-                <main className="pt-20 bg-black dark:bg-black light:bg-white text-white dark:text-white light:text-gray-900">
+                <main className="pt-20 flex-1 bg-black dark:bg-black light:bg-white text-white dark:text-white light:text-gray-900">
                     {children}
                 </main>
+                <Footer/>
             </div>
-            <Footer/>
         </ThemeProvider>
         </body>
         </html>

@@ -21,6 +21,7 @@ import { Media } from "./collections/Media";
 import { Members } from "./collections/Members";
 import { Publications } from "./collections/Publications";
 import { Recruitment } from "./collections/Recruitment";
+import { SiteSettings } from "./collections/SiteSettings";
 import { Sponsors } from "./collections/Sponsors";
 import SupportUs from "./collections/SupportUs";
 import { Users } from "./collections/Users";
@@ -59,6 +60,7 @@ export default buildConfig({
     },
   },
   collections: collections,
+  globals: [SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
@@ -68,6 +70,8 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || "",
     },
+    push: false, // Enforce migrations
+    migrationDir: path.resolve(dirname, 'migrations'),
   }),
   sharp,
   plugins: [
@@ -75,3 +79,4 @@ export default buildConfig({
     // storage-adapter-placeholder
   ],
 });
+

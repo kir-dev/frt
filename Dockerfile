@@ -30,6 +30,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/src ./src
 COPY --from=builder /app/payload.config.ts ./payload.config.ts
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
+COPY --from=builder /app/css-loader-register.mjs ./css-loader-register.mjs
+COPY --from=builder /app/css-loader-hooks.mjs ./css-loader-hooks.mjs
+COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 3000
 
