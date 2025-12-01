@@ -124,7 +124,7 @@ export default function RecruitmentPageClient({ recruitmentData, lang }: Recruit
                     <div id="application-section" className="lg:hidden mt-12 text-center">
                         <p className="text-xl mb-4">{translations.interested}</p>
                         <a
-                            href="https://docs.google.com/forms/d/e/1FAIpQLSfoRr50h0nzuhrctVWgNhOOm003Yd38Vw1jNdhWAvOocf16zQ/viewform?usp=header"
+                            href="https://forms.gle/QeA1x6B5sXamfo8Y9"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
@@ -157,7 +157,7 @@ export default function RecruitmentPageClient({ recruitmentData, lang }: Recruit
                         <div className="bg-frtcardBG backdrop-blur-sm rounded-lg p-5 text-center">
                             <p className="text-sm mb-2">{translations.interested}</p>
                             <a
-                                href="https://docs.google.com/forms/d/e/1FAIpQLSfoRr50h0nzuhrctVWgNhOOm003Yd38Vw1jNdhWAvOocf16zQ/viewform?usp=header"
+                                href="https://forms.gle/QeA1x6B5sXamfo8Y9"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-block bg-red-600 hover:bg-red-700 !text-white font-bold py-2 px-4 rounded-lg transition-colors text-base w-full"

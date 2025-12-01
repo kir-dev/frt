@@ -30,7 +30,7 @@ export default async function DonatePage(props: { searchParams?: Promise<Record<
                 <div className="mb-8 flex justify-center">
                     <a
                         className="mb-4 max-w-[300px] text-center inline-block bg-red-600 hover:bg-red-700 !text-white font-bold py-2 px-6 rounded-lg transition-colors text-base w-full"
-                        href='mailto:sponsoring@fun-ke.com'
+                        href='mailto:info.bme.frt@gmail.com'
                     >
                         {lang === "en" ? support.button_text_en : support.button_text}
                     </a>

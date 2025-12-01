@@ -1,5 +1,5 @@
+import { FixedToolbarFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 import { CollectionConfig } from "payload";
-import {FixedToolbarFeature, lexicalEditor} from "@payloadcms/richtext-lexical";
 
 export const Publications: CollectionConfig = {
   slug: "publications",
@@ -58,7 +58,7 @@ export const Publications: CollectionConfig = {
     {
       name: "link",
       type: "text",
-      required: true,
+      required: false,
       label: "Link a publikációhoz",
     },
   ],

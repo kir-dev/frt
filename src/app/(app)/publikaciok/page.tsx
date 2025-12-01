@@ -1,7 +1,7 @@
-import Link from "next/link"
-import { getPublications } from "@/lib/payload-cms"
-import { ExternalLink, User, FileText } from "lucide-react"
-import {RichText} from "@payloadcms/richtext-lexical/react";
+import { getPublications } from "@/lib/payload-cms";
+import { RichText } from "@payloadcms/richtext-lexical/react";
+import { ExternalLink, FileText, User } from "lucide-react";
+import Link from "next/link";
 
 // Új típus a searchParams-hoz
 export type PublicationsPageProps = {
@@ -55,26 +55,34 @@ export default async function PublicationsPage(props: PublicationsPageProps) {
                                             <User size={16} />
                                             <span>{publication.author}</span>
                                         </div>
-                                        <Link
-                                            href={publication.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="group inline-block"
-                                        >
-                                            <h2 className="text-xl font-bold group-hover:text-frtRed transition-colors flex items-center gap-2">
-                                                {lang === 'en' ? publication.title_eng : publication.title}
-                                            </h2>
-                                        </Link>
-                                        <div className="mt-2 sm:mt-0 sm:absolute sm:top-0 sm:right-0 w-fit">
+                                        {publication.link ? (
                                             <Link
                                                 href={publication.link}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-1 px-3 py-2 sm:px-2 sm:py-1 !bg-frtRed !hover:bg-red-800 !text-white rounded-md transition-colors text-xs font-medium"
+                                                className="group inline-block"
                                             >
-                                                <ExternalLink size={14} />
-                                                {lang === 'en' ? 'View' : 'Megtekintés'}
+                                                <h2 className="text-xl font-bold group-hover:text-frtRed transition-colors flex items-center gap-2">
+                                                    {lang === 'en' ? publication.title_eng : publication.title}
+                                                </h2>
                                             </Link>
+                                        ) : (
+                                            <h2 className="text-xl font-bold flex items-center gap-2">
+                                                {lang === 'en' ? publication.title_eng : publication.title}
+                                            </h2>
+                                        )}
+                                        <div className="mt-2 sm:mt-0 sm:absolute sm:top-0 sm:right-0 w-fit">
+                                            {publication.link && (
+                                                <Link
+                                                    href={publication.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-1 px-3 py-2 sm:px-2 sm:py-1 !bg-frtRed !hover:bg-red-800 !text-white rounded-md transition-colors text-xs font-medium"
+                                                >
+                                                    <ExternalLink size={14} />
+                                                    {lang === 'en' ? 'View' : 'Megtekintés'}
+                                                </Link>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
