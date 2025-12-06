@@ -5,6 +5,7 @@ import * as migration_20251118_160316_add_formula_student from './20251118_16031
 import * as migration_20251124_120000_fix_locked_documents_relation from './20251124_120000_fix_locked_documents_relation';
 import * as migration_20251130_000000_init_site_settings from './20251130_000000_init_site_settings';
 import * as migration_20251201_090036_publications_optional_link from './20251201_090036_publications_optional_link';
+import * as migration_20251206_100136_update_payload_3_67 from './20251206_100136_update_payload_3_67';
 
 export const migrations = [
   {
@@ -40,6 +41,11 @@ export const migrations = [
   {
     up: migration_20251201_090036_publications_optional_link.up,
     down: migration_20251201_090036_publications_optional_link.down,
-    name: '20251201_090036_publications_optional_link'
+    name: '20251201_090036_publications_optional_link',
+  },
+  {
+    up: migration_20251206_100136_update_payload_3_67.up,
+    down: migration_20251206_100136_update_payload_3_67.down,
+    name: '20251206_100136_update_payload_3_67'
   },
 ];
