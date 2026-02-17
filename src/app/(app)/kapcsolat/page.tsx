@@ -51,7 +51,7 @@ export default async function ContactPage (props: { searchParams?: Promise<Recor
                     </a>
                     
                     <a className="inline-block bg-gray-800 hover:bg-gray-700 !text-white font-bold py-2 px-6 rounded-lg transition-colors text-base border border-gray-700"
-                       href='https://forms.gle/79q1yJQ2D86TvZ8E6'
+                       href='https://forms.gle/n1WgGtivpW3hnPA76'
                        target="_blank"
                        rel="noopener noreferrer">
                         {lang === 'en' ? 'Event Exhibition Request' : 'Rendezvényen való kiállítási igény'}

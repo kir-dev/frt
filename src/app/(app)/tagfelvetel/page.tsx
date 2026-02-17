@@ -1,8 +1,8 @@
-import RecruitmentPageClient from "./recruitment-page-client"
-import { getRecruitmentData } from "@/lib/payload-cms"
+import { getRecruitmentData } from "@/lib/payload-cms";
+import RecruitmentPageClient from "./recruitment-page-client";
 
 export const metadata = {
-    title: "Folyamatos tagfelvétel",
+    title: "Tavaszi tagfelvétel",
     description: "Nyitott pozíciók a csapatunkban",
 }
 
