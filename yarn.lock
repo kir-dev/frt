@@ -1949,10 +1949,10 @@
     "@emnapi/runtime" "^1.4.3"
     "@tybys/wasm-util" "^0.9.0"
 
-"@next/env@15.5.7":
-  version "15.5.7"
-  resolved "https://registry.yarnpkg.com/@next/env/-/env-15.5.7.tgz#4168db34ae3bc9fd9ad3b951d327f4cfc38d4362"
-  integrity sha512-4h6Y2NyEkIEN7Z8YxkA27pq6zTkS09bUSYC0xjd0NpwFxjnIKeZEeH591o5WECSmjpUhLn3H2QLJcDye3Uzcvg==
+"@next/env@15.5.9":
+  version "15.5.9"
+  resolved "https://registry.yarnpkg.com/@next/env/-/env-15.5.9.tgz#53c2c34dc17cd87b61f70c6cc211e303123b2ab8"
+  integrity sha512-4GlTZ+EJM7WaW2HEZcyU317tIQDjkQIyENDLxYJfSWlfqguN+dHkZgyQTV/7ykvobU7yEH5gKvreNrH4B6QgIg==
 
 "@next/env@^15.1.5":
   version "15.3.3"
@@ -2047,7 +2047,7 @@
     to-snake-case "1.0.0"
     uuid "10.0.0"
 
-"@payloadcms/drizzle@3.67.0", "@payloadcms/drizzle@^3.67.0":
+"@payloadcms/drizzle@3.67.0":
   version "3.67.0"
   resolved "https://registry.yarnpkg.com/@payloadcms/drizzle/-/drizzle-3.67.0.tgz#ecba980aa2ae759eedea988c664628b31c808821"
   integrity sha512-YStaXv6s5u6EZ/GjPtA3FrFGGQNN/ommjt/oeAzTgHrnXYuEXbtJLKmiLTq6AwacLgm5kSyfQeDH2U56MeiQxA==
@@ -2059,7 +2059,26 @@
     to-snake-case "1.0.0"
     uuid "9.0.0"
 
-"@payloadcms/email-nodemailer@3.67.0", "@payloadcms/email-nodemailer@^3.67.0":
+"@payloadcms/drizzle@^3.73.0":
+  version "3.80.0"
+  resolved "https://registry.yarnpkg.com/@payloadcms/drizzle/-/drizzle-3.80.0.tgz#ae846c9fe8c510bc9d9b8a3e1618d5df46a174d0"
+  integrity sha512-q47D8I+dZTaI9fMCMEQtpKbmDUDEp8MIMxg+0O0wxy8CUsxX3sHC3ChgcuHAztqDeBguMaag7OWuWmDoArhfBw==
+  dependencies:
+    console-table-printer "2.12.1"
+    dequal "2.0.3"
+    drizzle-orm "0.44.7"
+    prompts "2.4.2"
+    to-snake-case "1.0.0"
+    uuid "9.0.0"
+
+"@payloadcms/email-nodemailer@3.80.0":
+  version "3.80.0"
+  resolved "https://registry.yarnpkg.com/@payloadcms/email-nodemailer/-/email-nodemailer-3.80.0.tgz#e2d8fac05ba0d7e34cda45d5bcb7b05a2ba0beb2"
+  integrity sha512-+XXMkzUgPKErsguJIfLlkd75FnO8k1TcqK0XNCN51+uwTYZFmKc08wiL1oU+wxS52qa1HFhh0ObJ5ZJH4c04Ew==
+  dependencies:
+    nodemailer "7.0.12"
+
+"@payloadcms/email-nodemailer@^3.67.0":
   version "3.67.0"
   resolved "https://registry.yarnpkg.com/@payloadcms/email-nodemailer/-/email-nodemailer-3.67.0.tgz#50bcd5606a1dbe8fdbbb528412b8809dd54f6c27"
   integrity sha512-lFrVrs/5A1ZHpDUBhGY1x0dCtghIpI4XVdaFng9tF4SIahb7ouGFyjSyHI9OEq603ftw6NOJDhSM5fsvocxWow==
@@ -2096,18 +2115,18 @@
     sass "1.77.4"
     uuid "10.0.0"
 
-"@payloadcms/payload-cloud@^3.67.0":
-  version "3.67.0"
-  resolved "https://registry.yarnpkg.com/@payloadcms/payload-cloud/-/payload-cloud-3.67.0.tgz#68aff05aa47f5c1b182221a6a1b454f00cdfa41d"
-  integrity sha512-8xpQOkCwfe2fbFM841/QZ5HLcreEcQzQvUaYcwrGNuv+cTmb4SfaC7LPTeQyWdvaQ6TI7vFruy8dwUChujP1Kw==
+"@payloadcms/payload-cloud@^3.73.0":
+  version "3.80.0"
+  resolved "https://registry.yarnpkg.com/@payloadcms/payload-cloud/-/payload-cloud-3.80.0.tgz#31f2d2590dbc2fbd254332ef1d2a2118a2c70008"
+  integrity sha512-NcsjcvbJ06dSh/fwEev3YKl4Q5NZvqFCLTMQRTNzksrjoGM1Bw/PR5YfD2Mi+nLEsgQq+2gqC4uBEC/NbhK1JA==
   dependencies:
     "@aws-sdk/client-cognito-identity" "^3.614.0"
     "@aws-sdk/client-s3" "^3.614.0"
     "@aws-sdk/credential-providers" "^3.614.0"
     "@aws-sdk/lib-storage" "^3.614.0"
-    "@payloadcms/email-nodemailer" "3.67.0"
+    "@payloadcms/email-nodemailer" "3.80.0"
     amazon-cognito-identity-js "^6.1.2"
-    nodemailer "7.0.9"
+    nodemailer "7.0.12"
 
 "@payloadcms/richtext-lexical@^3.67.0":
   version "3.67.0"
@@ -5651,12 +5670,12 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-next@15.5.7:
-  version "15.5.7"
-  resolved "https://registry.yarnpkg.com/next/-/next-15.5.7.tgz#4507700b2bbcaf2c9fb7a9ad25c0dac2ba4a9a75"
-  integrity sha512-+t2/0jIJ48kUpGKkdlhgkv+zPTEOoXyr60qXe68eB/pl3CMJaLeIGjzp5D6Oqt25hCBiBTt8wEeeAzfJvUKnPQ==
+next@15.5.9:
+  version "15.5.9"
+  resolved "https://registry.yarnpkg.com/next/-/next-15.5.9.tgz#1b80d05865cc27e710fb4dcfc6fd9e726ed12ad4"
+  integrity sha512-agNLK89seZEtC5zUHwtut0+tNrc0Xw4FT/Dg+B/VLEo9pAcS9rtTKpek3V6kVcVwsB2YlqMaHdfZL4eLEVYuCg==
   dependencies:
-    "@next/env" "15.5.7"
+    "@next/env" "15.5.9"
     "@swc/helpers" "0.5.15"
     caniuse-lite "^1.0.30001579"
     postcss "8.4.31"
@@ -5683,6 +5702,11 @@ node-releases@^2.0.19:
   version "2.0.19"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.19.tgz#9e445a52950951ec4d177d843af370b411caf314"
   integrity sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==
+
+nodemailer@7.0.12:
+  version "7.0.12"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-7.0.12.tgz#b6b7bb05566c6c8458ee360aa30a407a478d35b7"
+  integrity sha512-H+rnK5bX2Pi/6ms3sN4/jRQvYSMltV6vqup/0SFOrxYYY/qoNvhXPlYq3e+Pm9RFJRwrMGbMIwi81M4dxpomhA==
 
 nodemailer@7.0.9:
   version "7.0.9"
