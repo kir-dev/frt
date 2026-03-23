@@ -1,4 +1,3 @@
-import { BulkUpload } from "@/components/payload/BulkUpload";
 import { CollectionConfig } from "payload";
 
 export const Gallery: CollectionConfig = {
@@ -41,8 +40,7 @@ export const Gallery: CollectionConfig = {
       type: 'ui',
       admin: {
         components: {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          Field: BulkUpload as any,
+          Field: '/components/payload/BulkUpload#BulkUpload',
         },
       },
     },
