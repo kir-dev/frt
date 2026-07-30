@@ -1,5 +1,6 @@
 import {
   Car,
+  CareerSetting,
   Contact,
   Event,
   FormulaStudent,
@@ -28,8 +29,22 @@ export async function getRecruitmentData(): Promise<Recruitment[]> {
   const recruitmentData = await payload.find({
     collection: "recruitment",
     limit: 1000,
+    sort: "order",
+    depth: 1, // hogy a csoport képe (upload) is betöltődjön
   });
   return recruitmentData.docs;
+}
+
+export async function getCareerSettings(): Promise<CareerSetting | null> {
+  const payload = await getPayload({ config });
+  try {
+    return (await payload.findGlobal({
+      slug: "career-settings",
+    })) as CareerSetting;
+  } catch (error) {
+    console.error("Error fetching career settings:", error);
+    return null;
+  }
 }
 
 export async function getCars(): Promise<Car[]> {
