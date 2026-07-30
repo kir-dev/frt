@@ -90,6 +90,62 @@ Open http://localhost:3000. Admin is available at http://localhost:3000/admin.
 - `yarn start` — Start the production server
 - `yarn lint` — Run ESLint
 
+## Karrier oldal
+
+A `/karrier` oldal (korábban „Tagfelvétel", a `/tagfelvetel` útvonal 308-cal ide irányít) mindig elérhető, akkor is, ha éppen nincs nyitott pozíció.
+
+### Tartalomkezelés
+
+- **Karrier csoportok** (`recruitment` kollekció) — csoportonként kép, rendezési szám, leírás, és a pozíciók listája. Egy pozícióhoz megadható:
+  - bevezető szöveg (opcionális),
+  - tetszőleges számú **szekció** (pl. Feladatok, Szükséges skillek, Miben fejlődhetsz, Előnyök),
+  - három **kiemelt tudnivaló**: Csatlakozás, Időráfordítás, Részegység — ezek ikonokkal jelennek meg a leírás alatt,
+  - „Nyitott pozíció" jelölőnégyzet: csak a bepipált pozíciók jelennek meg az oldalon.
+- **Karrier oldal** globális beállítás (`career-settings`) — az oldal bevezetője, a jelentkezés módja (beépített űrlap vagy külső Google űrlap), és a jelentkezés nyitva/zárva állapota.
+- **Jelentkezések** (`job-applications` kollekció) — a beépített űrlapon beérkezett jelentkezések. A kollekció `create` jogosultsága zárt: beküldeni csak a `/api/karrier/jelentkezes` végponton keresztül lehet.
+
+### Jelentkezések kiírása Google Sheets táblázatba
+
+A beépített űrlap minden jelentkezést elment a Payloadba, és ha be van állítva a webhook, egy Google Sheets táblázatba is kiírja. A webhook hibája **nem** akadályozza meg a jelentkezés mentését — a státusz a jelentkezés oldalsávjában látszik (Kiírva / Kihagyva / Hiba).
+
+Beállítás:
+
+1. Hozz létre egy Google Sheets táblázatot, az első sorba a fejlécekkel:
+   `submittedAt | name | email | phone | university | major | semester | group | position | motivation`
+2. A táblázatban: **Bővítmények → Apps Script**, és illeszd be az alábbi szkriptet (a `SECRET` értéket cseréld le egy hosszú véletlen karakterláncra):
+
+   ```javascript
+   const SECRET = 'ide-egy-hosszu-veletlen-titok';
+
+   function doPost(e) {
+     const data = JSON.parse(e.postData.contents);
+
+     if (data.secret !== SECRET) {
+       return ContentService.createTextOutput(JSON.stringify({ error: 'forbidden' }))
+         .setMimeType(ContentService.MimeType.JSON);
+     }
+
+     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+     sheet.appendRow([
+       data.submittedAt, data.name, data.email, data.phone, data.university,
+       data.major, data.semester, data.group, data.position, data.motivation,
+     ]);
+
+     return ContentService.createTextOutput(JSON.stringify({ result: 'ok' }))
+       .setMimeType(ContentService.MimeType.JSON);
+   }
+   ```
+
+3. **Telepítés → Új telepítés → Webalkalmazás**; „Végrehajtás mint": *Én*, „Hozzáférés": *Bárki*. Másold ki a kapott `/exec` végződésű URL-t.
+4. Állítsd be a `.env` fájlban:
+
+   ```
+   GOOGLE_SHEETS_WEBHOOK_URL=<a kimásolt /exec URL>
+   GOOGLE_SHEETS_WEBHOOK_SECRET=<ugyanaz a titok, mint a szkriptben>
+   ```
+
+Ha a `GOOGLE_SHEETS_WEBHOOK_URL` nincs beállítva, a jelentkezések csak a Payload adminba kerülnek (a szinkron státusza „Kihagyva" lesz).
+
 ## Deployment
 
 Since the project uses `push: false` for database schema management, you must run migrations manually after deploying new code.
