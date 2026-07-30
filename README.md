@@ -106,45 +106,31 @@ A `/karrier` oldal (korábban „Tagfelvétel", a `/tagfelvetel` útvonal 308-ca
 
 ### Jelentkezések kiírása Google Sheets táblázatba
 
-A beépített űrlap minden jelentkezést elment a Payloadba, és ha be van állítva a webhook, egy Google Sheets táblázatba is kiírja. A webhook hibája **nem** akadályozza meg a jelentkezés mentését — a státusz a jelentkezés oldalsávjában látszik (Kiírva / Kihagyva / Hiba).
+A beépített űrlap minden jelentkezést elment a Payloadba, és ha be van állítva egy táblázat, egy sorral kiegészíti azt is. A táblázat hibája **nem** akadályozza meg a jelentkezés mentését — a státusz a jelentkezés oldalsávjában látszik (Kiírva / Kihagyva / Hiba), és a „Kiírás újra a táblázatba" gombbal bármikor pótolható.
 
-Beállítás:
+#### Egyszeri beállítás (fejlesztői oldal)
 
-1. Hozz létre egy Google Sheets táblázatot, az első sorba a fejlécekkel:
-   `submittedAt | name | email | phone | university | major | semester | group | position | motivation`
-2. A táblázatban: **Bővítmények → Apps Script**, és illeszd be az alábbi szkriptet (a `SECRET` értéket cseréld le egy hosszú véletlen karakterláncra):
-
-   ```javascript
-   const SECRET = 'ide-egy-hosszu-veletlen-titok';
-
-   function doPost(e) {
-     const data = JSON.parse(e.postData.contents);
-
-     if (data.secret !== SECRET) {
-       return ContentService.createTextOutput(JSON.stringify({ error: 'forbidden' }))
-         .setMimeType(ContentService.MimeType.JSON);
-     }
-
-     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
-     sheet.appendRow([
-       data.submittedAt, data.name, data.email, data.phone, data.university,
-       data.major, data.semester, data.group, data.position, data.motivation,
-     ]);
-
-     return ContentService.createTextOutput(JSON.stringify({ result: 'ok' }))
-       .setMimeType(ContentService.MimeType.JSON);
-   }
-   ```
-
-3. **Telepítés → Új telepítés → Webalkalmazás**; „Végrehajtás mint": *Én*, „Hozzáférés": *Bárki*. Másold ki a kapott `/exec` végződésű URL-t.
-4. Állítsd be a `.env` fájlban:
+1. A [Google Cloud Console](https://console.cloud.google.com/)-ban hozz létre egy projektet, és engedélyezd benne a **Google Sheets API**-t.
+2. **IAM & Admin → Service Accounts → Create service account.** Szerepkör nem kell hozzá.
+3. A fióknál **Keys → Add key → Create new key → JSON**, töltsd le a kulcsot.
+4. A letöltött JSON-ból két érték kell a `.env`-be:
 
    ```
-   GOOGLE_SHEETS_WEBHOOK_URL=<a kimásolt /exec URL>
-   GOOGLE_SHEETS_WEBHOOK_SECRET=<ugyanaz a titok, mint a szkriptben>
+   GOOGLE_SERVICE_ACCOUNT_EMAIL=<a JSON "client_email" mezője>
+   GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY="<a JSON "private_key" mezője, a \n-ekkel együtt>"
    ```
 
-Ha a `GOOGLE_SHEETS_WEBHOOK_URL` nincs beállítva, a jelentkezések csak a Payload adminba kerülnek (a szinkron státusza „Kihagyva" lesz).
+   A privát kulcsot idézőjelek közé tedd, és hagyd benne a `\n` karaktereket — a kód alakítja vissza sortörésekké.
+
+#### Táblázat bekötése (a szerkesztő dolga, kódolás nélkül)
+
+1. Hozz létre egy Google Sheets táblázatot (üresen is jó, a fejlécet mi írjuk bele).
+2. **Megosztás → add hozzá a szolgáltatásfiók e-mail címét Szerkesztő jogosultsággal.** A pontos címet az adminban a mező alatt kiírjuk.
+3. Payload admin → **Karrier oldal → Jelentkezés → Google táblázat linkje**: illeszd be a táblázat linkjét, és mentsd.
+
+Mentéskor rögtön ellenőrizzük, hogy a táblázat elérhető-e; ha nincs megosztva vagy rossz a link, a mező hibaüzenetet ad. A mező üresen hagyható — ilyenkor a jelentkezések csak az adminba érkeznek.
+
+A kiírt oszlopok sorrendje: `Beküldve, Név, E-mail, Telefon, Egyetem / kar, Szak, Félév, Csoport, Pozíció, Motiváció`.
 
 ## Deployment
 
