@@ -25,7 +25,7 @@ function NotFoundContent() {
             back: "Vissza",
             links: "Hasznos linkek",
             news: "Hírek",
-            recruitment: "Tagfelvétel",
+            recruitment: "Karrier",
             about: "Rólunk",
             supportUs: "Támogass minket"
         },
@@ -37,7 +37,7 @@ function NotFoundContent() {
             back: "Back",
             links: "Useful links",
             news: "News",
-            recruitment: "Recruitment",
+            recruitment: "Careers",
             about: "About us",
             supportUs: "Support us"
         }
@@ -93,7 +93,7 @@ function NotFoundContent() {
                             <span className="font-medium">{t.news}</span>
                         </Link>
                         <Link
-                            href={`/tagfelvetel?lang=${language}`}
+                            href={`/karrier?lang=${language}`}
                             className="block p-3 bg-red-950/50 hover:bg-red-900/50 rounded-lg transition-colors text-center"
                         >
                             <span className="font-medium">{t.recruitment}</span>

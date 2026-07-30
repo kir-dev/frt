@@ -13,8 +13,8 @@ export async function getVisibleNavItems(): Promise<NavItem[]> {
     // Filter navigation items based on settings
     return NAV_ITEMS.map(item => {
       if (!item.dropdown) {
-        // Handle top-level items (like Tagfelvétel)
-        if (item.href === '/tagfelvetel' && !settings.showRecruitmentPage) {
+        // Handle top-level items (like Karrier)
+        if (item.href === '/karrier' && !settings.showRecruitmentPage) {
           return null
         }
         return item
@@ -25,7 +25,7 @@ export async function getVisibleNavItems(): Promise<NavItem[]> {
         if (dropdownItem.href === '/egyesulet' && !settings.showAssociationPage) {
           return false
         }
-        if (dropdownItem.href === '/tagfelvetel' && !settings.showRecruitmentPage) {
+        if (dropdownItem.href === '/karrier' && !settings.showRecruitmentPage) {
           return false
         }
         return true
@@ -58,7 +58,7 @@ export async function isPageVisible(pagePath: string): Promise<boolean> {
     switch (pagePath) {
       case '/egyesulet':
         return settings.showAssociationPage ?? true
-      case '/tagfelvetel':
+      case '/karrier':
         return settings.showRecruitmentPage ?? true
       default:
         return true

@@ -39,14 +39,14 @@ export const SiteSettings: GlobalConfig = {
               name: 'showRecruitmentPage',
               type: 'checkbox',
               label: {
-                en: 'Show Recruitment Page',
-                hu: 'Tagfelvétel oldal megjelenítése',
+                en: 'Show Careers Page',
+                hu: 'Karrier oldal megjelenítése',
               },
               defaultValue: true,
               admin: {
                 description: {
-                  en: 'Controls visibility of the Recruitment page in navigation and direct access',
-                  hu: 'A Tagfelvétel oldal láthatóságát szabályozza a navigációban és közvetlen hozzáférésben',
+                  en: 'Controls visibility of the Careers page in navigation and direct access',
+                  hu: 'A Karrier oldal láthatóságát szabályozza a navigációban és közvetlen hozzáférésben',
                 },
               },
             },

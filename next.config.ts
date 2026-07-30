@@ -16,6 +16,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        // A Tagfelvétel oldal Karrier néven, /karrier útvonalon él tovább.
+        source: "/tagfelvetel",
+        destination: "/karrier",
+        permanent: true,
+      },
+    ];
+  },
   /* config options here */
 };
 

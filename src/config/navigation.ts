@@ -42,9 +42,9 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   {
-    name: "Tagfelvétel",
-    nameEn: "Joining Process",
-    href: "/tagfelvetel",
+    name: "Karrier",
+    nameEn: "Careers",
+    href: "/karrier",
     dropdown: null,
   },
   {

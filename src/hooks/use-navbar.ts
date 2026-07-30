@@ -95,8 +95,8 @@ export function useNavbar() {
   // Filter navigation items based on settings
   const filteredNavItems = NAV_ITEMS.map(item => {
     if (!item.dropdown) {
-      // Handle top-level items (like Tagfelvétel)
-      if (item.href === '/tagfelvetel' && !siteSettings.showRecruitmentPage) {
+      // Handle top-level items (like Karrier)
+      if (item.href === '/karrier' && !siteSettings.showRecruitmentPage) {
         return null;
       }
       return item;
@@ -107,7 +107,7 @@ export function useNavbar() {
       if (dropdownItem.href === '/egyesulet' && !siteSettings.showAssociationPage) {
         return false;
       }
-      if (dropdownItem.href === '/tagfelvetel' && !siteSettings.showRecruitmentPage) {
+      if (dropdownItem.href === '/karrier' && !siteSettings.showRecruitmentPage) {
         return false;
       }
       return true;
