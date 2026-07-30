@@ -23,6 +23,7 @@ import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { FixedToolbarFeatureClient as FixedToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BulkUpload as BulkUpload_f78d2ec679640e7d1f31ce1bfa4679ca } from '../../../components/payload/BulkUpload'
+import { ResyncSheetButton as ResyncSheetButton_fc506d5d7c6da31bb9047d09d1630842 } from '../../../components/payload/ResyncSheetButton'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 export const importMap = {
@@ -51,5 +52,6 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#FixedToolbarFeatureClient": FixedToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "/components/payload/BulkUpload#BulkUpload": BulkUpload_f78d2ec679640e7d1f31ce1bfa4679ca,
+  "/components/payload/ResyncSheetButton#ResyncSheetButton": ResyncSheetButton_fc506d5d7c6da31bb9047d09d1630842,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

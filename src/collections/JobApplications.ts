@@ -1,56 +1,39 @@
-import { sendApplicationToSheet } from "@/lib/google-sheets";
-import type { CollectionAfterChangeHook, CollectionConfig } from "payload";
+import { syncApplicationToSheet } from "@/lib/karrier-sheet-sync";
+import type { CollectionAfterChangeHook, CollectionConfig, PayloadHandler } from "payload";
 
-/**
- * Új jelentkezés kiírása a Google Sheets táblázatba, majd a szinkron
- * eredményének visszaírása a dokumentumra. A hiba sosem bukik ki a hívóhoz:
- * a jelentkezés a Payloadban akkor is elmentve marad.
- */
-const syncToGoogleSheet: CollectionAfterChangeHook = async ({ doc, operation, req, context }) => {
+/** Új jelentkezés automatikus kiírása a beállított Google táblázatba. */
+const syncOnCreate: CollectionAfterChangeHook = async ({ doc, operation, req, context }) => {
   if (operation !== "create" || context?.skipSheetSync) {
     return doc;
   }
 
-  const result = await sendApplicationToSheet({
-    id: doc.id,
-    submittedAt: doc.createdAt,
-    name: doc.name,
-    email: doc.email,
-    phone: doc.phone ?? "",
-    university: doc.university ?? "",
-    major: doc.major ?? "",
-    semester: doc.semester ?? "",
-    group: doc.groupName ?? "",
-    position: doc.positionName ?? "",
-    motivation: doc.motivation ?? "",
+  await syncApplicationToSheet(req.payload, doc, req);
+  return doc;
+};
+
+/**
+ * Kézi újraküldés az adminból: a beállítás előtt vagy hiba miatt kimaradt
+ * jelentkezéseket utólag is ki lehet írni a táblázatba.
+ */
+const resyncHandler: PayloadHandler = async (req) => {
+  if (!req.user) {
+    return Response.json({ error: "UNAUTHORIZED" }, { status: 401 });
+  }
+
+  const id = req.routeParams?.id;
+  if (!id) {
+    return Response.json({ error: "MISSING_ID" }, { status: 400 });
+  }
+
+  const doc = await req.payload.findByID({
+    collection: "job-applications",
+    id: String(id),
+    overrideAccess: true,
   });
 
-  if (result.status === "error") {
-    req.payload.logger.error(
-        `A(z) #${doc.id} jelentkezés Google Sheets szinkronizálása sikertelen: ${result.message}`,
-    );
-  }
+  const result = await syncApplicationToSheet(req.payload, doc);
 
-  try {
-    await req.payload.update({
-      collection: "job-applications",
-      id: doc.id,
-      data: {
-        sheetSyncStatus: result.status,
-        sheetSyncError: result.status === "error" ? result.message : null,
-      },
-      overrideAccess: true,
-      // A create tranzakciójában vagyunk — req nélkül a friss sor még nem látszana.
-      req,
-      context: { skipSheetSync: true },
-    });
-  } catch (error) {
-    req.payload.logger.error(
-        `A(z) #${doc.id} jelentkezés szinkron-státuszának mentése sikertelen: ${error}`,
-    );
-  }
-
-  return doc;
+  return Response.json(result, { status: result.status === "error" ? 502 : 200 });
 };
 
 export const JobApplications: CollectionConfig = {
@@ -140,10 +123,10 @@ export const JobApplications: CollectionConfig = {
       name: "sheetSyncStatus",
       type: "select",
       required: false,
-      label: "Google Sheets szinkron",
+      label: "Google táblázat",
       options: [
         { label: "Kiírva", value: "ok" },
-        { label: "Kihagyva (nincs webhook beállítva)", value: "skipped" },
+        { label: "Kihagyva", value: "skipped" },
         { label: "Hiba", value: "error" },
       ],
       admin: {
@@ -155,15 +138,32 @@ export const JobApplications: CollectionConfig = {
       name: "sheetSyncError",
       type: "text",
       required: false,
-      label: "Szinkron hibaüzenete",
+      label: "Részletek",
       admin: {
         readOnly: true,
         position: "sidebar",
-        condition: (data) => data?.sheetSyncStatus === "error",
+        condition: (_, siblingData) => Boolean(siblingData?.sheetSyncError),
+      },
+    },
+    {
+      name: "resyncToSheet",
+      type: "ui",
+      admin: {
+        position: "sidebar",
+        components: {
+          Field: "/components/payload/ResyncSheetButton#ResyncSheetButton",
+        },
       },
     },
   ],
+  endpoints: [
+    {
+      path: "/:id/resync",
+      method: "post",
+      handler: resyncHandler,
+    },
+  ],
   hooks: {
-    afterChange: [syncToGoogleSheet],
+    afterChange: [syncOnCreate],
   },
 };

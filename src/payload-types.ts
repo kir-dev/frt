@@ -1410,6 +1410,7 @@ export interface CareerSetting {
    * Csak a „Külső Google űrlap” mód esetén használjuk.
    */
   googleFormUrl?: string | null;
+  spreadsheetUrl?: string | null;
   /**
    * Kikapcsolva az oldal továbbra is elérhető, de a jelentkezési űrlap és a „Jelentkezz” gomb helyett egy tájékoztató szöveg jelenik meg.
    */
@@ -1439,6 +1440,7 @@ export interface CareerSettingsSelect<T extends boolean = true> {
   introEng?: T;
   applicationMode?: T;
   googleFormUrl?: T;
+  spreadsheetUrl?: T;
   applicationsOpen?: T;
   applicationsClosedText?: T;
   applicationsClosedTextEng?: T;

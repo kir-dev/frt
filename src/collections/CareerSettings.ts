@@ -1,5 +1,14 @@
+import { checkSpreadsheetAccess, serviceAccountEmail } from "@/lib/google-sheets";
 import { FixedToolbarFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 import type { GlobalConfig } from "payload";
+
+const spreadsheetHelp = () => {
+  const email = serviceAccountEmail();
+
+  return email
+      ? `Illeszd be a Google táblázat linkjét, és oszd meg a táblázatot Szerkesztő jogosultsággal ezzel a címmel: ${email} — a fejlécsort automatikusan létrehozzuk. Üresen hagyva a jelentkezések csak ide, az adminba érkeznek.`
+      : "A táblázatba írás nincs beállítva a szerveren (hiányzik a Google szolgáltatásfiók). Szólj a fejlesztőknek, addig a jelentkezések csak ide, az adminba érkeznek.";
+};
 
 export const CareerSettings: GlobalConfig = {
   slug: "career-settings",
@@ -83,6 +92,28 @@ export const CareerSettings: GlobalConfig = {
               admin: {
                 description: "Csak a „Külső Google űrlap” mód esetén használjuk.",
                 condition: (data) => data?.applicationMode === "googleForm",
+              },
+            },
+            {
+              name: "spreadsheetUrl",
+              type: "text",
+              required: false,
+              label: "Google táblázat linkje",
+              admin: {
+                description: spreadsheetHelp,
+                condition: (data) => data?.applicationMode !== "googleForm",
+              },
+              // Mentéskor rögtön kiderül, ha a táblázat nincs megosztva velünk.
+              validate: async (value: string | null | undefined) => {
+                if (!value?.trim()) return true
+
+                const result = await checkSpreadsheetAccess(value)
+
+                if (result.status === "error") {
+                  return `A táblázat nem érhető el: ${result.message}. Ellenőrizd a linket, és hogy megosztottad-e Szerkesztő jogosultsággal.`
+                }
+
+                return true
               },
             },
             {
