@@ -1,0 +1,84 @@
+/**
+ * A Karrier oldal szövegei egy helyen. Az oldal a `?lang=en` paraméterrel vált
+ * nyelvet, ahogy a többi oldal is.
+ */
+
+export const isEnglish = (lang: string) => lang === "en"
+
+export type CareerTexts = ReturnType<typeof careerTexts>
+export type ApplicationFormTexts = ReturnType<typeof applicationFormTexts>
+
+export function careerTexts(isEn: boolean) {
+    return {
+        title: isEn ? "Careers" : "Karrier",
+        subtitle: isEn ? "Join the team" : "Csatlakozz a csapathoz",
+        groups: isEn ? "Groups" : "Csoportok",
+        noOpenPositions: isEn
+            ? "There are no open positions in this group at the moment."
+            : "Jelenleg nincs nyitott pozíció ebben a csoportban.",
+        noOpenPositionsShort: isEn ? "No open positions" : "Nincs nyitott pozíció",
+        interested: isEn ? "Interested in any of these positions?" : "Érdeklődsz valamelyik pozíció iránt?",
+        apply: isEn ? "Apply now!" : "Jelentkezz most!",
+        applyForThis: isEn ? "Apply for this position" : "Jelentkezem erre a pozícióra",
+        joining: isEn ? "Joining" : "Csatlakozás",
+        timeCommitment: isEn ? "Time commitment" : "Időráfordítás",
+        subsystem: isEn ? "Subsystem" : "Részegység",
+        applicationsClosed: isEn
+            ? "Applications are currently closed. Come back soon!"
+            : "A jelentkezés jelenleg zárva. Nézz vissza hamarosan!",
+    }
+}
+
+/** Magyarul a szám után egyes szám áll, angolul a darabszámtól függ. */
+export function openPositionsLabel(count: number, isEn: boolean) {
+    return isEn ? `${count} open position${count === 1 ? "" : "s"}` : `${count} nyitott pozíció`
+}
+
+export function applicationFormTexts(isEn: boolean) {
+    return {
+        heading: isEn ? "Application" : "Jelentkezés",
+        lead: isEn
+            ? "Fill in the form below and we will get back to you by email."
+            : "Töltsd ki az alábbi űrlapot, és e-mailben keresünk meg téged.",
+        name: isEn ? "Name" : "Név",
+        email: isEn ? "Email address" : "E-mail cím",
+        phone: isEn ? "Phone number" : "Telefonszám",
+        university: isEn ? "University / faculty" : "Egyetem / kar",
+        major: isEn ? "Major" : "Szak",
+        semester: isEn ? "Semester" : "Hányadik félév",
+        group: isEn ? "Group" : "Csoport",
+        position: isEn ? "Position" : "Pozíció",
+        motivation: isEn ? "Motivation / message" : "Motiváció / üzenet",
+        consent: isEn
+            ? "I consent to the processing of my personal data for the purpose of the application."
+            : "Hozzájárulok a személyes adataim kezeléséhez a jelentkezés elbírálása céljából.",
+        optional: isEn ? "optional" : "opcionális",
+        submit: isEn ? "Send application" : "Jelentkezés beküldése",
+        submitting: isEn ? "Sending…" : "Küldés…",
+        success: isEn
+            ? "Thank you! We have received your application and will contact you soon."
+            : "Köszönjük! Megkaptuk a jelentkezésed, hamarosan keresünk.",
+    }
+}
+
+/** A szerver hibakódjaihoz tartozó, felhasználónak szóló üzenetek. */
+export function applicationErrorText(code: string, isEn: boolean) {
+    switch (code) {
+        case "MISSING_FIELDS":
+            return isEn
+                ? "Please fill in the required fields and accept the data processing consent."
+                : "Kérlek, töltsd ki a kötelező mezőket és fogadd el az adatkezelési hozzájárulást."
+        case "INVALID_EMAIL":
+            return isEn ? "Please enter a valid email address." : "Kérlek, adj meg egy érvényes e-mail címet."
+        case "TOO_MANY_REQUESTS":
+            return isEn
+                ? "Too many submissions. Please try again in a minute."
+                : "Túl sok beküldés. Kérlek, próbáld újra egy perc múlva."
+        case "APPLICATIONS_CLOSED":
+            return isEn ? "Applications are currently closed." : "A jelentkezés jelenleg zárva."
+        default:
+            return isEn
+                ? "Something went wrong. Please try again later."
+                : "Valami hiba történt. Kérlek, próbáld újra később."
+    }
+}

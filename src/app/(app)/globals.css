@@ -143,6 +143,38 @@
   margin-bottom: 0.5em; /* Kis térköz a listaelemek között */
 }
 
+/* Karrier oldal — pozíció szekcióinak felsorolása.
+   A szerkesztő a CMS-ben sima felsorolást ír, a sor elején emojival: az emoji a
+   felsorolásjel, ezért a pöttyöt elhagyjuk, és függő behúzással igazítjuk a
+   tördelt sorokat a szöveg alá. */
+.karrier-section-list ul,
+.karrier-section-list ol {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.karrier-section-list li {
+  margin-bottom: 0.5em;
+  padding-left: 1.6em;
+  text-indent: -1.6em;
+  /* A sor elejére írt emoji után szűk lenne a sima szóköz — épp csak megnyitjuk. */
+  word-spacing: 0.12em;
+}
+
+.karrier-section-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Ha a szerkesztő felsorolás helyett bekezdéseket ír, azok se lógjanak ki. */
+.karrier-section-list p {
+  margin-bottom: 0.5em;
+}
+
+.karrier-section-list p:last-child {
+  margin-bottom: 0;
+}
+
 /* Egyéb formázások, ha szükséges (pl. linkek, címsorok, stb.) */
 .rich-text-content a {
   color: theme('colors.frtRed');
