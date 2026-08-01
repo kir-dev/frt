@@ -5,7 +5,11 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package.json yarn.lock ./
-RUN yarn --frozen-lockfile
+RUN --mount=type=cache,target=/usr/local/share/.cache/yarn \
+    NODE_OPTIONS=--dns-result-order=ipv4first \
+    yarn --frozen-lockfile \
+      --network-timeout 600000 \
+      --network-concurrency 4
 
 FROM base AS builder
 WORKDIR /app
