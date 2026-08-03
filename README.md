@@ -134,35 +134,14 @@ A kiírt oszlopok sorrendje: `Beküldve, Név, E-mail, Telefon, Egyetem / kar, S
 
 ## Deployment
 
-Since the project uses `push: false` for database schema management, you must run migrations manually after deploying new code.
+Docker images are built in GitHub Actions and published to GitHub Container Registry. The VPS only pulls an immutable image, runs the environment-specific Payload migrations, and recreates the application container without building source code.
 
-### Steps to Deploy
+- Pushes to `staging` deploy automatically to the isolated staging Compose project.
+- Production is started manually from the `main` branch and is protected by the GitHub `Production` environment.
+- Production deployments create a PostgreSQL backup before migrations.
+- Failed application health checks restore the previous application image. Database migrations are never rolled back automatically.
 
-1.  **Pull latest changes**:
-    ```bash
-    git pull origin main
-    ```
-
-2.  **Rebuild Docker containers**:
-    ```bash
-    docker compose up -d --build
-    ```
-
-3.  **Run Migrations**:
-    Execute the migration command inside the running container:
-    ```bash
-    docker exec frt-app-1 yarn payload:migrate
-    ```
-    *Note: You may be prompted to confirm the migration. You can auto-confirm with `echo y | docker exec -i frt-app-1 yarn payload:migrate`.*
-
-### Troubleshooting Migrations
-
-If you encounter `ERR_UNKNOWN_FILE_EXTENSION` errors with CSS files, ensure you are using the custom loader scripts (`css-loader-register.mjs`) which are included in the Docker image and used by the `yarn payload:migrate` script.
-
-- Ensure Docker is running if you use Postgres via Compose.
-- On first run, Payload will initialize tables in the configured Postgres database.
-- If you change database credentials, update `DATABASE_URI` accordingly.
-- Static assets live under `public/`. Media uploaded via the CMS will be stored where your Payload storage is configured.
+See [docs/deployment.md](docs/deployment.md) for environment setup, required secrets and variables, first deployment, verification, and rollback instructions. The older [preview runbook](docs/preview.md) remains available as a manual fallback.
 
 ## What this site includes
 

@@ -1,0 +1,216 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - staging
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: kir-dev/frt
+
+concurrency:
+  group: deploy-frt-vps
+  cancel-in-progress: false
+
+jobs:
+  quality:
+    name: Validate release
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Require main for production releases
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          if [[ "$GITHUB_REF_NAME" != "main" ]]; then
+            echo "Production releases must be dispatched from the main branch." >&2
+            exit 1
+          fi
+
+      - name: Check out repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile --network-timeout 600000
+
+      - name: Run ESLint
+        run: yarn eslint .
+
+      - name: Run TypeScript checks
+        run: yarn tsc --noEmit
+
+  build:
+    name: Build and publish image
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image-ref: ${{ steps.image.outputs.ref }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate image metadata
+        id: metadata
+        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,format=long,prefix=sha-
+            type=raw,value=staging,enable=${{ github.event_name == 'push' }}
+            type=raw,value=production,enable=${{ github.event_name == 'workflow_dispatch' }}
+
+      - name: Build and push image
+        id: build
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: ${{ vars.IMAGE_PLATFORM || 'linux/amd64' }}
+          push: true
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+          cache-from: type=gha,scope=frt-app
+          cache-to: type=gha,mode=max,scope=frt-app
+          provenance: true
+          sbom: true
+
+      - name: Export immutable image reference
+        id: image
+        env:
+          IMAGE_DIGEST: ${{ steps.build.outputs.digest }}
+        run: echo "ref=${REGISTRY}/${IMAGE_NAME}@${IMAGE_DIGEST}" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    name: Deploy ${{ github.event_name == 'push' && 'staging' || 'production' }}
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: read
+    environment:
+      name: ${{ github.event_name == 'push' && 'Staging' || 'Production' }}
+      url: ${{ vars.PUBLIC_URL }}
+    env:
+      IMAGE_REF: ${{ needs.build.outputs.image-ref }}
+      DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+      COMPOSE_PROJECT: ${{ vars.COMPOSE_PROJECT }}
+      APP_ENV_FILE: ${{ vars.APP_ENV_FILE }}
+      HEALTH_URL: ${{ vars.HEALTH_URL }}
+      COMPOSE_OVERRIDE: ${{ github.event_name == 'push' && 'docker-compose.staging.yml' || '' }}
+      BACKUP_DATABASE: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+      GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Check out deployment files
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Validate deployment configuration
+        run: |
+          required_values=(
+            IMAGE_REF
+            DEPLOY_PATH
+            COMPOSE_PROJECT
+            APP_ENV_FILE
+            HEALTH_URL
+            VPS_HOST
+            VPS_USER
+            SSH_PRIVATE_KEY
+            SSH_KNOWN_HOSTS
+          )
+
+          for variable_name in "${required_values[@]}"; do
+            if [[ -z "${!variable_name}" ]]; then
+              echo "Missing deployment configuration: $variable_name" >&2
+              exit 1
+            fi
+          done
+
+          if [[ ! "$DEPLOY_PATH" =~ ^/[a-zA-Z0-9_./-]+$ || "$DEPLOY_PATH" == *".."* ]]; then
+            echo "DEPLOY_PATH must be a safe absolute path." >&2
+            exit 1
+          fi
+
+      - name: Configure SSH
+        run: |
+          install -m 700 -d "$HOME/.ssh"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$HOME/.ssh/deploy_key"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/deploy_key" "$HOME/.ssh/known_hosts"
+
+      - name: Upload deployment files
+        run: |
+          target="${VPS_USER}@${VPS_HOST}"
+          ssh_options=(-i "$HOME/.ssh/deploy_key" -o BatchMode=yes -o StrictHostKeyChecking=yes)
+          printf -v prepare_command 'mkdir -p %q %q' "$DEPLOY_PATH" "$DEPLOY_PATH/scripts"
+
+          # The command is intentionally assembled and escaped on the runner.
+          # shellcheck disable=SC2029
+          ssh "${ssh_options[@]}" "$target" "$prepare_command"
+          scp "${ssh_options[@]}" docker-compose.yml docker-compose.staging.yml "$target:$DEPLOY_PATH/"
+          scp "${ssh_options[@]}" scripts/deploy-image.sh "$target:$DEPLOY_PATH/scripts/"
+
+      - name: Authenticate VPS to GHCR
+        run: |
+          target="${VPS_USER}@${VPS_HOST}"
+          ssh_options=(-i "$HOME/.ssh/deploy_key" -o BatchMode=yes -o StrictHostKeyChecking=yes)
+          # GITHUB_ACTOR is intentionally expanded on the runner.
+          # shellcheck disable=SC2029
+          printf '%s' "$GHCR_TOKEN" | ssh "${ssh_options[@]}" "$target" \
+            "docker login ghcr.io --username '$GITHUB_ACTOR' --password-stdin"
+
+      - name: Deploy immutable image
+        run: |
+          target="${VPS_USER}@${VPS_HOST}"
+          ssh_options=(-i "$HOME/.ssh/deploy_key" -o BatchMode=yes -o StrictHostKeyChecking=yes)
+          printf -v deploy_command \
+            'cd %q && ./scripts/deploy-image.sh %q %q %q %q %q %q' \
+            "$DEPLOY_PATH" \
+            "$IMAGE_REF" \
+            "$COMPOSE_PROJECT" \
+            "$APP_ENV_FILE" \
+            "$HEALTH_URL" \
+            "$BACKUP_DATABASE" \
+            "$COMPOSE_OVERRIDE"
+
+          # The command is intentionally assembled and escaped on the runner.
+          # shellcheck disable=SC2029
+          ssh "${ssh_options[@]}" "$target" "$deploy_command"
+
+      - name: Log the VPS out of GHCR
+        if: always()
+        continue-on-error: true
+        run: |
+          target="${VPS_USER}@${VPS_HOST}"
+          ssh -i "$HOME/.ssh/deploy_key" -o BatchMode=yes -o StrictHostKeyChecking=yes \
+            "$target" "docker logout ghcr.io"
