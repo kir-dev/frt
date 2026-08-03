@@ -5,6 +5,7 @@ import { RichText } from "@payloadcms/richtext-lexical/react"
 import { resolveApplicationConfig } from "./career-config"
 import ApplicationForm from "./components/application-form"
 import ApplyButton from "./components/apply-button"
+import CareerFaq from "./components/career-faq"
 import CareerGroup from "./components/career-group"
 import CareerSidebar from "./components/career-sidebar"
 import { careerTexts, isEnglish } from "./translations"
@@ -21,6 +22,7 @@ export default function CareerPageClient({ recruitmentData, careerSettings, lang
     const texts = careerTexts(isEn)
     const application = resolveApplicationConfig(careerSettings, isEn, texts.applicationsClosed)
     const intro = isEn ? careerSettings?.introEng : careerSettings?.intro
+    const faqs = careerSettings?.faqs ?? []
 
     const {
         formRef,
@@ -86,6 +88,8 @@ export default function CareerPageClient({ recruitmentData, careerSettings, lang
                             )
                         )}
                     </div>
+
+                    <CareerFaq items={faqs} isEn={isEn} texts={texts} />
                 </div>
 
                 <CareerSidebar

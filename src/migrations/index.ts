@@ -8,6 +8,7 @@ import * as migration_20251201_090036_publications_optional_link from './2025120
 import * as migration_20251206_100136_update_payload_3_67 from './20251206_100136_update_payload_3_67';
 import * as migration_20260729_182451_karrier_oldal from './20260729_182451_karrier_oldal';
 import * as migration_20260730_204153_karrier_sheets_link from './20260730_204153_karrier_sheets_link';
+import * as migration_20260803_170842_karrier_faq from './20260803_170842_karrier_faq';
 
 export const migrations = [
   {
@@ -58,6 +59,11 @@ export const migrations = [
   {
     up: migration_20260730_204153_karrier_sheets_link.up,
     down: migration_20260730_204153_karrier_sheets_link.down,
-    name: '20260730_204153_karrier_sheets_link'
+    name: '20260730_204153_karrier_sheets_link',
+  },
+  {
+    up: migration_20260803_170842_karrier_faq.up,
+    down: migration_20260803_170842_karrier_faq.down,
+    name: '20260803_170842_karrier_faq'
   },
 ];

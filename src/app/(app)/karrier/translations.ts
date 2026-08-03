@@ -26,6 +26,10 @@ export function careerTexts(isEn: boolean) {
         applicationsClosed: isEn
             ? "Applications are currently closed. Come back soon!"
             : "A jelentkezés jelenleg zárva. Nézz vissza hamarosan!",
+        faqTitle: isEn ? "Frequently asked questions" : "Gyakran ismételt kérdések",
+        faqLead: isEn
+            ? "We have collected the questions that most often come up during recruitment."
+            : "Összegyűjtöttük a tagfelvétel során leggyakrabban felmerülő kérdéseket.",
     }
 }
 
