@@ -5,11 +5,11 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
     env_file:
-      - .env
+      - ${APP_ENV_FILE:-.env}
     networks:
       - postgres
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB" ]
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
       interval: 1s
       timeout: 10s
       start_period: 10s
@@ -17,8 +17,9 @@ services:
 
   app:
     restart: always
+    image: ${FRT_APP_IMAGE:-frt-app:local}
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     build:
       context: .
       dockerfile: Dockerfile
@@ -29,9 +30,19 @@ services:
       postgres:
         condition: service_healthy
     env_file:
-      - .env
+      - ${APP_ENV_FILE:-.env}
     networks:
       - postgres
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - fetch('http://127.0.0.1:3000/api/health').then((response) => { if (!response.ok) process.exit(1) }).catch(() => process.exit(1))
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 6
 
 volumes:
   postgres:
