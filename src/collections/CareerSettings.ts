@@ -146,6 +146,66 @@ export const CareerSettings: GlobalConfig = {
             },
           ],
         },
+        {
+          label: {
+            en: "FAQ",
+            hu: "GYIK",
+          },
+          fields: [
+            {
+              name: "faqs",
+              type: "array",
+              required: false,
+              label: "Gyakran ismételt kérdések",
+              labels: {
+                singular: "Kérdés és válasz",
+                plural: "Kérdések és válaszok",
+              },
+              admin: {
+                description:
+                    "A kérdések ebben a sorrendben jelennek meg a Karrier oldal alján. Üresen hagyva a GYIK szekció nem jelenik meg.",
+              },
+              fields: [
+                {
+                  name: "question",
+                  type: "text",
+                  required: true,
+                  label: "Kérdés",
+                },
+                {
+                  name: "questionEng",
+                  type: "text",
+                  required: true,
+                  label: "Kérdés (angolul)",
+                },
+                {
+                  name: "answer",
+                  type: "richText",
+                  required: true,
+                  label: "Válasz",
+                  editor: lexicalEditor({
+                    features: ({ defaultFeatures }) => [
+                      ...defaultFeatures,
+                      FixedToolbarFeature(),
+                    ],
+                  }),
+                },
+                {
+                  name: "answerEng",
+                  type: "richText",
+                  required: true,
+                  label: "Válasz (angolul)",
+                  editor: lexicalEditor({
+                    features: ({ defaultFeatures }) => [
+                      ...defaultFeatures,
+                      FixedToolbarFeature(),
+                    ],
+                  }),
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
   ],

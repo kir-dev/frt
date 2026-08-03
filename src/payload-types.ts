@@ -1417,6 +1417,46 @@ export interface CareerSetting {
   applicationsOpen?: boolean | null;
   applicationsClosedText?: string | null;
   applicationsClosedTextEng?: string | null;
+  /**
+   * A kérdések ebben a sorrendben jelennek meg a Karrier oldal alján. Üresen hagyva a GYIK szekció nem jelenik meg.
+   */
+  faqs?:
+    | {
+        question: string;
+        questionEng: string;
+        answer: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        answerEng: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1444,6 +1484,15 @@ export interface CareerSettingsSelect<T extends boolean = true> {
   applicationsOpen?: T;
   applicationsClosedText?: T;
   applicationsClosedTextEng?: T;
+  faqs?:
+    | T
+    | {
+        question?: T;
+        questionEng?: T;
+        answer?: T;
+        answerEng?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
