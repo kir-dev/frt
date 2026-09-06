@@ -38,6 +38,9 @@ jobs:
       - name: Run TypeScript checks
         run: yarn tsc --noEmit
 
+      - name: Test career applications
+        run: yarn test:career
+
   container:
     name: Build Docker image
     needs: quality
