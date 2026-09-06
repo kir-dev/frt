@@ -1,4 +1,5 @@
 import * as migration_contact_baseline from "./20260906_154658_contact_baseline";
+import * as migration_events_baseline from "./20260906_220000_events_baseline";
 import * as migration_20250907_085438 from './20250907_085438';
 import * as migration_20251108_000000_add_support_us_button_text from './20251108_000000_add_support_us_button_text';
 import * as migration_20251108_172023_add_events_facebook_event_link from './20251108_172023_add_events_facebook_event_link';
@@ -73,5 +74,10 @@ export const migrations = [
     up: migration_20260906_154659_career_form_cv_contact.up,
     down: migration_20260906_154659_career_form_cv_contact.down,
     name: '20260906_154659_career_form_cv_contact'
+  },
+  {
+    up: migration_events_baseline.up,
+    down: migration_events_baseline.down,
+    name: '20260906_220000_events_baseline',
   },
 ];
