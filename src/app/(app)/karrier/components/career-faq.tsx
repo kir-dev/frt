@@ -33,7 +33,7 @@ export default function CareerFaq({ items, isEn, texts }: CareerFaqProps) {
     if (visibleItems.length === 0) return null
 
     return (
-        <section aria-labelledby={`${sectionId}-title`} className="mt-20 scroll-mt-32">
+        <section tabIndex={-1} id="gyik" aria-labelledby={`${sectionId}-title`} className="mt-20 scroll-mt-32">
             <div className="mb-8 max-w-2xl">
                 <h2 id={`${sectionId}-title`} className="text-3xl font-bold text-white sm:text-4xl">
                     {texts.faqTitle}

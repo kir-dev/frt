@@ -2,6 +2,7 @@
 
 import type { CareerSetting, Recruitment } from "@/payload-types"
 import { RichText } from "@payloadcms/richtext-lexical/react"
+import { resolveFormConfig } from "@/lib/career-form"
 import { resolveApplicationConfig } from "./career-config"
 import ApplicationForm from "./components/application-form"
 import ApplyButton from "./components/apply-button"
@@ -17,12 +18,26 @@ interface CareerPageClientProps {
     lang: string
 }
 
-export default function CareerPageClient({ recruitmentData, careerSettings, lang }: CareerPageClientProps) {
+export default function CareerPageClient({
+    recruitmentData,
+    careerSettings,
+    lang,
+}: CareerPageClientProps) {
     const isEn = isEnglish(lang)
     const texts = careerTexts(isEn)
-    const application = resolveApplicationConfig(careerSettings, isEn, texts.applicationsClosed)
+    const application = resolveApplicationConfig(
+        careerSettings,
+        isEn,
+        texts.applicationsClosed,
+    )
     const intro = isEn ? careerSettings?.introEng : careerSettings?.intro
     const faqs = careerSettings?.faqs ?? []
+    const hasFaqs = faqs.some((item) =>
+        Boolean(
+            (isEn ? item.questionEng : item.question)?.trim() &&
+                (isEn ? item.answerEng : item.answer),
+        ),
+    )
 
     const {
         formRef,
@@ -37,70 +52,94 @@ export default function CareerPageClient({ recruitmentData, careerSettings, lang
     } = useCareerPage()
 
     return (
-        <main className="min-h-screen bg-black text-white">
-            <div className="container mx-auto flex flex-col justify-center gap-8 px-4 py-12 lg:flex-row">
-                <div className="w-full max-w-4xl">
-                    <h1 className="mb-4 text-center text-4xl font-bold">{texts.title}</h1>
+        <div className="min-h-screen bg-black text-white">
+            <div className="container mx-auto max-w-7xl px-4 py-12">
+                <header>
+                    <h1 className="mb-4 text-center text-4xl font-bold">
+                        {texts.title}
+                    </h1>
 
                     {intro ? (
                         <div className="rich-text-content mb-12 text-center">
                             <RichText data={intro} />
                         </div>
                     ) : (
-                        <p className="mb-12 text-center text-lg text-gray-300">{texts.subtitle}</p>
+                        <p className="mb-12 text-center text-lg text-gray-300">
+                            {texts.subtitle}
+                        </p>
                     )}
+                </header>
+                <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_16rem]">
+                    <div className="min-w-0">
+                        <div className="space-y-6">
+                            {recruitmentData.map((group) => (
+                                <CareerGroup
+                                    key={group.id}
+                                    group={group}
+                                    isOpen={openGroupIds.has(group.id)}
+                                    openPositionKeys={openPositionKeys}
+                                    isEn={isEn}
+                                    texts={texts}
+                                    application={application}
+                                    onToggle={() => toggleGroup(group.id)}
+                                    onTogglePosition={togglePosition}
+                                    onApply={applyForPosition}
+                                />
+                            ))}
+                        </div>
 
-                    <div className="space-y-6">
-                        {recruitmentData.map((group) => (
-                            <CareerGroup
-                                key={group.id}
-                                group={group}
-                                isOpen={openGroupIds.has(group.id)}
-                                openPositionKeys={openPositionKeys}
-                                isEn={isEn}
-                                texts={texts}
-                                application={application}
-                                onToggle={() => toggleGroup(group.id)}
-                                onTogglePosition={togglePosition}
-                                onApply={applyForPosition}
-                            />
-                        ))}
-                    </div>
+                        <CareerFaq items={faqs} isEn={isEn} texts={texts} />
 
-                    <div ref={formRef} id="jelentkezes" className="mt-16 scroll-mt-32">
-                        {!application.isOpen ? (
-                            <div className="rounded-lg bg-frtcardBG p-8 text-center">
-                                <p className="text-lg">{application.closedText}</p>
-                            </div>
-                        ) : application.useBuiltInForm ? (
-                            <ApplicationForm lang={lang} isEn={isEn} selectedPosition={selectedPosition} />
-                        ) : (
-                            application.googleFormUrl && (
+                        <div
+                            tabIndex={-1}
+                            ref={formRef}
+                            id="jelentkezes"
+                            className="mt-16 scroll-mt-32"
+                        >
+                            {!application.isOpen ? (
                                 <div className="rounded-lg bg-frtcardBG p-8 text-center">
-                                    <p className="mb-4 text-xl">{texts.interested}</p>
-                                    <ApplyButton
-                                        label={texts.apply}
-                                        application={application}
-                                        onApply={scrollToForm}
-                                        className="px-6 py-3"
-                                    />
+                                    <p className="text-lg">
+                                        {application.closedText}
+                                    </p>
                                 </div>
-                            )
-                        )}
+                            ) : application.useBuiltInForm ? (
+                                <ApplicationForm
+                                    lang={lang}
+                                    isEn={isEn}
+                                    selectedPosition={selectedPosition}
+                                    initialConfig={resolveFormConfig(
+                                        careerSettings,
+                                    )}
+                                />
+                            ) : (
+                                application.googleFormUrl && (
+                                    <div className="rounded-lg bg-frtcardBG p-8 text-center">
+                                        <p className="mb-4 text-xl">
+                                            {texts.interested}
+                                        </p>
+                                        <ApplyButton
+                                            label={texts.apply}
+                                            application={application}
+                                            onApply={scrollToForm}
+                                            className="px-6 py-3"
+                                        />
+                                    </div>
+                                )
+                            )}
+                        </div>
                     </div>
 
-                    <CareerFaq items={faqs} isEn={isEn} texts={texts} />
+                    <CareerSidebar
+                        groups={recruitmentData}
+                        isEn={isEn}
+                        texts={texts}
+                        application={application}
+                        onSelectGroup={openGroupAndScroll}
+                        onApply={scrollToForm}
+                        hasFaqs={hasFaqs}
+                    />
                 </div>
-
-                <CareerSidebar
-                    groups={recruitmentData}
-                    isEn={isEn}
-                    texts={texts}
-                    application={application}
-                    onSelectGroup={openGroupAndScroll}
-                    onApply={scrollToForm}
-                />
             </div>
-        </main>
+        </div>
     )
 }

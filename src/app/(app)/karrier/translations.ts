@@ -10,7 +10,7 @@ export type ApplicationFormTexts = ReturnType<typeof applicationFormTexts>
 
 export function careerTexts(isEn: boolean) {
     return {
-        title: isEn ? "Careers" : "Karrier",
+        title: isEn ? "Join our team!" : "Csatlakozz csapatunkhoz!",
         subtitle: isEn ? "Join the team" : "Csatlakozz a csapathoz",
         groups: isEn ? "Groups" : "Csoportok",
         noOpenPositions: isEn
@@ -68,6 +68,17 @@ export function applicationFormTexts(isEn: boolean) {
 /** A szerver hibakódjaihoz tartozó, felhasználónak szóló üzenetek. */
 export function applicationErrorText(code: string, isEn: boolean) {
     switch (code) {
+        case "FORM_CHANGED":
+            return isEn ? "The form has changed. Your answers and file have been kept. Please review the updated questions and submit again." : "Az űrlap közben megváltozott. A válaszaid és a fájlod megmaradtak. Ellenőrizd a frissített kérdéseket, majd küldd be újra."
+        case "INVALID_ANSWER":
+            return isEn ? "Please check the selected answer." : "Kérlek, ellenőrizd a megadott választ."
+        case "ANSWER_TOO_LONG":
+            return isEn ? "This answer is too long. Please shorten it." : "Ez a válasz túl hosszú. Kérlek, rövidítsd le."
+        case "CV_TOO_LARGE":
+        case "BODY_TOO_LARGE":
+            return isEn ? "The upload is too large. The PDF may be at most 5 MiB." : "A feltöltés túl nagy. A PDF legfeljebb 5 MiB lehet."
+        case "INVALID_CV":
+            return isEn ? "Please choose a valid, unencrypted PDF document." : "Kérlek, válassz érvényes, jelszóval nem védett PDF-dokumentumot."
         case "MISSING_FIELDS":
             return isEn
                 ? "Please fill in the required fields and accept the data processing consent."

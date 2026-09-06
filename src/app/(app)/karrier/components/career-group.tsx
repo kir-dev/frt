@@ -41,7 +41,7 @@ export default function CareerGroup({
     const panelId = `group-panel-${group.id}`
 
     return (
-        <section id={`group-${group.id}`} className="scroll-mt-32">
+        <section tabIndex={-1} id={`group-${group.id}`} className="scroll-mt-32">
             <div className="overflow-hidden rounded-lg bg-frtcardBG">
                 <button
                     type="button"
