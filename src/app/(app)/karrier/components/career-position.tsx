@@ -35,19 +35,19 @@ export default function CareerPosition({
     const description = isEn ? position.positionDescriptionEng : position.positionDescription
 
     return (
-        <li className="overflow-hidden rounded-lg bg-black/30">
+        <li className="overflow-hidden rounded-lg bg-career-inset">
             <button
                 type="button"
                 onClick={onToggle}
                 aria-expanded={isOpen}
                 aria-controls={panelId}
-                className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-red-950/40"
+                className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-career-hover"
             >
-                <span className="font-bold text-frtRed">{positionName}</span>
+                <span className="font-bold text-career-accent">{positionName}</span>
                 <ChevronDown
                     size={20}
                     aria-hidden="true"
-                    className={`shrink-0 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                    className={`shrink-0 text-career-muted transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
                 />
             </button>
 

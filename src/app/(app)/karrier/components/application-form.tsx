@@ -21,7 +21,7 @@ interface ApplicationFormProps {
     initialConfig: FormConfig
 }
 const INPUT_CLASS =
-    "w-full rounded-lg border border-white/20 bg-black px-4 py-2.5 text-white focus:border-frtRed focus:outline-none focus:ring-1 focus:ring-frtRed"
+    "w-full rounded-lg border border-career-input-border bg-career-field px-4 py-2.5 text-career-text placeholder:text-career-muted focus:border-career-accent focus:outline-none focus:ring-1 focus:ring-career-accent"
 
 function Question({
     question: q,
@@ -45,7 +45,7 @@ function Question({
             {q.required ? (
                 " *"
             ) : (
-                <span className="font-normal text-gray-400">
+                <span className="font-normal text-career-muted">
                     {" "}
                     ({isEn ? "optional" : "opcionális"})
                 </span>
@@ -81,7 +81,7 @@ function Question({
                     aria-invalid={error || undefined}
                     aria-describedby={common["aria-describedby"]}
                 >
-                    <legend className="mb-2 text-sm font-medium text-gray-200">
+                    <legend className="mb-2 text-sm font-medium text-career-text">
                         {labelContent}
                     </legend>
                     <div className="space-y-2">
@@ -104,7 +104,7 @@ function Question({
                                             e.target.checked,
                                         )
                                     }
-                                    className="h-4 w-4 accent-frtRed"
+                                    className="h-4 w-4 accent-career-action"
                                 />
                                 {isEn ? option.labelEng : option.label}
                             </label>
@@ -114,7 +114,7 @@ function Question({
             ) : q.type === "checkbox" ? (
                 <label
                     htmlFor={id}
-                    className="flex items-start gap-3 text-sm text-gray-200"
+                    className="flex items-start gap-3 text-sm text-career-text"
                 >
                     <input
                         {...common}
@@ -122,7 +122,7 @@ function Question({
                         required={!!q.required}
                         checked={value === true}
                         onChange={(e) => onChange(e.target.checked)}
-                        className="mt-1 h-4 w-4 shrink-0 accent-frtRed"
+                        className="mt-1 h-4 w-4 shrink-0 accent-career-action"
                     />
                     <span>{labelContent}</span>
                 </label>
@@ -130,7 +130,7 @@ function Question({
                 <>
                     <label
                         htmlFor={id}
-                        className="mb-1.5 block text-sm font-medium text-gray-200"
+                        className="mb-1.5 block text-sm font-medium text-career-text"
                     >
                         {labelContent}
                     </label>
@@ -190,7 +190,7 @@ function Question({
                 </>
             )}
             {hint && (
-                <p id={`${id}-hint`} className="mt-1.5 text-sm text-gray-400">
+                <p id={`${id}-hint`} className="mt-1.5 text-sm text-career-muted">
                     {hint}
                 </p>
             )}
@@ -275,7 +275,7 @@ export default function ApplicationForm({
     if (status === "success")
         return (
             <div
-                className="rounded-lg bg-frtcardBG p-8 text-center"
+                className="rounded-lg bg-career-surface ring-1 ring-inset ring-career-border p-8 text-center"
                 role="status"
             >
                 <SuccessCheck />
@@ -295,9 +295,9 @@ export default function ApplicationForm({
         />
     )
     return (
-        <div lang={lang} className="rounded-lg bg-frtcardBG p-6 sm:p-8">
+        <div lang={lang} className="rounded-lg bg-career-surface ring-1 ring-inset ring-career-border p-6 sm:p-8">
             <h2 className="mb-2 text-2xl font-bold">{texts.heading}</h2>
-            <p className="mb-6 text-gray-300">{texts.lead}</p>
+            <p className="mb-6 text-career-muted">{texts.lead}</p>
             <form onSubmit={handleSubmit} noValidate>
                 <fieldset
                     disabled={status === "submitting"}
@@ -317,7 +317,7 @@ export default function ApplicationForm({
                             <Paperclip size={17} aria-hidden />
                             {isEn ? "CV (optional)" : "Önéletrajz (opcionális)"}
                         </label>
-                        <p id="cv-help" className="mb-3 text-sm text-gray-400">
+                        <p id="cv-help" className="mb-3 text-sm text-career-muted">
                             {isEn
                                 ? "One PDF file, up to 5 MiB. Only our administrators can access it."
                                 : "Egy PDF-fájl, legfeljebb 5 MiB. Csak az adminisztrátoraink férnek hozzá."}
@@ -329,7 +329,7 @@ export default function ApplicationForm({
                             type="file"
                             accept=".pdf,application/pdf"
                             aria-describedby="cv-help"
-                            className="block w-full min-w-0 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-black/50 file:px-4 file:py-2 file:text-white"
+                            className="block w-full min-w-0 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-career-accent-soft file:px-4 file:py-2 file:text-career-accent"
                             onChange={(event) => {
                                 const file = event.target.files?.[0] ?? null
                                 if (
@@ -357,7 +357,7 @@ export default function ApplicationForm({
                                     if (fileRef.current)
                                         fileRef.current.value = ""
                                 }}
-                                className="mt-2 inline-flex items-center gap-1 text-sm text-red-300"
+                                className="mt-2 inline-flex items-center gap-1 text-sm text-career-accent"
                             >
                                 <X size={16} aria-hidden />
                                 {isEn ? "Remove file" : "Fájl eltávolítása"}
@@ -369,7 +369,7 @@ export default function ApplicationForm({
                         .map(renderQuestion)}
                     {errorMessage && (
                         <p
-                            className="flex items-start gap-2 text-sm text-red-300"
+                            className="flex items-start gap-2 text-sm text-career-accent"
                             role="alert"
                         >
                             <AlertCircle
@@ -382,7 +382,7 @@ export default function ApplicationForm({
                     )}
                     <button
                         type="submit"
-                        className="inline-flex items-center gap-2 rounded-lg bg-frtRed px-6 py-3 font-bold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed"
+                        className="inline-flex items-center gap-2 rounded-lg bg-career-action px-6 py-3 font-bold text-career-on-action transition-colors hover:bg-career-action-hover disabled:cursor-not-allowed"
                         disabled={status === "submitting"}
                     >
                         {status === "submitting" && (

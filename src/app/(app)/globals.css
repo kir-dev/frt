@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./karrier/career-theme.css";
 @tailwind utilities;
 
 @plugin "@tailwindcss/typography";

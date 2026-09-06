@@ -33,13 +33,13 @@ export default function CareerSidebar({
             aria-label={isEn ? "On this page" : "Oldalon belüli navigáció"}
             className="sticky top-[104px] hidden max-h-[calc(100dvh-120px)] space-y-4 overflow-y-auto rounded-lg lg:block"
         >
-            <div className="rounded-lg bg-frtcardBG">
+            <div className="rounded-lg bg-career-surface ring-1 ring-inset ring-career-border">
                 <button
                     type="button"
                     aria-expanded={open}
                     aria-controls={listId}
                     onClick={() => setOpen(!open)}
-                    className="flex w-full items-center justify-between gap-3 rounded-lg p-5 text-left font-bold text-red-400 focus-visible:outline-2 focus-visible:outline-frtRed"
+                    className="flex w-full items-center justify-between gap-3 rounded-lg p-5 text-left font-bold text-career-accent focus-visible:outline-2 focus-visible:outline-career-accent"
                 >
                     {texts.groups}
                     <ChevronDown
@@ -62,7 +62,7 @@ export default function CareerSidebar({
                                 setOpen(false)
                                 onSelectGroup(group.id)
                             }}
-                            className="block w-full rounded px-2 py-2 text-left hover:text-red-400 focus-visible:outline-2 focus-visible:outline-frtRed"
+                            className="block w-full rounded px-2 py-2 text-left hover:text-career-accent focus-visible:outline-2 focus-visible:outline-career-accent"
                         >
                             {isEn ? group.groupNameEng : group.groupName}
                         </button>
@@ -78,18 +78,18 @@ export default function CareerSidebar({
                             document.getElementById("gyik"),
                         )
                     }}
-                    className="block rounded-lg bg-frtcardBG p-5 font-bold hover:text-red-400 focus-visible:outline-2 focus-visible:outline-frtRed"
+                    className="block rounded-lg bg-career-surface ring-1 ring-inset ring-career-border p-5 font-bold hover:text-career-accent focus-visible:outline-2 focus-visible:outline-career-accent"
                 >
                     {texts.faqTitle}
                 </a>
             )}
             {application.isOpen && (
-                <div className="rounded-lg bg-frtcardBG p-5 text-center">
+                <div className="rounded-lg bg-career-surface ring-1 ring-inset ring-career-border p-5 text-center">
                     <ApplyButton
                         label={texts.apply}
                         application={application}
                         onApply={onApply}
-                        className="w-full px-4 py-2 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                        className="w-full px-4 py-2 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-career-accent"
                     />
                 </div>
             )}

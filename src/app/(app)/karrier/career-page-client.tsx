@@ -52,7 +52,7 @@ export default function CareerPageClient({
     } = useCareerPage()
 
     return (
-        <div className="min-h-screen bg-black text-white">
+        <div className="career-page min-h-screen">
             <div className="container mx-auto max-w-7xl px-4 py-12">
                 <header>
                     <h1 className="mb-4 text-center text-4xl font-bold">
@@ -64,7 +64,7 @@ export default function CareerPageClient({
                             <RichText data={intro} />
                         </div>
                     ) : (
-                        <p className="mb-12 text-center text-lg text-gray-300">
+                        <p className="mb-12 text-center text-lg text-career-muted">
                             {texts.subtitle}
                         </p>
                     )}
@@ -97,7 +97,7 @@ export default function CareerPageClient({
                             className="mt-16 scroll-mt-32"
                         >
                             {!application.isOpen ? (
-                                <div className="rounded-lg bg-frtcardBG p-8 text-center">
+                                <div className="rounded-lg bg-career-surface ring-1 ring-inset ring-career-border p-8 text-center">
                                     <p className="text-lg">
                                         {application.closedText}
                                     </p>
@@ -113,7 +113,7 @@ export default function CareerPageClient({
                                 />
                             ) : (
                                 application.googleFormUrl && (
-                                    <div className="rounded-lg bg-frtcardBG p-8 text-center">
+                                    <div className="rounded-lg bg-career-surface ring-1 ring-inset ring-career-border p-8 text-center">
                                         <p className="mb-4 text-xl">
                                             {texts.interested}
                                         </p>

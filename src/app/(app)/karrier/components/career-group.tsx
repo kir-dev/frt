@@ -42,13 +42,13 @@ export default function CareerGroup({
 
     return (
         <section tabIndex={-1} id={`group-${group.id}`} className="scroll-mt-32">
-            <div className="overflow-hidden rounded-lg bg-frtcardBG">
+            <div className="overflow-hidden rounded-lg bg-career-surface ring-1 ring-inset ring-career-border">
                 <button
                     type="button"
                     onClick={onToggle}
                     aria-expanded={isOpen}
                     aria-controls={panelId}
-                    className="flex w-full flex-col items-stretch gap-0 text-left transition-colors hover:bg-red-950 sm:flex-row sm:items-stretch"
+                    className="flex w-full flex-col items-stretch gap-0 text-left transition-colors hover:bg-career-hover sm:flex-row sm:items-stretch"
                 >
                     {/* Kép nélküli csoportnál nem hagyunk üres helyet — a szöveg tölti ki a sávot.
                         A self-stretch miatt a kép a sáv teljes magasságát kitölti, így hosszabb
@@ -71,10 +71,10 @@ export default function CareerGroup({
                             {/* A sávban csak rövid, szöveges előnézet fér el. A CMS-ben a leírás
                                 beágyazott képet is tartalmazhat — azt itt elrejtjük, különben
                                 szétfeszítené a sávot. */}
-                            <div className="rich-text-content line-clamp-3 text-sm break-words text-gray-300 [&_img]:hidden">
+                            <div className="rich-text-content line-clamp-3 text-sm break-words text-career-muted [&_img]:hidden">
                                 <RichText data={isEn ? group.descriptionEng : group.description} />
                             </div>
-                            <p className="mt-3 text-xs uppercase tracking-wide text-gray-400">
+                            <p className="mt-3 text-xs uppercase tracking-wide text-career-muted">
                                 {openPositions.length > 0
                                     ? openPositionsLabel(openPositions.length, isEn)
                                     : texts.noOpenPositionsShort}
@@ -83,13 +83,13 @@ export default function CareerGroup({
                         <ChevronDown
                             size={28}
                             aria-hidden="true"
-                            className={`shrink-0 text-frtRed transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                            className={`shrink-0 text-career-accent transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
                         />
                     </div>
                 </button>
 
                 {isOpen && (
-                    <div id={panelId} className="border-t border-frtRed/30 px-5 py-5">
+                    <div id={panelId} className="border-t border-career-border px-5 py-5">
                         {openPositions.length > 0 ? (
                             <ul className="space-y-3">
                                 {openPositions.map((position, index) => {
@@ -113,7 +113,7 @@ export default function CareerGroup({
                                 })}
                             </ul>
                         ) : (
-                            <p className="text-gray-400">{texts.noOpenPositions}</p>
+                            <p className="text-career-muted">{texts.noOpenPositions}</p>
                         )}
                     </div>
                 )}

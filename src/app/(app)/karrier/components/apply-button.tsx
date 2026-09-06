@@ -11,7 +11,7 @@ interface ApplyButtonProps {
     className?: string
 }
 
-const BASE_CLASS = "inline-block rounded-lg bg-frtRed font-bold !text-white transition-colors hover:bg-red-700"
+const BASE_CLASS = "inline-block rounded-lg bg-career-action font-bold text-career-on-action transition-colors hover:bg-career-action-hover"
 
 /**
  * A "Jelentkezz" gomb a beállított jelentkezési mód szerint gomb vagy külső

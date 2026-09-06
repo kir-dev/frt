@@ -7,7 +7,7 @@ export default function SuccessCheck() {
             width={48}
             height={48}
             fill="none"
-            className={`${styles.icon} mx-auto mb-4 text-frtRed`}
+            className={`${styles.icon} mx-auto mb-4 text-career-accent`}
             aria-hidden="true"
             focusable="false"
         >

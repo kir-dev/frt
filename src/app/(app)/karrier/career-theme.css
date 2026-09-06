@@ -1,0 +1,71 @@
+/* Career colors are independent of the legacy global utility overrides. */
+@theme inline {
+  --color-career-page: var(--career-page);
+  --color-career-surface: var(--career-surface);
+  --color-career-inset: var(--career-inset);
+  --color-career-hover: var(--career-hover);
+  --color-career-text: var(--career-text);
+  --color-career-muted: var(--career-muted);
+  --color-career-accent: var(--career-accent);
+  --color-career-accent-soft: var(--career-accent-soft);
+  --color-career-border: var(--career-border);
+  --color-career-input-border: var(--career-input-border);
+  --color-career-field: var(--career-field);
+  --color-career-action: var(--career-action);
+  --color-career-action-hover: var(--career-action-hover);
+  --color-career-on-action: var(--career-on-action);
+}
+
+.career-page {
+  --career-page: #000000;
+  --career-surface: #230505;
+  --career-inset: #140404;
+  --career-hover: #3b1015;
+  --career-text: #fafafa;
+  --career-muted: #c7babb;
+  --career-accent: #ff8290;
+  --career-accent-soft: #421820;
+  --career-border: #663b40;
+  --career-input-border: #927478;
+  --career-field: #080808;
+  --career-action: #d51028;
+  --career-action-hover: #b20e21;
+  --career-on-action: #ffffff;
+  background-color: var(--career-page);
+  color: var(--career-text);
+}
+
+html.light .career-page {
+  --career-page: #ffffff;
+  --career-surface: #f7f7f8;
+  --career-inset: #ffffff;
+  --career-hover: #f0e7e9;
+  --career-text: #211c22;
+  --career-muted: #59515a;
+  --career-accent: #b51025;
+  --career-accent-soft: #f9e4e7;
+  --career-border: #dad6d8;
+  --career-input-border: #82777b;
+  --career-field: #ffffff;
+}
+
+/* CMS paragraphs and headings follow their surrounding text hierarchy. */
+.career-page .rich-text-content :is(p, h1, h2, h3, h4, h5, h6, li) {
+  color: inherit;
+}
+
+.career-page .rich-text-content a {
+  color: var(--career-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.career-page :is(button, a, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--career-accent);
+  outline-offset: 3px;
+}
+
+/* Inset outlines stay visible inside clipped accordion cards. */
+.career-page button[aria-expanded]:focus-visible {
+  outline-offset: -3px;
+}
