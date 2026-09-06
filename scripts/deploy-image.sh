@@ -144,6 +144,16 @@ if [[ "$backup_database" == "true" ]]; then
     rm -f "$backup_tmp"
     exit 1
   fi
+  cv_backup_path="${backup_path%.dump}-cvs.tar.gz"
+  echo "Creating private CV backup at $cv_backup_path"
+  if compose_with "$candidate_env" run --rm -T --no-deps --entrypoint tar app \
+    -C /app/private -czf - cvs > "$cv_backup_path.tmp"; then
+    mv "$cv_backup_path.tmp" "$cv_backup_path"
+    chmod 600 "$backup_path" "$cv_backup_path"
+  else
+    rm -f "$cv_backup_path.tmp"
+    exit 1
+  fi
 fi
 
 echo "Running Payload migrations with the candidate image"

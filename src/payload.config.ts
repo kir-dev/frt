@@ -9,6 +9,7 @@ import { buildConfig } from "payload";
 import sharp from "sharp";
 import { fileURLToPath } from "url";
 
+import { ApplicationCVs } from "./collections/ApplicationCVs";
 import { Articles } from "./collections/Articles";
 import Association from "./collections/Association";
 import { Cars } from "./collections/Cars";
@@ -43,6 +44,7 @@ const collections = [
       Sponsors,
       Recruitment,
       JobApplications,
+      ApplicationCVs,
       Groups,
       Association,
       SupportUs,

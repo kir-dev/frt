@@ -14,6 +14,9 @@ const eslintConfig = [
     ignores: [
       ".next/**",
       "coverage/**",
+      ".local-verification/**",
+      ".career-tests-*/**",
+      "private/**",
       "next-env.d.ts",
       "node_modules/**",
       "src/payload-types.ts",

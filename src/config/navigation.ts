@@ -42,12 +42,6 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   {
-    name: "Karrier",
-    nameEn: "Careers",
-    href: "/karrier",
-    dropdown: null,
-  },
-  {
     name: "Rólunk",
     nameEn: "About us",
     href: "",
@@ -62,5 +56,11 @@ export const NAV_ITEMS: NavItem[] = [
       { name: "Egyesület", nameEn: "Association", href: "/egyesulet" },
       { name: "Galéria", nameEn: "Gallery", href: "/galeria" },
     ],
+  },
+  {
+    name: "Karrier",
+    nameEn: "Careers",
+    href: "/karrier",
+    dropdown: null,
   },
 ];

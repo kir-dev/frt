@@ -1,0 +1,43 @@
+.icon {
+    display: block;
+}
+
+.ring,
+.check {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .icon {
+        animation: appear 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .ring {
+        animation: draw 360ms ease-out both;
+    }
+
+    .check {
+        animation: draw 260ms 180ms ease-out both;
+    }
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: scale(0.88);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes draw {
+    from {
+        stroke-dashoffset: 1;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}

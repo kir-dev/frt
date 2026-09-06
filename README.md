@@ -150,3 +150,36 @@ See [docs/deployment.md](docs/deployment.md) for environment setup, required sec
 - Theming and reusable UI components
 
 If you have questions or want to contribute, feel free to open an issue or PR.
+
+### Szerkeszthető űrlap és önéletrajzok
+
+A **Karrier oldal → Űrlap kérdései** fülön szerkeszthetők a magyar/angol feliratok,
+segédszövegek, sorrend, kötelezőség és láthatóság. Új kérdésként rövid vagy hosszú
+szöveg, egy- vagy többválasztós mező és jelölőnégyzet adható hozzá. A név, e-mail
+és hozzájárulás kötelező; a csoport és pozíció mező megőrzi az automatikus kitöltést.
+A hozzájárulás mindig az űrlap végén jelenik meg. A kérdés- és opcióazonosítók
+állandók. A jelentkezések a beküldéskori kérdéseket, opciókat és válaszokat is tárolják.
+Ha kitöltés közben módosul az űrlap, a beküldés frissíti a kérdéseket és újraellenőrzést
+kér, miközben a beírt válaszok és a kiválasztott CV megmaradnak.
+
+Az opcionális CV egy érvényes, nem titkosított PDF lehet, maximum **5 MiB**.
+A fájl a privát `application-cvs` kollekcióba kerül, csak bejelentkezett admin
+olvashatja vagy töltheti le. A jelentkezés törlése a hozzá tartozó fájlt is törli.
+A nyilvános médiatárba nem kerül önéletrajz. Helyi tárolási útvonal:
+`private/cvs`; a `CV_STORAGE_DIR` változóval felülírható. Dockerben külön,
+környezetenként elkülönített `applicant_cvs` kötet tárolja a fájlokat.
+
+Állítsd be a **`NEXT_PUBLIC_SERVER_URL`** változót az adott környezet nyilvános
+HTTPS címére (helyben például `http://localhost:3107`). A Google-táblázat a
+korábbi tíz oszlop után a **További válaszok** és **Jelentkezés az adminban**
+oszlopokat kapja. A második linkről adminbelépés után tölthető le a CV.
+Ha a K–L oszlopban már saját adatok vannak, az export hibát jelez, és nem írja
+felül őket: előbb helyezd át ezeket, majd használd az újraszinkronizálás gombot.
+A jelentkezés és CV táblázathiba esetén is megmarad.
+
+A **Kapcsolat** bejegyzésben szerkeszthető a kiállítási gomb HTTPS linkje és
+magyar/angol felirata. Üres linknél a gomb nem jelenik meg. Ezeket a beállításokat
+csak bejelentkezett admin módosíthatja.
+
+Ellenőrzések: `yarn test:career`, `yarn tsc --noEmit`, `yarn eslint <érintett fájlok>`.
+Adatbázis-frissítés: `yarn payload:migrate`; generált típusok: `yarn payload:generate-types`.

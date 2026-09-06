@@ -182,3 +182,34 @@ cd /srv/frt-preview
 ```
 
 Ez sem végez helyi Docker buildet.
+
+## Privát önéletrajzok mentése és helyreállítása
+
+A Compose `applicant_cvs` kötete az `/app/private/cvs` könyvtárra csatlakozik.
+A staging és production külön Compose projektnevét továbbra is kötelező használni.
+A helyi CV-ket és tesztadatokat a Docker build és a Git figyelmen kívül hagyja.
+A `NEXT_PUBLIC_SERVER_URL` az adott környezet publikus címe legyen, hogy a
+Google-táblázatban szereplő adminhivatkozások teljes URL-ek legyenek.
+
+A production telepítési script az adatbázismentés mellé `postgres-<id>-cvs.tar.gz`
+fájlt is készít. Sikertelen fájlmentés esetén a migráció nem indul el. Mindkét
+mentés személyes adatokat tartalmazhat; a script 600-as fájljogosultságot állít be.
+Az adatbázis és a CV-archívum együtt kezelendő. Konzisztens kézi mentéshez és
+helyreállításhoz állítsd le az alkalmazás írásait/alkalmazáskonténerét.
+
+Helyreállítás próbája kizárólag elkülönített környezetben:
+
+1. Az adatbázis dumpját állítsd vissza egy külön PostgreSQL-adatbázisba.
+2. Az azonos időpontú archívumot bontsd ki az elkülönített privát kötetbe
+   (`tar -xzf <archívum> -C <privát-könyvtár>`; az archívumban `cvs/` szerepel).
+3. Indítsd el az alkalmazást ezzel az adatbázissal és `CV_STORAGE_DIR` útvonallal.
+4. Adminbelépéssel tölts le egy önéletrajzot, és hasonlítsd össze az eredeti
+   SHA-256 lenyomatával. Belépés nélkül ugyanez a URL legyen elutasítva.
+5. Újraindítás után ismételd meg a letöltést. Az eredeti környezetet a próba nem módosíthatja.
+
+A korábbi migrációs snapshotok már tartalmazták a Kapcsolat-táblát, de az
+üres adatbázist felépítő migrációs lánc nem. A `contact_baseline` migráció ezt
+`IF NOT EXISTS` műveletekkel pótolja, meglévő kapcsolati adatok megőrzésével.
+Visszavonása szándékosan nem törli a táblát. A következő migráció az új kérdéseket,
+CV-kapcsolatot és kiállítási gombmezőket adja hozzá; éles adatokat tartalmazó
+adatbázison visszavonás helyett előre javító migrációt használj.

@@ -50,6 +50,9 @@ jobs:
       - name: Run TypeScript checks
         run: yarn tsc --noEmit
 
+      - name: Test career applications
+        run: yarn test:career
+
   build:
     name: Build and publish image
     needs: quality

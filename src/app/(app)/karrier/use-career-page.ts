@@ -6,14 +6,15 @@ import type { SelectedPosition } from "./types"
 const FALLBACK_NAVBAR_HEIGHT = 80
 const SCROLL_GAP = 20
 
-function scrollIntoViewBelowNavbar(element: HTMLElement | null) {
+export function scrollIntoViewBelowNavbar(element: HTMLElement | null) {
     if (!element) return
+    element.focus({ preventScroll: true })
 
     const navbar = document.querySelector("nav")
     const navbarHeight = navbar ? navbar.offsetHeight : FALLBACK_NAVBAR_HEIGHT
     const top = element.getBoundingClientRect().top + window.scrollY - navbarHeight - SCROLL_GAP
 
-    window.scrollTo({ top, behavior: "smooth" })
+    window.scrollTo({ top, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" })
 }
 
 function toggleInSet<T>(set: Set<T>, value: T) {

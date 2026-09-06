@@ -1,7 +1,10 @@
 "use client"
 
+import { ChevronDown } from "lucide-react"
+import { useId, useState } from "react"
 import type { CareerTexts } from "../translations"
 import type { ApplicationConfig, CareerGroupData } from "../types"
+import { scrollIntoViewBelowNavbar } from "../use-career-page"
 import ApplyButton from "./apply-button"
 
 interface CareerSidebarProps {
@@ -11,9 +14,9 @@ interface CareerSidebarProps {
     application: ApplicationConfig
     onSelectGroup: (groupId: number) => void
     onApply: () => void
+    hasFaqs: boolean
 }
 
-/** Ragadós oldalsáv: csoportlista és a jelentkezés gomb. Csak nagy képernyőn. */
 export default function CareerSidebar({
     groups,
     isEn,
@@ -21,36 +24,75 @@ export default function CareerSidebar({
     application,
     onSelectGroup,
     onApply,
+    hasFaqs,
 }: CareerSidebarProps) {
+    const [open, setOpen] = useState(false)
+    const listId = useId()
     return (
-        <div className="sticky top-[200px] hidden self-start lg:block">
-            <div className="mb-4 w-64 rounded-lg bg-frtcardBG p-5 backdrop-blur-sm">
-                <h3 className="mb-4 text-base font-bold text-red-400">{texts.groups}</h3>
-                <nav className="space-y-3">
+        <aside
+            aria-label={isEn ? "On this page" : "Oldalon belüli navigáció"}
+            className="sticky top-[104px] hidden max-h-[calc(100dvh-120px)] space-y-4 overflow-y-auto rounded-lg lg:block"
+        >
+            <div className="rounded-lg bg-career-surface ring-1 ring-inset ring-career-border">
+                <button
+                    type="button"
+                    aria-expanded={open}
+                    aria-controls={listId}
+                    onClick={() => setOpen(!open)}
+                    className="flex w-full items-center justify-between gap-3 rounded-lg p-5 text-left font-bold text-career-accent focus-visible:outline-2 focus-visible:outline-career-accent"
+                >
+                    {texts.groups}
+                    <ChevronDown
+                        size={20}
+                        aria-hidden
+                        className={`motion-safe:transition-transform ${open ? "rotate-180" : ""}`}
+                    />
+                </button>
+                <nav
+                    id={listId}
+                    hidden={!open}
+                    aria-label={texts.groups}
+                    className="space-y-1 px-3 pb-3"
+                >
                     {groups.map((group) => (
                         <button
                             key={group.id}
                             type="button"
-                            onClick={() => onSelectGroup(group.id)}
-                            className="block w-full text-left transition-colors hover:text-red-400"
+                            onClick={() => {
+                                setOpen(false)
+                                onSelectGroup(group.id)
+                            }}
+                            className="block w-full rounded px-2 py-2 text-left hover:text-career-accent focus-visible:outline-2 focus-visible:outline-career-accent"
                         >
                             {isEn ? group.groupNameEng : group.groupName}
                         </button>
                     ))}
                 </nav>
             </div>
-
+            {hasFaqs && (
+                <a
+                    href="#gyik"
+                    onClick={(event) => {
+                        event.preventDefault()
+                        scrollIntoViewBelowNavbar(
+                            document.getElementById("gyik"),
+                        )
+                    }}
+                    className="block rounded-lg bg-career-surface ring-1 ring-inset ring-career-border p-5 font-bold hover:text-career-accent focus-visible:outline-2 focus-visible:outline-career-accent"
+                >
+                    {texts.faqTitle}
+                </a>
+            )}
             {application.isOpen && (
-                <div className="rounded-lg bg-frtcardBG p-5 text-center backdrop-blur-sm">
-                    <p className="mb-2 text-sm">{texts.interested}</p>
+                <div className="rounded-lg bg-career-surface ring-1 ring-inset ring-career-border p-5 text-center">
                     <ApplyButton
                         label={texts.apply}
                         application={application}
                         onApply={onApply}
-                        className="w-full px-4 py-2 text-base"
+                        className="w-full px-4 py-2 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-career-accent"
                     />
                 </div>
             )}
-        </div>
+        </aside>
     )
 }
