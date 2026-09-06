@@ -36,7 +36,7 @@ jobs:
         run: yarn eslint .
 
       - name: Run TypeScript checks
-        run: yarn tsc --noEmit
+        run: yarn next typegen && yarn tsc --noEmit
 
       - name: Test career applications
         run: yarn test:career

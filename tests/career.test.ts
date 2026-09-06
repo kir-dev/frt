@@ -133,7 +133,7 @@ test("PDF parser accepts a real document and rejects renamed text and malformed 
     assert.ok(
         (
             await validateCV(
-                new File([bytes], "cv.pdf", { type: "application/pdf" }),
+                new File([new Uint8Array(bytes)], "cv.pdf", { type: "application/pdf" }),
             )
         ).length,
     )
