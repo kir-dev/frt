@@ -78,6 +78,7 @@ export interface Config {
     sponsors: Sponsor;
     recruitment: Recruitment;
     'job-applications': JobApplication;
+    'application-cvs': ApplicationCv;
     groups: Group;
     association: Association;
     'support-us': SupportUs;
@@ -101,6 +102,7 @@ export interface Config {
     sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     recruitment: RecruitmentSelect<false> | RecruitmentSelect<true>;
     'job-applications': JobApplicationsSelect<false> | JobApplicationsSelect<true>;
+    'application-cvs': ApplicationCvsSelect<false> | ApplicationCvsSelect<true>;
     groups: GroupsSelect<false> | GroupsSelect<true>;
     association: AssociationSelect<false> | AssociationSelect<true>;
     'support-us': SupportUsSelect<false> | SupportUsSelect<true>;
@@ -695,6 +697,19 @@ export interface Recruitment {
  */
 export interface JobApplication {
   id: number;
+  cv?: (number | null) | ApplicationCv;
+  formVersion?: string | null;
+  language?: ('hu' | 'en') | null;
+  answerSummary?: string | null;
+  answerSnapshot?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   name: string;
   email: string;
   phone?: string | null;
@@ -709,6 +724,24 @@ export interface JobApplication {
   sheetSyncError?: string | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "application-cvs".
+ */
+export interface ApplicationCv {
+  id: number;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * Az egyesület szerkeszthető tartalmai
@@ -806,6 +839,12 @@ export interface SupportUs {
  */
 export interface Contact {
   id: number;
+  /**
+   * Üresen hagyva a gomb nem jelenik meg.
+   */
+  exhibitionUrl?: string | null;
+  exhibitionLabel?: string | null;
+  exhibitionLabelEng?: string | null;
   title: string;
   title_en: string;
   content: {
@@ -951,6 +990,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'job-applications';
         value: number | JobApplication;
+      } | null)
+    | ({
+        relationTo: 'application-cvs';
+        value: number | ApplicationCv;
       } | null)
     | ({
         relationTo: 'groups';
@@ -1226,6 +1269,11 @@ export interface RecruitmentSelect<T extends boolean = true> {
  * via the `definition` "job-applications_select".
  */
 export interface JobApplicationsSelect<T extends boolean = true> {
+  cv?: T;
+  formVersion?: T;
+  language?: T;
+  answerSummary?: T;
+  answerSnapshot?: T;
   name?: T;
   email?: T;
   phone?: T;
@@ -1240,6 +1288,23 @@ export interface JobApplicationsSelect<T extends boolean = true> {
   sheetSyncError?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "application-cvs_select".
+ */
+export interface ApplicationCvsSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1285,6 +1350,9 @@ export interface SupportUsSelect<T extends boolean = true> {
  * via the `definition` "contact_select".
  */
 export interface ContactSelect<T extends boolean = true> {
+  exhibitionUrl?: T;
+  exhibitionLabel?: T;
+  exhibitionLabelEng?: T;
   title?: T;
   title_en?: T;
   content?: T;
@@ -1370,6 +1438,30 @@ export interface SiteSetting {
 export interface CareerSetting {
   id: number;
   /**
+   * Sorrend: húzd a kérdéseket a helyükre. A hozzájárulás mindig a CV után jelenik meg. A név, e-mail és hozzájárulás kötelező. A csoport és pozíció az automatikus kitöltés miatt nem törölhető.
+   */
+  formQuestions?:
+    | {
+        key: string;
+        label: string;
+        labelEng: string;
+        hint?: string | null;
+        hintEng?: string | null;
+        type: 'text' | 'textarea' | 'select' | 'multiselect' | 'checkbox';
+        required?: boolean | null;
+        hidden?: boolean | null;
+        options?:
+          | {
+              key: string;
+              label: string;
+              labelEng: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
    * Az oldal tetején, a csoportok listája fölött jelenik meg.
    */
   intro?: {
@@ -1403,7 +1495,7 @@ export interface CareerSetting {
     [k: string]: unknown;
   } | null;
   /**
-   * Beépített űrlap esetén a jelentkezések a Payload adminba érkeznek (és a Google táblázatba, ha be van állítva a webhook).
+   * Beépített űrlap esetén a jelentkezések a Payload adminba érkeznek (és a Google táblázatba, ha be van állítva a táblázat).
    */
   applicationMode?: ('builtIn' | 'googleForm') | null;
   /**
@@ -1418,7 +1510,7 @@ export interface CareerSetting {
   applicationsClosedText?: string | null;
   applicationsClosedTextEng?: string | null;
   /**
-   * A kérdések ebben a sorrendben jelennek meg a Karrier oldal alján. Üresen hagyva a GYIK szekció nem jelenik meg.
+   * A kérdések ebben a sorrendben jelennek meg a csoportok után, a jelentkezés előtt. Üresen hagyva a GYIK szekció nem jelenik meg.
    */
   faqs?:
     | {
@@ -1476,6 +1568,27 @@ export interface SiteSettingsSelect<T extends boolean = true> {
  * via the `definition` "career-settings_select".
  */
 export interface CareerSettingsSelect<T extends boolean = true> {
+  formQuestions?:
+    | T
+    | {
+        key?: T;
+        label?: T;
+        labelEng?: T;
+        hint?: T;
+        hintEng?: T;
+        type?: T;
+        required?: T;
+        hidden?: T;
+        options?:
+          | T
+          | {
+              key?: T;
+              label?: T;
+              labelEng?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   intro?: T;
   introEng?: T;
   applicationMode?: T;

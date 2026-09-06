@@ -29,6 +29,8 @@ export const SHEET_COLUMNS = [
   "Csoport",
   "Pozíció",
   "Motiváció",
+  "További válaszok",
+  "Jelentkezés az adminban",
 ] as const;
 
 export type ApplicationRow = {
@@ -42,6 +44,8 @@ export type ApplicationRow = {
   group: string;
   position: string;
   motivation: string;
+  additionalAnswers: string;
+  adminUrl: string;
 };
 
 export type SheetResult = { status: "ok" } | { status: "skipped"; reason: string } | { status: "error"; message: string };
@@ -156,17 +160,19 @@ export async function checkSpreadsheetAccess(url: string): Promise<SheetResult> 
   }
 }
 
-/** Ha a táblázat első sora üres, kiírjuk a fejlécet. */
+/** Extend only a known legacy header; never overwrite an editor's custom columns. */
+export function headerUpdate(existing: string[]): { range: string; values: string[] } | null {
+  if (existing.every(value => !value)) return { range: "A1:L1", values: [...SHEET_COLUMNS] };
+  if (SHEET_COLUMNS.slice(0, 10).some((label, i) => existing[i] !== label)) throw new Error("A táblázat első tíz oszlopa eltér a jelentkezési fejléctől. A fejlécet nem írtuk felül.");
+  if (SHEET_COLUMNS.slice(10).some((label, i) => existing[i + 10] && existing[i + 10] !== label)) throw new Error("A K–L oszlopok foglaltak. Kérjük, helyezd át őket a két új jelentkezési oszlop számára.");
+  return existing[10] && existing[11] ? null : { range: "K1:L1", values: SHEET_COLUMNS.slice(10) };
+}
 async function ensureHeaderRow(spreadsheetId: string) {
-  const range = `A1:${String.fromCharCode(64 + SHEET_COLUMNS.length)}1`;
-  const existing = await sheetsRequest(`/${spreadsheetId}/values/${range}`);
-
-  if (!existing.values || existing.values.length === 0) {
-    await sheetsRequest(`/${spreadsheetId}/values/${range}?valueInputOption=RAW`, {
-      method: "PUT",
-      body: JSON.stringify({ values: [SHEET_COLUMNS] }),
-    });
-  }
+  const existing = await sheetsRequest(`/${spreadsheetId}/values/A1:L1`);
+  const update = headerUpdate(existing.values?.[0] ?? []);
+  if (update) await sheetsRequest(`/${spreadsheetId}/values/${update.range}?valueInputOption=RAW`, {
+    method: "PUT", body: JSON.stringify({ values: [update.values] }),
+  });
 }
 
 /**
@@ -205,6 +211,8 @@ export async function appendApplicationRow(spreadsheetUrl: string | null | undef
             row.group,
             row.position,
             row.motivation,
+            row.additionalAnswers,
+            row.adminUrl,
           ],
         ],
       }),

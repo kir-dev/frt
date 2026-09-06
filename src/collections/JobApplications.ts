@@ -1,8 +1,17 @@
 import { syncApplicationToSheet } from "@/lib/karrier-sheet-sync";
-import type { CollectionAfterChangeHook, CollectionConfig, PayloadHandler } from "payload";
+import type {
+  CollectionAfterChangeHook,
+  CollectionConfig,
+  PayloadHandler,
+} from "payload";
 
 /** Új jelentkezés automatikus kiírása a beállított Google táblázatba. */
-const syncOnCreate: CollectionAfterChangeHook = async ({ doc, operation, req, context }) => {
+const syncOnCreate: CollectionAfterChangeHook = async ({
+  doc,
+  operation,
+  req,
+  context,
+}) => {
   if (operation !== "create" || context?.skipSheetSync) {
     return doc;
   }
@@ -33,7 +42,9 @@ const resyncHandler: PayloadHandler = async (req) => {
 
   const result = await syncApplicationToSheet(req.payload, doc);
 
-  return Response.json(result, { status: result.status === "error" ? 502 : 200 });
+  return Response.json(result, {
+    status: result.status === "error" ? 502 : 200,
+  });
 };
 
 export const JobApplications: CollectionConfig = {
@@ -56,6 +67,38 @@ export const JobApplications: CollectionConfig = {
     delete: ({ req: { user } }) => !!user,
   },
   fields: [
+    {
+      name: "cv",
+      type: "upload",
+      relationTo: "application-cvs",
+      label: "Önéletrajz (PDF)",
+      admin: { readOnly: true },
+    },
+    {
+      name: "formVersion",
+      type: "text",
+      label: "Űrlap verziója",
+      admin: { readOnly: true },
+    },
+    {
+      name: "language",
+      type: "select",
+      options: ["hu", "en"],
+      label: "Beküldés nyelve",
+      admin: { readOnly: true },
+    },
+    {
+      name: "answerSummary",
+      type: "textarea",
+      label: "Beküldött válaszok",
+      admin: { readOnly: true },
+    },
+    {
+      name: "answerSnapshot",
+      type: "json",
+      label: "Kérdések és válaszok a beküldéskor",
+      admin: { readOnly: true },
+    },
     {
       name: "name",
       type: "text",
@@ -165,5 +208,17 @@ export const JobApplications: CollectionConfig = {
   ],
   hooks: {
     afterChange: [syncOnCreate],
+    afterDelete: [
+      async ({ doc, req }) => {
+        const id = typeof doc.cv === "object" ? doc.cv?.id : doc.cv;
+        if (id)
+          await req.payload.delete({
+            collection: "application-cvs",
+            id,
+            overrideAccess: true,
+            req,
+          });
+      },
+    ],
   },
 };
