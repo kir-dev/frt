@@ -25,6 +25,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - frt:/app/media
+      - applicant_cvs:/app/private/cvs
       - ./public/videos:/app/public/videos
     depends_on:
       postgres:
@@ -47,6 +48,7 @@ services:
 volumes:
   postgres:
   frt:
+  applicant_cvs:
 
 networks:
   postgres:

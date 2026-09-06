@@ -42,3 +42,6 @@ next-env.d.ts
 /.idea/
 /yarn.lock
 public/videos
+# Private applicant documents and local verification artifacts
+/private/
+/.local-verification/

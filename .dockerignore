@@ -11,3 +11,8 @@ public/videos/*
 
 # Local environment files may contain deployment secrets.
 .env*
+
+# Never package applicant documents or local test credentials
+private
+.local-verification
+.career-tests-*
