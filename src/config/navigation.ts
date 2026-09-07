@@ -58,8 +58,8 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   {
-    name: "Karrier",
-    nameEn: "Careers",
+    name: "Csatlakozz csapatunkhoz!",
+    nameEn: "Join our team!",
     href: "/karrier",
     dropdown: null,
   },
