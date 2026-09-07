@@ -6,12 +6,15 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --webpack",
+    "build:career-transfer": "node scripts/build-career-transfer.mjs",
+    "career:transfer": "node scripts/career-transfer-server.mjs",
     "start": "next start",
     "lint": "eslint .",
     "payload:migrate": "node --import ./css-loader-register.mjs ./node_modules/.bin/payload migrate",
     "payload:migrate-status": "node --import ./css-loader-register.mjs ./node_modules/.bin/payload migrate:status",
     "payload:generate-types": "node --import ./css-loader-register.mjs ./node_modules/.bin/payload generate:types",
-    "test:career": "node scripts/test-career.mjs"
+    "test:career": "node scripts/test-career.mjs",
+    "test:career-transfer": "node --test tests/career-transfer.test.mjs tests/career-transfer-server.test.mjs"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.19",

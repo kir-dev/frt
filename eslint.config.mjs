@@ -8,6 +8,7 @@ const eslintConfig = [
       "coverage/**",
       ".local-verification/**",
       ".career-tests-*/**",
+      "scripts/.career-transfer/**",
       "private/**",
       "next-env.d.ts",
       "node_modules/**",

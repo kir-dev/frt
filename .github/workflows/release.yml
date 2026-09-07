@@ -53,6 +53,9 @@ jobs:
       - name: Test career applications
         run: yarn test:career
 
+      - name: Test career content transfer
+        run: yarn test:career-transfer
+
   build:
     name: Build and publish image
     needs: quality

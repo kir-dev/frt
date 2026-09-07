@@ -44,4 +44,6 @@ next-env.d.ts
 public/videos
 # Private applicant documents and local verification artifacts
 /private/
+/media
 /.local-verification/
+/scripts/.career-transfer/
