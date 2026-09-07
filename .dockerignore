@@ -16,3 +16,5 @@ public/videos/*
 private
 .local-verification
 .career-tests-*
+media
+scripts/.career-transfer
