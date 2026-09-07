@@ -5,34 +5,46 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package.json yarn.lock ./
-RUN yarn --frozen-lockfile
+RUN --mount=type=cache,target=/usr/local/share/.cache/yarn \
+    NODE_OPTIONS=--dns-result-order=ipv4first \
+    yarn --frozen-lockfile \
+      --network-timeout 600000 \
+      --network-concurrency 4
 
-FROM base AS builder
+FROM base AS source
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
+RUN yarn run build:career-transfer
+
+FROM source AS builder
 RUN yarn run build
 
-FROM base AS runner
+FROM base AS career-transfer-runner
 WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-COPY --from=builder /app/public ./public
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=source /app/src ./src
+COPY --from=source /app/payload.config.ts ./payload.config.ts
+COPY --from=source /app/tsconfig.json ./tsconfig.json
+COPY --from=source /app/css-loader-register.mjs ./css-loader-register.mjs
+COPY --from=source /app/css-loader-hooks.mjs ./css-loader-hooks.mjs
+COPY --from=source /app/package.json ./package.json
+COPY --from=source /app/scripts/career-transfer-server.mjs ./scripts/career-transfer-server.mjs
+COPY --from=source /app/scripts/.career-transfer ./scripts/.career-transfer
 
+CMD ["node", "scripts/career-transfer-server.mjs"]
+
+FROM career-transfer-runner AS runner
+COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=builder /app/src ./src
-COPY --from=builder /app/payload.config.ts ./payload.config.ts
-COPY --from=builder /app/tsconfig.json ./tsconfig.json
-COPY --from=builder /app/css-loader-register.mjs ./css-loader-register.mjs
-COPY --from=builder /app/css-loader-hooks.mjs ./css-loader-hooks.mjs
-COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 3000
 

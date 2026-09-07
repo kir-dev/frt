@@ -1,16 +1,30 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript";
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    ignores: [
+      ".next/**",
+      "coverage/**",
+      ".local-verification/**",
+      ".career-tests-*/**",
+      "scripts/.career-transfer/**",
+      "private/**",
+      "next-env.d.ts",
+      "node_modules/**",
+      "src/payload-types.ts",
+    ],
+  },
+  ...nextVitals,
+  ...nextTypescript,
+  {
+    // New React Compiler diagnostics stay visible without making this security
+    // upgrade depend on unrelated component rewrites. Compiler is not enabled.
+    rules: {
+      "react-hooks/set-state-in-effect": "warn",
+      "react-hooks/immutability": "warn",
+    },
+  },
 ];
 
 export default eslintConfig;

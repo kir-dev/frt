@@ -50,12 +50,12 @@ export default async function ContactPage (props: { searchParams?: Promise<Recor
                         {lang === 'en' ? 'Open Email' : 'Email megnyitása'}
                     </a>
                     
-                    <a className="inline-block bg-gray-800 hover:bg-gray-700 !text-white font-bold py-2 px-6 rounded-lg transition-colors text-base border border-gray-700"
-                       href='https://forms.gle/n1WgGtivpW3hnPA76'
+                    {contact.exhibitionUrl?.trim() && <a className="inline-block bg-gray-800 hover:bg-gray-700 !text-white font-bold py-2 px-6 rounded-lg transition-colors text-base border border-gray-700"
+                       href={contact.exhibitionUrl.trim()}
                        target="_blank"
                        rel="noopener noreferrer">
-                        {lang === 'en' ? 'Event Exhibition Request' : 'Rendezvényen való kiállítási igény'}
-                    </a>
+                        {lang === 'en' ? (contact.exhibitionLabelEng || 'Event Exhibition Request') : (contact.exhibitionLabel || 'Rendezvényen való kiállítási igény')}
+                    </a>}
                 </div>
             </div>
             <div className="mt-12 flex flex-col items-center">

@@ -42,12 +42,6 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   {
-    name: "Tagfelvétel",
-    nameEn: "Joining Process",
-    href: "/tagfelvetel",
-    dropdown: null,
-  },
-  {
     name: "Rólunk",
     nameEn: "About us",
     href: "",
@@ -62,5 +56,11 @@ export const NAV_ITEMS: NavItem[] = [
       { name: "Egyesület", nameEn: "Association", href: "/egyesulet" },
       { name: "Galéria", nameEn: "Gallery", href: "/galeria" },
     ],
+  },
+  {
+    name: "Csatlakozz csapatunkhoz!",
+    nameEn: "Join our team!",
+    href: "/karrier",
+    dropdown: null,
   },
 ];

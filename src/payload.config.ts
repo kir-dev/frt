@@ -9,14 +9,17 @@ import { buildConfig } from "payload";
 import sharp from "sharp";
 import { fileURLToPath } from "url";
 
+import { ApplicationCVs } from "./collections/ApplicationCVs";
 import { Articles } from "./collections/Articles";
 import Association from "./collections/Association";
 import { Cars } from "./collections/Cars";
+import { CareerSettings } from "./collections/CareerSettings";
 import Contact from "./collections/Contact";
 import { Events } from "./collections/Events";
 import FormulaStudent from "./collections/FormulaStudent";
 import { Gallery } from "./collections/Gallery";
 import Groups from "./collections/Groups";
+import { JobApplications } from "./collections/JobApplications";
 import { Media } from "./collections/Media";
 import { Members } from "./collections/Members";
 import { Publications } from "./collections/Publications";
@@ -40,6 +43,8 @@ const collections = [
       Members,
       Sponsors,
       Recruitment,
+      JobApplications,
+      ApplicationCVs,
       Groups,
       Association,
       SupportUs,
@@ -60,7 +65,7 @@ export default buildConfig({
     },
   },
   collections: collections,
-  globals: [SiteSettings],
+  globals: [SiteSettings, CareerSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

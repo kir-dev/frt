@@ -77,11 +77,14 @@ export interface Config {
     members: Member;
     sponsors: Sponsor;
     recruitment: Recruitment;
+    'job-applications': JobApplication;
+    'application-cvs': ApplicationCv;
     groups: Group;
     association: Association;
     'support-us': SupportUs;
     contact: Contact;
     'formula-student': FormulaStudent;
+    'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -98,11 +101,14 @@ export interface Config {
     members: MembersSelect<false> | MembersSelect<true>;
     sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
     recruitment: RecruitmentSelect<false> | RecruitmentSelect<true>;
+    'job-applications': JobApplicationsSelect<false> | JobApplicationsSelect<true>;
+    'application-cvs': ApplicationCvsSelect<false> | ApplicationCvsSelect<true>;
     groups: GroupsSelect<false> | GroupsSelect<true>;
     association: AssociationSelect<false> | AssociationSelect<true>;
     'support-us': SupportUsSelect<false> | SupportUsSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
     'formula-student': FormulaStudentSelect<false> | FormulaStudentSelect<true>;
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -110,16 +116,20 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
+  fallbackLocale: null;
   globals: {
     'site-settings': SiteSetting;
+    'career-settings': CareerSetting;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'career-settings': CareerSettingsSelect<false> | CareerSettingsSelect<true>;
   };
   locale: null;
-  user: User & {
-    collection: 'users';
+  widgets: {
+    collections: CollectionsWidget;
   };
+  user: User;
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -160,7 +170,15 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
   password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -195,7 +213,7 @@ export interface Article {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -210,7 +228,7 @@ export interface Article {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -225,7 +243,7 @@ export interface Article {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -240,7 +258,7 @@ export interface Article {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -282,7 +300,7 @@ export interface Event {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -297,7 +315,7 @@ export interface Event {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -361,7 +379,7 @@ export interface Car {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -376,7 +394,7 @@ export interface Car {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -411,7 +429,7 @@ export interface Publication {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -426,7 +444,7 @@ export interface Publication {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -437,7 +455,7 @@ export interface Publication {
     };
     [k: string]: unknown;
   };
-  link: string;
+  link?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -473,7 +491,7 @@ export interface Group {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -488,7 +506,7 @@ export interface Group {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -519,7 +537,7 @@ export interface Sponsor {
   createdAt: string;
 }
 /**
- * Nyitott pozíciók a csoportokon belül, funkcionális területek szerint csoportosítva.
+ * A Karrier oldalon megjelenő csoportok és a hozzájuk tartozó pozíciók.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "recruitment".
@@ -528,11 +546,19 @@ export interface Recruitment {
   id: number;
   groupName: string;
   groupNameEng: string;
+  /**
+   * A csoport sávjának bal oldalán jelenik meg. Fekvő (kb. 4:3) kép ajánlott.
+   */
+  image?: (number | null) | Media;
+  /**
+   * A csoportok növekvő sorrendben jelennek meg. Üresen hagyva a lista végére kerül.
+   */
+  order?: number | null;
   description: {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -547,7 +573,7 @@ export interface Recruitment {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -561,11 +587,18 @@ export interface Recruitment {
   positions: {
     positionName: string;
     positionNameEng: string;
-    positionDescription: {
+    /**
+     * Csak a bepipált pozíciók jelennek meg a Karrier oldalon.
+     */
+    positionOpen?: boolean | null;
+    /**
+     * Rövid felvezető szöveg, a szekciók fölött jelenik meg. Opcionális.
+     */
+    positionDescription?: {
       root: {
         type: string;
         children: {
-          type: string;
+          type: any;
           version: number;
           [k: string]: unknown;
         }[];
@@ -575,12 +608,12 @@ export interface Recruitment {
         version: number;
       };
       [k: string]: unknown;
-    };
-    positionDescriptionEng: {
+    } | null;
+    positionDescriptionEng?: {
       root: {
         type: string;
         children: {
-          type: string;
+          type: any;
           version: number;
           [k: string]: unknown;
         }[];
@@ -590,12 +623,125 @@ export interface Recruitment {
         version: number;
       };
       [k: string]: unknown;
+    } | null;
+    /**
+     * A pozíció leírása szekciókra bontva, pl. Feladatok, Szükséges skillek, Miben fejlődhetsz, Előnyök.
+     */
+    sections?:
+      | {
+          sectionTitle: string;
+          sectionTitleEng: string;
+          sectionContent: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          };
+          sectionContentEng: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * A pozíció leírása alatt, ikonokkal kiemelve jelennek meg. Az üresen hagyott mezők nem jelennek meg.
+     */
+    highlights?: {
+      /**
+       * Pl. „2. félévtől, gépészmérnök hallgatóknak” vagy „Bármely szakos hallgatónak”.
+       */
+      joining?: string | null;
+      joiningEng?: string | null;
+      /**
+       * Pl. „heti 10-15 óra”.
+       */
+      timeCommitment?: string | null;
+      timeCommitmentEng?: string | null;
+      /**
+       * Pl. „Futómű”, „Akkumulátor”, „Aerodinamika”.
+       */
+      subsystem?: string | null;
+      subsystemEng?: string | null;
     };
-    positionOpen: boolean;
     id?: string | null;
   }[];
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * A Karrier oldalon beérkezett jelentkezések.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-applications".
+ */
+export interface JobApplication {
+  id: number;
+  cv?: (number | null) | ApplicationCv;
+  formVersion?: string | null;
+  language?: ('hu' | 'en') | null;
+  answerSummary?: string | null;
+  answerSnapshot?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  name: string;
+  email: string;
+  phone?: string | null;
+  university?: string | null;
+  major?: string | null;
+  semester?: string | null;
+  groupName?: string | null;
+  positionName?: string | null;
+  motivation?: string | null;
+  consent?: boolean | null;
+  sheetSyncStatus?: ('ok' | 'skipped' | 'error') | null;
+  sheetSyncError?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "application-cvs".
+ */
+export interface ApplicationCv {
+  id: number;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * Az egyesület szerkeszthető tartalmai
@@ -611,7 +757,7 @@ export interface Association {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -626,7 +772,7 @@ export interface Association {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -656,7 +802,7 @@ export interface SupportUs {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -671,7 +817,7 @@ export interface SupportUs {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -693,13 +839,19 @@ export interface SupportUs {
  */
 export interface Contact {
   id: number;
+  /**
+   * Üresen hagyva a gomb nem jelenik meg.
+   */
+  exhibitionUrl?: string | null;
+  exhibitionLabel?: string | null;
+  exhibitionLabelEng?: string | null;
   title: string;
   title_en: string;
   content: {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -714,7 +866,7 @@ export interface Contact {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -742,7 +894,7 @@ export interface FormulaStudent {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -757,7 +909,7 @@ export interface FormulaStudent {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -770,6 +922,23 @@ export interface FormulaStudent {
   };
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv".
+ */
+export interface PayloadKv {
+  id: number;
+  key: string;
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -817,6 +986,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'recruitment';
         value: number | Recruitment;
+      } | null)
+    | ({
+        relationTo: 'job-applications';
+        value: number | JobApplication;
+      } | null)
+    | ({
+        relationTo: 'application-cvs';
+        value: number | ApplicationCv;
       } | null)
     | ({
         relationTo: 'groups';
@@ -894,6 +1071,13 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1044,6 +1228,8 @@ export interface SponsorsSelect<T extends boolean = true> {
 export interface RecruitmentSelect<T extends boolean = true> {
   groupName?: T;
   groupNameEng?: T;
+  image?: T;
+  order?: T;
   description?: T;
   descriptionEng?: T;
   positions?:
@@ -1051,13 +1237,74 @@ export interface RecruitmentSelect<T extends boolean = true> {
     | {
         positionName?: T;
         positionNameEng?: T;
+        positionOpen?: T;
         positionDescription?: T;
         positionDescriptionEng?: T;
-        positionOpen?: T;
+        sections?:
+          | T
+          | {
+              sectionTitle?: T;
+              sectionTitleEng?: T;
+              sectionContent?: T;
+              sectionContentEng?: T;
+              id?: T;
+            };
+        highlights?:
+          | T
+          | {
+              joining?: T;
+              joiningEng?: T;
+              timeCommitment?: T;
+              timeCommitmentEng?: T;
+              subsystem?: T;
+              subsystemEng?: T;
+            };
         id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-applications_select".
+ */
+export interface JobApplicationsSelect<T extends boolean = true> {
+  cv?: T;
+  formVersion?: T;
+  language?: T;
+  answerSummary?: T;
+  answerSnapshot?: T;
+  name?: T;
+  email?: T;
+  phone?: T;
+  university?: T;
+  major?: T;
+  semester?: T;
+  groupName?: T;
+  positionName?: T;
+  motivation?: T;
+  consent?: T;
+  sheetSyncStatus?: T;
+  sheetSyncError?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "application-cvs_select".
+ */
+export interface ApplicationCvsSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1103,6 +1350,9 @@ export interface SupportUsSelect<T extends boolean = true> {
  * via the `definition` "contact_select".
  */
 export interface ContactSelect<T extends boolean = true> {
+  exhibitionUrl?: T;
+  exhibitionLabel?: T;
+  exhibitionLabelEng?: T;
   title?: T;
   title_en?: T;
   content?: T;
@@ -1121,6 +1371,14 @@ export interface FormulaStudentSelect<T extends boolean = true> {
   content_en?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv_select".
+ */
+export interface PayloadKvSelect<T extends boolean = true> {
+  key?: T;
+  data?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1165,9 +1423,132 @@ export interface SiteSetting {
    */
   showAssociationPage?: boolean | null;
   /**
-   * Controls visibility of the Recruitment page in navigation and direct access
+   * Controls visibility of the Careers page in navigation and direct access
    */
   showRecruitmentPage?: boolean | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * A Karrier oldal bevezetője és a jelentkezés módjának beállítása.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "career-settings".
+ */
+export interface CareerSetting {
+  id: number;
+  /**
+   * Sorrend: húzd a kérdéseket a helyükre. A hozzájárulás mindig a CV után jelenik meg. A név, e-mail és hozzájárulás kötelező. A csoport és pozíció az automatikus kitöltés miatt nem törölhető.
+   */
+  formQuestions?:
+    | {
+        key: string;
+        label: string;
+        labelEng: string;
+        hint?: string | null;
+        hintEng?: string | null;
+        type: 'text' | 'textarea' | 'select' | 'multiselect' | 'checkbox';
+        required?: boolean | null;
+        hidden?: boolean | null;
+        options?:
+          | {
+              key: string;
+              label: string;
+              labelEng: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Az oldal tetején, a csoportok listája fölött jelenik meg.
+   */
+  intro?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  introEng?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Beépített űrlap esetén a jelentkezések a Payload adminba érkeznek (és a Google táblázatba, ha be van állítva a táblázat).
+   */
+  applicationMode?: ('builtIn' | 'googleForm') | null;
+  /**
+   * Csak a „Külső Google űrlap” mód esetén használjuk.
+   */
+  googleFormUrl?: string | null;
+  spreadsheetUrl?: string | null;
+  /**
+   * Kikapcsolva az oldal továbbra is elérhető, de a jelentkezési űrlap és a „Jelentkezz” gomb helyett egy tájékoztató szöveg jelenik meg.
+   */
+  applicationsOpen?: boolean | null;
+  applicationsClosedText?: string | null;
+  applicationsClosedTextEng?: string | null;
+  /**
+   * A kérdések ebben a sorrendben jelennek meg a csoportok után, a jelentkezés előtt. Üresen hagyva a GYIK szekció nem jelenik meg.
+   */
+  faqs?:
+    | {
+        question: string;
+        questionEng: string;
+        answer: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        answerEng: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1181,6 +1562,63 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "career-settings_select".
+ */
+export interface CareerSettingsSelect<T extends boolean = true> {
+  formQuestions?:
+    | T
+    | {
+        key?: T;
+        label?: T;
+        labelEng?: T;
+        hint?: T;
+        hintEng?: T;
+        type?: T;
+        required?: T;
+        hidden?: T;
+        options?:
+          | T
+          | {
+              key?: T;
+              label?: T;
+              labelEng?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  intro?: T;
+  introEng?: T;
+  applicationMode?: T;
+  googleFormUrl?: T;
+  spreadsheetUrl?: T;
+  applicationsOpen?: T;
+  applicationsClosedText?: T;
+  applicationsClosedTextEng?: T;
+  faqs?:
+    | T
+    | {
+        question?: T;
+        questionEng?: T;
+        answer?: T;
+        answerEng?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_widget".
+ */
+export interface CollectionsWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

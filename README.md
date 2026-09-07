@@ -90,37 +90,58 @@ Open http://localhost:3000. Admin is available at http://localhost:3000/admin.
 - `yarn start` — Start the production server
 - `yarn lint` — Run ESLint
 
+## Karrier oldal
+
+A `/karrier` oldal (korábban „Tagfelvétel", a `/tagfelvetel` útvonal 308-cal ide irányít) mindig elérhető, akkor is, ha éppen nincs nyitott pozíció.
+
+### Tartalomkezelés
+
+- **Karrier csoportok** (`recruitment` kollekció) — csoportonként kép, rendezési szám, leírás, és a pozíciók listája. Egy pozícióhoz megadható:
+  - bevezető szöveg (opcionális),
+  - tetszőleges számú **szekció** (pl. Feladatok, Szükséges skillek, Miben fejlődhetsz, Előnyök),
+  - három **kiemelt tudnivaló**: Csatlakozás, Időráfordítás, Részegység — ezek ikonokkal jelennek meg a leírás alatt,
+  - „Nyitott pozíció" jelölőnégyzet: csak a bepipált pozíciók jelennek meg az oldalon.
+- **Karrier oldal** globális beállítás (`career-settings`) — az oldal bevezetője, a jelentkezés módja (beépített űrlap vagy külső Google űrlap), és a jelentkezés nyitva/zárva állapota.
+- **Jelentkezések** (`job-applications` kollekció) — a beépített űrlapon beérkezett jelentkezések. A kollekció `create` jogosultsága zárt: beküldeni csak a `/api/karrier/jelentkezes` végponton keresztül lehet.
+
+### Jelentkezések kiírása Google Sheets táblázatba
+
+A beépített űrlap minden jelentkezést elment a Payloadba, és ha be van állítva egy táblázat, egy sorral kiegészíti azt is. A táblázat hibája **nem** akadályozza meg a jelentkezés mentését — a státusz a jelentkezés oldalsávjában látszik (Kiírva / Kihagyva / Hiba), és a „Kiírás újra a táblázatba" gombbal bármikor pótolható.
+
+#### Egyszeri beállítás (fejlesztői oldal)
+
+1. A [Google Cloud Console](https://console.cloud.google.com/)-ban hozz létre egy projektet, és engedélyezd benne a **Google Sheets API**-t.
+2. **IAM & Admin → Service Accounts → Create service account.** Szerepkör nem kell hozzá.
+3. A fióknál **Keys → Add key → Create new key → JSON**, töltsd le a kulcsot.
+4. A letöltött JSON-ból két érték kell a `.env`-be:
+
+   ```
+   GOOGLE_SERVICE_ACCOUNT_EMAIL=<a JSON "client_email" mezője>
+   GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY="<a JSON "private_key" mezője, a \n-ekkel együtt>"
+   ```
+
+   A privát kulcsot idézőjelek közé tedd, és hagyd benne a `\n` karaktereket — a kód alakítja vissza sortörésekké.
+
+#### Táblázat bekötése (a szerkesztő dolga, kódolás nélkül)
+
+1. Hozz létre egy Google Sheets táblázatot (üresen is jó, a fejlécet mi írjuk bele).
+2. **Megosztás → add hozzá a szolgáltatásfiók e-mail címét Szerkesztő jogosultsággal.** A pontos címet az adminban a mező alatt kiírjuk.
+3. Payload admin → **Karrier oldal → Jelentkezés → Google táblázat linkje**: illeszd be a táblázat linkjét, és mentsd.
+
+Mentéskor rögtön ellenőrizzük, hogy a táblázat elérhető-e; ha nincs megosztva vagy rossz a link, a mező hibaüzenetet ad. A mező üresen hagyható — ilyenkor a jelentkezések csak az adminba érkeznek.
+
+A kiírt oszlopok sorrendje: `Beküldve, Név, E-mail, Telefon, Egyetem / kar, Szak, Félév, Csoport, Pozíció, Motiváció`.
+
 ## Deployment
 
-Since the project uses `push: false` for database schema management, you must run migrations manually after deploying new code.
+Docker images are built in GitHub Actions and published to GitHub Container Registry. The VPS only pulls an immutable image, runs the environment-specific Payload migrations, and recreates the application container without building source code.
 
-### Steps to Deploy
+- Pushes to `staging` deploy automatically to the isolated staging Compose project.
+- Production is started manually from the `main` branch and is protected by the GitHub `Production` environment.
+- Production deployments create a PostgreSQL backup before migrations.
+- Failed application health checks restore the previous application image. Database migrations are never rolled back automatically.
 
-1.  **Pull latest changes**:
-    ```bash
-    git pull origin main
-    ```
-
-2.  **Rebuild Docker containers**:
-    ```bash
-    docker compose up -d --build
-    ```
-
-3.  **Run Migrations**:
-    Execute the migration command inside the running container:
-    ```bash
-    docker exec frt-app-1 yarn payload:migrate
-    ```
-    *Note: You may be prompted to confirm the migration. You can auto-confirm with `echo y | docker exec -i frt-app-1 yarn payload:migrate`.*
-
-### Troubleshooting Migrations
-
-If you encounter `ERR_UNKNOWN_FILE_EXTENSION` errors with CSS files, ensure you are using the custom loader scripts (`css-loader-register.mjs`) which are included in the Docker image and used by the `yarn payload:migrate` script.
-
-- Ensure Docker is running if you use Postgres via Compose.
-- On first run, Payload will initialize tables in the configured Postgres database.
-- If you change database credentials, update `DATABASE_URI` accordingly.
-- Static assets live under `public/`. Media uploaded via the CMS will be stored where your Payload storage is configured.
+See [docs/deployment.md](docs/deployment.md) for environment setup, required secrets and variables, first deployment, verification, and rollback instructions. The older [preview runbook](docs/preview.md) remains available as a manual fallback.
 
 ## What this site includes
 
@@ -129,3 +150,36 @@ If you encounter `ERR_UNKNOWN_FILE_EXTENSION` errors with CSS files, ensure you 
 - Theming and reusable UI components
 
 If you have questions or want to contribute, feel free to open an issue or PR.
+
+### Szerkeszthető űrlap és önéletrajzok
+
+A **Karrier oldal → Űrlap kérdései** fülön szerkeszthetők a magyar/angol feliratok,
+segédszövegek, sorrend, kötelezőség és láthatóság. Új kérdésként rövid vagy hosszú
+szöveg, egy- vagy többválasztós mező és jelölőnégyzet adható hozzá. A név, e-mail
+és hozzájárulás kötelező; a csoport és pozíció mező megőrzi az automatikus kitöltést.
+A hozzájárulás mindig az űrlap végén jelenik meg. A kérdés- és opcióazonosítók
+állandók. A jelentkezések a beküldéskori kérdéseket, opciókat és válaszokat is tárolják.
+Ha kitöltés közben módosul az űrlap, a beküldés frissíti a kérdéseket és újraellenőrzést
+kér, miközben a beírt válaszok és a kiválasztott CV megmaradnak.
+
+Az opcionális CV egy érvényes, nem titkosított PDF lehet, maximum **5 MiB**.
+A fájl a privát `application-cvs` kollekcióba kerül, csak bejelentkezett admin
+olvashatja vagy töltheti le. A jelentkezés törlése a hozzá tartozó fájlt is törli.
+A nyilvános médiatárba nem kerül önéletrajz. Helyi tárolási útvonal:
+`private/cvs`; a `CV_STORAGE_DIR` változóval felülírható. Dockerben külön,
+környezetenként elkülönített `applicant_cvs` kötet tárolja a fájlokat.
+
+Állítsd be a **`NEXT_PUBLIC_SERVER_URL`** változót az adott környezet nyilvános
+HTTPS címére (helyben például `http://localhost:3107`). A Google-táblázat a
+korábbi tíz oszlop után a **További válaszok** és **Jelentkezés az adminban**
+oszlopokat kapja. A második linkről adminbelépés után tölthető le a CV.
+Ha a K–L oszlopban már saját adatok vannak, az export hibát jelez, és nem írja
+felül őket: előbb helyezd át ezeket, majd használd az újraszinkronizálás gombot.
+A jelentkezés és CV táblázathiba esetén is megmarad.
+
+A **Kapcsolat** bejegyzésben szerkeszthető a kiállítási gomb HTTPS linkje és
+magyar/angol felirata. Üres linknél a gomb nem jelenik meg. Ezeket a beállításokat
+csak bejelentkezett admin módosíthatja.
+
+Ellenőrzések: `yarn test:career`, `yarn tsc --noEmit`, `yarn eslint <érintett fájlok>`.
+Adatbázis-frissítés: `yarn payload:migrate`; generált típusok: `yarn payload:generate-types`.
