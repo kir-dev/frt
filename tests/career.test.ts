@@ -5,6 +5,7 @@ import {
     DEFAULT_QUESTIONS,
     MAX_CV_SIZE,
     resolveFormConfig,
+    validateCVPresence,
     validateQuestions,
     validateAnswers,
     summarizeAnswers,
@@ -33,7 +34,21 @@ const custom: FormQuestion = {
     required: true,
     options: [option],
 }
-const config = { version: "v1", questions: [...DEFAULT_QUESTIONS, custom] }
+const config = {
+    version: "v1",
+    questions: [...DEFAULT_QUESTIONS, custom],
+    cvRequired: false,
+}
+
+test("CV requirement defaults to optional and follows the admin setting", () => {
+    assert.equal(resolveFormConfig().cvRequired, false)
+    assert.equal(resolveFormConfig({ cvRequired: false }).cvRequired, false)
+    const requiredConfig = resolveFormConfig({ cvRequired: true })
+    assert.equal(requiredConfig.cvRequired, true)
+    assert.equal(validateCVPresence(false, requiredConfig), "MISSING_CV")
+    assert.equal(validateCVPresence(true, requiredConfig), true)
+    assert.equal(validateCVPresence(false, resolveFormConfig()), true)
+})
 
 test("mandatory core fields cannot be deleted, hidden or changed to another type", () => {
     for (const key of ["name", "email", "consent"]) {

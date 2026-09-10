@@ -79,6 +79,8 @@ export function applicationErrorText(code: string, isEn: boolean) {
             return isEn ? "The upload is too large. The PDF may be at most 5 MiB." : "A feltöltés túl nagy. A PDF legfeljebb 5 MiB lehet."
         case "INVALID_CV":
             return isEn ? "Please choose a valid, unencrypted PDF document." : "Kérlek, válassz érvényes, jelszóval nem védett PDF-dokumentumot."
+        case "MISSING_CV":
+            return isEn ? "Please attach your CV in PDF format." : "Kérlek, csatold az önéletrajzodat PDF formátumban."
         case "MISSING_FIELDS":
             return isEn
                 ? "Please fill in the required fields and accept the data processing consent."

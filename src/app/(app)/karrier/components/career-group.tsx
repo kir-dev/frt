@@ -68,10 +68,9 @@ export default function CareerGroup({
                     <div className="flex flex-1 items-center gap-4 px-5 py-5">
                         <div className="min-w-0 flex-1">
                             <h2 className="mb-2 text-2xl font-bold">{groupName}</h2>
-                            {/* A sávban csak rövid, szöveges előnézet fér el. A CMS-ben a leírás
-                                beágyazott képet is tartalmazhat — azt itt elrejtjük, különben
-                                szétfeszítené a sávot. */}
-                            <div className="rich-text-content line-clamp-3 text-sm break-words text-career-muted [&_img]:hidden">
+                            {/* A teljes formázott leírást megjelenítjük. A CMS-ben beágyazott kép is
+                                szerepelhet — azt itt elrejtjük, hogy ne feszítse szét a csoportsávot. */}
+                            <div className="rich-text-content text-sm break-words text-career-muted [&_img]:hidden">
                                 <RichText data={isEn ? group.descriptionEng : group.description} />
                             </div>
                             <p className="mt-3 text-xs uppercase tracking-wide text-career-muted">

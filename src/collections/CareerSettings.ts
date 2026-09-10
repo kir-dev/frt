@@ -166,6 +166,17 @@ export const CareerSettings: GlobalConfig = {
               },
             },
             {
+              name: "cvRequired",
+              type: "checkbox",
+              defaultValue: false,
+              label: "Önéletrajz kötelező",
+              admin: {
+                description:
+                  "Bekapcsolva a beépített jelentkezési űrlap csak PDF önéletrajzzal küldhető be.",
+                condition: (data) => data?.applicationMode !== "googleForm",
+              },
+            },
+            {
               name: "applicationsOpen",
               type: "checkbox",
               defaultValue: true,
