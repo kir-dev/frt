@@ -38,6 +38,7 @@ export interface FormQuestion {
 export interface FormConfig {
     version: string
     questions: FormQuestion[]
+    cvRequired: boolean
 }
 export const MAX_CV_SIZE = 5 * 1024 * 1024
 export const DEFAULT_QUESTIONS: FormQuestion[] = [
@@ -99,6 +100,7 @@ export const DEFAULT_QUESTIONS: FormQuestion[] = [
 export function resolveFormConfig(
     settings?: {
         formQuestions?: FormQuestion[] | null
+        cvRequired?: boolean | null
         updatedAt?: string | null
     } | null,
 ): FormConfig {
@@ -107,7 +109,15 @@ export function resolveFormConfig(
         questions: settings?.formQuestions?.length
             ? settings.formQuestions
             : DEFAULT_QUESTIONS,
+        cvRequired: settings?.cvRequired === true,
     }
+}
+
+export function validateCVPresence(
+    hasCV: boolean,
+    config: Pick<FormConfig, "cvRequired">,
+): true | "MISSING_CV" {
+    return config.cvRequired && !hasCV ? "MISSING_CV" : true
 }
 export function validateQuestions(questions: FormQuestion[]): true | string {
     if (!questions.length || questions.length > 50)

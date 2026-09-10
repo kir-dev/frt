@@ -1504,6 +1504,10 @@ export interface CareerSetting {
   googleFormUrl?: string | null;
   spreadsheetUrl?: string | null;
   /**
+   * Bekapcsolva a beépített jelentkezési űrlap csak PDF önéletrajzzal küldhető be.
+   */
+  cvRequired?: boolean | null;
+  /**
    * Kikapcsolva az oldal továbbra is elérhető, de a jelentkezési űrlap és a „Jelentkezz” gomb helyett egy tájékoztató szöveg jelenik meg.
    */
   applicationsOpen?: boolean | null;
@@ -1594,6 +1598,7 @@ export interface CareerSettingsSelect<T extends boolean = true> {
   applicationMode?: T;
   googleFormUrl?: T;
   spreadsheetUrl?: T;
+  cvRequired?: T;
   applicationsOpen?: T;
   applicationsClosedText?: T;
   applicationsClosedTextEng?: T;

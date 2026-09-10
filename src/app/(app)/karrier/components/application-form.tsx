@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import {
     MAX_CV_SIZE,
     validateAnswers,
+    validateCVPresence,
     type Answer,
     type FormConfig,
     type FormQuestion,
@@ -239,6 +240,11 @@ export default function ApplicationForm({
             showError(validated.error, validated.field)
             return
         }
+        const cvPresence = validateCVPresence(!!cv, config)
+        if (cvPresence !== true) {
+            showError(cvPresence, "cv")
+            return
+        }
         setStatus("submitting")
         setErrorMessage(null)
         setErrorField(undefined)
@@ -315,7 +321,14 @@ export default function ApplicationForm({
                             className="mb-2 flex items-center gap-2 text-sm font-medium"
                         >
                             <Paperclip size={17} aria-hidden />
-                            {isEn ? "CV (optional)" : "Önéletrajz (opcionális)"}
+                            {isEn ? "CV" : "Önéletrajz"}
+                            {config.cvRequired ? (
+                                " *"
+                            ) : (
+                                <span className="font-normal text-career-muted">
+                                    {` (${isEn ? "optional" : "opcionális"})`}
+                                </span>
+                            )}
                         </label>
                         <p id="cv-help" className="mb-3 text-sm text-career-muted">
                             {isEn
@@ -329,6 +342,8 @@ export default function ApplicationForm({
                             type="file"
                             accept=".pdf,application/pdf"
                             aria-describedby="cv-help"
+                            aria-invalid={errorField === "cv" || undefined}
+                            required={config.cvRequired}
                             className="block w-full min-w-0 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-career-accent-soft file:px-4 file:py-2 file:text-career-accent"
                             onChange={(event) => {
                                 const file = event.target.files?.[0] ?? null

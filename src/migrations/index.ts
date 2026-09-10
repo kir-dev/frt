@@ -12,6 +12,7 @@ import * as migration_20260729_182451_karrier_oldal from './20260729_182451_karr
 import * as migration_20260730_204153_karrier_sheets_link from './20260730_204153_karrier_sheets_link';
 import * as migration_20260803_170842_karrier_faq from './20260803_170842_karrier_faq';
 import * as migration_20260906_154659_career_form_cv_contact from './20260906_154659_career_form_cv_contact';
+import * as migration_20260910_194346_add_cv_required_setting from './20260910_194346_add_cv_required_setting';
 
 export const migrations = [
   {
@@ -79,5 +80,10 @@ export const migrations = [
     up: migration_events_baseline.up,
     down: migration_events_baseline.down,
     name: '20260906_220000_events_baseline',
+  },
+  {
+    up: migration_20260910_194346_add_cv_required_setting.up,
+    down: migration_20260910_194346_add_cv_required_setting.down,
+    name: '20260910_194346_add_cv_required_setting'
   },
 ];

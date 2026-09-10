@@ -6,6 +6,7 @@ import {
 } from "@/lib/application-upload";
 import {
   resolveFormConfig,
+  validateCVPresence,
   validateAnswers,
   summarizeAnswers,
   type CoreKey,
@@ -55,6 +56,12 @@ export async function POST(request: Request) {
     if (!parsed.ok)
       return NextResponse.json(
         { error: parsed.error, field: parsed.field },
+        { status: 400 },
+      );
+    const cvPresence = validateCVPresence(!!cv, formConfig);
+    if (cvPresence !== true)
+      return NextResponse.json(
+        { error: cvPresence, field: "cv" },
         { status: 400 },
       );
     const language = body.language === "en" ? "en" : "hu";
